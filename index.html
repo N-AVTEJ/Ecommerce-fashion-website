@@ -567,14 +567,63 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
+
+    <!-- Free Air Shipping Tracker -->
+    <div id="cartShippingProgress" style="padding: 12px 24px; background: var(--color-sand-light); border-bottom: 1px solid var(--border-subtle); font-size: 0.82rem;">
+      <div id="shippingProgressText" style="margin-bottom: 6px; color: var(--color-charcoal);">Add items to unlock <strong>FREE Express Air Shipping</strong></div>
+      <div style="width: 100%; height: 5px; background: rgba(0,0,0,0.1); border-radius: 9999px; overflow: hidden;">
+        <div id="shippingProgressBar" style="width: 0%; height: 100%; background: var(--gradient-violet); transition: width 0.3s ease;"></div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="cartEmptyState" style="display: none; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; text-align: center; flex: 1;">
+      <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--color-cream); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--color-text-muted);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 01-8 0"></path></svg>
+      </div>
+      <h4 style="font-size: 1.15rem; color: var(--color-charcoal); margin-bottom: 8px;">Your Shopping Bag is Empty</h4>
+      <p style="font-size: 0.9rem; color: var(--color-text-secondary); max-width: 260px; margin-bottom: 24px;">Explore our curated men's and women's collections to select your signature pieces.</p>
+      <button type="button" class="btn btn-charcoal" onclick="VeloraCart.close()">Explore Boutique</button>
+    </div>
+
+    <!-- Active Cart Items List -->
     <div id="cartItemsList" class="drawer-body">
       <!-- Injected by VeloraCart.render() -->
     </div>
-    <div class="drawer-footer">
-      <div class="cart-total-row">
-        <span style="font-size: 0.95rem; color: var(--color-text-secondary); font-weight: 600;">Estimated Subtotal</span>
-        <span id="cartDrawerSubtotal" class="cart-total-amount">₹0</span>
+
+    <!-- Footer Summary & Checkout -->
+    <div id="cartFooterSummary" class="drawer-footer">
+      <!-- Promo Voucher Input -->
+      <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+        <input type="text" id="cartPromoInput" placeholder="Voucher Code (e.g. VELORA50)" style="flex: 1; padding: 8px 12px; border: 1px solid var(--border-medium); border-radius: 4px; font-size: 0.85rem; text-transform: uppercase;" />
+        <button type="button" id="cartApplyPromoBtn" class="btn btn-outline" style="padding: 8px 14px; font-size: 0.8rem;" onclick="const inp = document.getElementById('cartPromoInput'); const res = VeloraCart.applyPromo(inp ? inp.value : ''); if (window.VeloraToast) VeloraToast.show({ title: res.success ? 'Privilege Applied' : 'Notice', message: res.message, type: res.success ? 'success' : 'warning' });">Apply</button>
       </div>
+
+      <div id="cartActivePromoTag" style="display: none; align-items: center; justify-content: space-between; padding: 6px 12px; background: rgba(139, 111, 216, 0.12); border-radius: 4px; margin-bottom: 12px; font-size: 0.8rem; color: var(--color-soft-violet);">
+        <span>Active: <strong id="cartActivePromoName"></strong></span>
+        <button type="button" style="color: #EF4444; font-weight: 700; cursor: pointer;" onclick="VeloraCart.removePromo()">✕</button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 6px; color: var(--color-text-secondary);">
+        <span>Subtotal</span>
+        <span id="cartSubtotalVal">₹0</span>
+      </div>
+
+      <div id="cartDiscountRow" style="display: none; justify-content: space-between; font-size: 0.9rem; margin-bottom: 6px; color: #10B981;">
+        <span>Privilege Discount</span>
+        <span id="cartDiscountVal">-₹0</span>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 12px; color: var(--color-text-secondary);">
+        <span>Estimated Delivery</span>
+        <span id="cartShippingVal">Calculated at step</span>
+      </div>
+
+      <div class="cart-total-row" style="border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+        <span style="font-size: 1rem; font-weight: 700; color: var(--color-charcoal);">Estimated Total</span>
+        <span id="cartGrandTotalVal" class="cart-total-amount">₹0</span>
+      </div>
+
       <button type="button" class="btn btn-charcoal" style="width: 100%; margin-bottom: 8px;" onclick="VeloraCart.close(); VeloraCheckout.open();">Proceed to Checkout</button>
       <button type="button" class="btn btn-outline" style="width: 100%;" onclick="VeloraCart.close()">Continue Shopping</button>
     </div>
@@ -589,8 +638,23 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
+
+    <!-- Wishlist Empty State -->
+    <div id="wishlistEmptyState" style="display: none; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; text-align: center; flex: 1;">
+      <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--color-cream); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--color-text-muted);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      </div>
+      <h4 style="font-size: 1.15rem; color: var(--color-charcoal); margin-bottom: 8px;">No Saved Pieces Yet</h4>
+      <p style="font-size: 0.9rem; color: var(--color-text-secondary); max-width: 260px; margin-bottom: 24px;">Tap the heart icon on any creation in our Men's or Women's collections to save for later.</p>
+      <button type="button" class="btn btn-charcoal" onclick="VeloraWishlist.close()">Explore Collections</button>
+    </div>
+
     <div id="wishlistItemsList" class="drawer-body">
       <!-- Injected by VeloraWishlist.render() -->
+    </div>
+
+    <div id="wishlistFooter" class="drawer-footer" style="display: none;">
+      <button type="button" class="btn btn-charcoal" style="width: 100%;" onclick="VeloraWishlist.moveAllToCart()">Move All to Shopping Bag</button>
     </div>
   </aside>
 
