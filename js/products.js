@@ -376,9 +376,114 @@ const VELORA_PRODUCTS = [
     isTrending: true,
     isFeatured: true
   },
+  {
+    id: "men-15",
+    sku: "VEL-M26-015",
+    name: "Heavyweight Boxy Pocket Tee",
+    department: "men",
+    category: "T-Shirts",
+    originalPrice: 2299,
+    discountedPrice: 1499,
+    discountPercent: 35,
+    badge: "CORE BASIC",
+    fabric: "300 GSM Heavy Combed Cotton",
+    rating: 4.9,
+    reviewCount: 94,
+    image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=900&q=85",
+    secondaryImage: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=85",
+    description: "Boxy architectural cut with blind-stitched chest pocket, reinforced ribbed crew neckline, and drop-shoulder drape in dense combed cotton.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: [
+      { name: "Vintage Chalk", hex: "#F5F0E8" },
+      { name: "Smoked Slate", hex: "#4A5568" },
+      { name: "Onyx", hex: "#171717" }
+    ],
+    tags: ["T-Shirts", "Heavyweight", "Boxy", "Men"],
+    isNew: true,
+    isTrending: true,
+    isFeatured: true
+  },
+  {
+    id: "men-16",
+    sku: "VEL-M26-016",
+    name: "Minimalist Leather Low-Tops",
+    department: "men",
+    category: "Sneakers",
+    originalPrice: 5499,
+    discountedPrice: 3849,
+    discountPercent: 30,
+    badge: "HANDCRAFTED",
+    fabric: "Full-Grain Italian Calf Leather & Margom Rubber Sole",
+    rating: 4.9,
+    reviewCount: 68,
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=900&q=85",
+    secondaryImage: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=900&q=85",
+    description: "Monolithic luxury sneaker handmade with supple full-grain Italian leather, waxed cotton laces, cushioned calfskin lining, and stitched cupsole.",
+    sizes: ["40", "41", "42", "43", "44"],
+    colors: [
+      { name: "Pure Chalk", hex: "#FFFFFF" },
+      { name: "Stealth Charcoal", hex: "#171717" }
+    ],
+    tags: ["Sneakers", "Footwear", "Leather", "Men"],
+    isNew: true,
+    isTrending: true,
+    isFeatured: false
+  },
+  {
+    id: "men-17",
+    sku: "VEL-M26-017",
+    name: "Cuban Collar Silk-Linen Shirt",
+    department: "men",
+    category: "Shirts",
+    originalPrice: 3799,
+    discountedPrice: 2659,
+    discountPercent: 30,
+    badge: "RESORT EDIT",
+    fabric: "60% Normandy Linen & 40% Mulberry Silk",
+    rating: 4.8,
+    reviewCount: 52,
+    image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=900&q=85",
+    secondaryImage: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=85",
+    description: "Relaxed open-collar resort silhouette woven with slub textured silk-linen blend, engraved mother-of-pearl buttons, and side-vented straight hem.",
+    sizes: ["38", "40", "42", "44"],
+    colors: [
+      { name: "Terracotta Sand", hex: "#C48B71" },
+      { name: "Warm Cream", hex: "#F5F0E8" }
+    ],
+    tags: ["Shirts", "Cuban Collar", "Linen", "Men"],
+    isNew: false,
+    isTrending: true,
+    isFeatured: true
+  },
+  {
+    id: "men-18",
+    sku: "VEL-M26-018",
+    name: "Relaxed Japanese Selvedge Jeans",
+    department: "men",
+    category: "Jeans",
+    originalPrice: 4799,
+    discountedPrice: 3299,
+    discountPercent: 31,
+    badge: "JAPAN SELVEDGE",
+    fabric: "14.5oz Kurabo Shuttle-Loomed Denim",
+    rating: 5.0,
+    reviewCount: 88,
+    image: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?auto=format&fit=crop&w=900&q=85",
+    secondaryImage: "https://images.unsplash.com/photo-1542272604-780c96856592?auto=format&fit=crop&w=900&q=85",
+    description: "Straight-leg architectural cut with pink-line selvedge ID, hidden copper rivets, button fly, and natural indigo rope dye that fades uniquely over time.",
+    sizes: ["30", "32", "34", "36"],
+    colors: [
+      { name: "Raw Dark Indigo", hex: "#192231" },
+      { name: "Vintage Rinse", hex: "#2C394E" }
+    ],
+    tags: ["Jeans", "Selvedge", "Denim", "Men"],
+    isNew: true,
+    isTrending: false,
+    isFeatured: true
+  },
 
   // =========================================================================
-  // WOMEN'S FASHION DEPARTMENT (14 Authentic Women's Creations)
+  // WOMEN'S FASHION DEPARTMENT (18 Authentic Women's Creations)
   // =========================================================================
   {
     id: "women-01",
@@ -750,6 +855,111 @@ const VELORA_PRODUCTS = [
     isNew: false,
     isTrending: true,
     isFeatured: false
+  },
+  {
+    id: "women-15",
+    sku: "VEL-W26-015",
+    name: "Sculptural Drape Column Midi Dress",
+    department: "women",
+    category: "Dresses",
+    originalPrice: 5499,
+    discountedPrice: 3799,
+    discountPercent: 31,
+    badge: "COUTURE",
+    fabric: "Double-Weave Stretch Crepe & Silk Lining",
+    rating: 5.0,
+    reviewCount: 64,
+    image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=900&q=85",
+    secondaryImage: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=900&q=85",
+    description: "Sleek column silhouette featuring an architectural asymmetric gathered shoulder, contoured waist paneling, and center-back slit.",
+    sizes: ["XS", "S", "M", "L"],
+    colors: [
+      { name: "Twilight Violet", hex: "#8B6FD8" },
+      { name: "Obsidian Noir", hex: "#171717" },
+      { name: "Warm Cream", hex: "#F5F0E8" }
+    ],
+    tags: ["Dresses", "Midi", "Cocktail", "Women"],
+    isNew: true,
+    isTrending: true,
+    isFeatured: true
+  },
+  {
+    id: "women-16",
+    sku: "VEL-W26-016",
+    name: "Silk Georgette Tie-Neck Blouse",
+    department: "women",
+    category: "Tops",
+    originalPrice: 3499,
+    discountedPrice: 2449,
+    discountPercent: 30,
+    badge: "ATELIER",
+    fabric: "100% Pure Silk Georgette",
+    rating: 4.8,
+    reviewCount: 47,
+    image: "https://images.unsplash.com/photo-1551803091-e20673f15770?auto=format&fit=crop&w=900&q=85",
+    secondaryImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=85",
+    description: "Refined sheer blouse with versatile extended neck scarf ties, blouson sleeves with gathered French cuffs, and mother-of-pearl buttons.",
+    sizes: ["XS", "S", "M", "L"],
+    colors: [
+      { name: "Ivory Cream", hex: "#F5F0E8" },
+      { name: "Soft Mauve", hex: "#B89CB5" }
+    ],
+    tags: ["Tops", "Blouse", "Silk", "Women"],
+    isNew: true,
+    isTrending: false,
+    isFeatured: true
+  },
+  {
+    id: "women-17",
+    sku: "VEL-W26-017",
+    name: "Structured Sculpted Leather Tote",
+    department: "women",
+    category: "Handbags",
+    originalPrice: 4999,
+    discountedPrice: 3499,
+    discountPercent: 30,
+    badge: "LUXURY ACCENT",
+    fabric: "Full-Grain Italian Pebble Leather",
+    rating: 4.9,
+    reviewCount: 59,
+    image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=900&q=85",
+    secondaryImage: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=85",
+    description: "Architectural tote featuring sculpted clean edges, gold-plated hardware, microfiber faux-suede interior with laptop compartment and key lanyard.",
+    sizes: ["One Size"],
+    colors: [
+      { name: "Camel Taupe", hex: "#B9A58F" },
+      { name: "Onyx Black", hex: "#171717" }
+    ],
+    tags: ["Handbags", "Tote", "Leather", "Women"],
+    isNew: false,
+    isTrending: true,
+    isFeatured: true
+  },
+  {
+    id: "women-18",
+    sku: "VEL-W26-018",
+    name: "Banarasi Katan Silk Festive Saree",
+    department: "women",
+    category: "Sarees",
+    originalPrice: 8999,
+    discountedPrice: 5999,
+    discountPercent: 33,
+    badge: "ROYAL HERITAGE",
+    fabric: "Pure Varanasi Katan Silk with Real Zari Weave",
+    rating: 5.0,
+    reviewCount: 92,
+    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=85",
+    secondaryImage: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=900&q=85",
+    description: "Masterwork Varanasi handloom saree featuring intricate floral meenakari kadwa motifs, heavy pallu, and rich brocade unstitched blouse piece.",
+    sizes: ["Free Size (6.3m)"],
+    colors: [
+      { name: "Royal Violet & Gold", hex: "#6D28D9" },
+      { name: "Crimson Sand", hex: "#9E3D48" }
+    ],
+    tags: ["Sarees", "Ethnic Wear", "Banarasi", "Silk", "Women"],
+    isNew: true,
+    isTrending: true,
+    isFeatured: true
   }
 ];
 

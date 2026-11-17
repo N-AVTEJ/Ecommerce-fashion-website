@@ -3,24 +3,6 @@
  * Editorial Storefront, Dynamic Department Cards, Modals & Micro-Interactions
  */
 
-document.addEventListener("DOMContentLoaded", () => {
-  window.VeloraAudio = VeloraAudio;
-  window.VeloraStoreUI = VeloraStoreUI;
-  window.VeloraQuickView = VeloraQuickView;
-  window.VeloraSearch = VeloraSearch;
-  window.VeloraCheckout = VeloraCheckout;
-
-  VeloraAudio.init();
-  if (window.VeloraFilters) VeloraFilters.init();
-  VeloraStoreUI.init();
-  if (window.VeloraCart) VeloraCart.init();
-  if (window.VeloraWishlist) VeloraWishlist.init();
-  VeloraMotion.init();
-  VeloraQuickView.init();
-  VeloraSearch.init();
-  VeloraCheckout.init();
-});
-
 /**
  * Luxury Web Audio Micro-Haptics
  * Subtle, procedural velvet click feedback (zero external audio files)
@@ -686,3 +668,44 @@ const VeloraCheckout = {
     location.reload();
   }
 };
+
+/**
+ * VELORA Application Bootstrap & Resilient Initialization
+ */
+function bootVelora() {
+  if (typeof window !== "undefined") {
+    window.VeloraAudio = VeloraAudio;
+    window.VeloraStoreUI = VeloraStoreUI;
+    window.VeloraQuickView = VeloraQuickView;
+    window.VeloraSearch = VeloraSearch;
+    window.VeloraCheckout = VeloraCheckout;
+  }
+
+  try { VeloraAudio.init(); } catch (e) { console.warn("[Velora] Audio init:", e); }
+  try { if (window.VeloraFilters) VeloraFilters.init(); } catch (e) { console.warn("[Velora] Filters init:", e); }
+  try { VeloraStoreUI.init(); } catch (e) { console.warn("[Velora] StoreUI init:", e); }
+  try { if (window.VeloraCart) VeloraCart.init(); } catch (e) { console.warn("[Velora] Cart init:", e); }
+  try { if (window.VeloraWishlist) VeloraWishlist.init(); } catch (e) { console.warn("[Velora] Wishlist init:", e); }
+  try { if (window.VeloraMotion) VeloraMotion.init(); } catch (e) { console.warn("[Velora] Motion init:", e); }
+  try { VeloraQuickView.init(); } catch (e) { console.warn("[Velora] QuickView init:", e); }
+  try { VeloraSearch.init(); } catch (e) { console.warn("[Velora] Search init:", e); }
+  try { VeloraCheckout.init(); } catch (e) { console.warn("[Velora] Checkout init:", e); }
+}
+
+if (typeof document !== "undefined") {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootVelora);
+  } else {
+    bootVelora();
+  }
+}
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    VeloraAudio,
+    VeloraStoreUI,
+    VeloraQuickView,
+    VeloraSearch,
+    VeloraCheckout
+  };
+}
