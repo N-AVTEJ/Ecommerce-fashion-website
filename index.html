@@ -80,12 +80,15 @@
         <span class="logo-subline">FASHION BEYOND BOUNDARIES</span>
       </a>
 
-      <!-- Desktop Navigation Links (Independently Accessible Departments) -->
+      <!-- Desktop Navigation Links (Multi-Page Store Architecture) -->
       <nav class="nav-links" aria-label="Primary Navigation">
-        <a href="#hero" class="nav-link is-active">Home</a>
-        <a href="#men-department" class="nav-link" data-nav-dept="men">Men</a>
-        <a href="#women-department" class="nav-link" data-nav-dept="women">Women</a>
-        <a href="#new-arrivals" class="nav-link">New Arrivals</a>
+        <a href="index.html" class="nav-link is-active">Home</a>
+        <a href="men.html" class="nav-link">Men</a>
+        <a href="women.html" class="nav-link">Women</a>
+        <a href="virtual-fit-men.html" class="nav-link nav-link-visionos" title="Spatial 3D Virtual Try-On Room">
+          <span>Virtual Fitting</span>
+          <span class="visionOS-badge">visionOS 3D</span>
+        </a>
         <a href="#trending" class="nav-link">Collections</a>
         <a href="#offers" class="nav-link nav-link-sale">
           <span>Sale</span>
@@ -140,7 +143,7 @@
     <div class="split-hero-divider" aria-hidden="true"></div>
 
     <!-- LEFT SIDE: MEN -->
-    <div class="split-hero-side split-hero-men" onclick="document.getElementById('exploreMenBtn').click()">
+    <div class="split-hero-side split-hero-men" onclick="window.location.href='men.html'">
       <img 
         src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1400&q=85" 
         alt="Contemporary Men's Fashion Model" 
@@ -152,15 +155,21 @@
       <div class="split-hero-content">
         <h1 class="split-hero-title">MEN</h1>
         <p class="split-hero-tagline">"Redefine Your Everyday."</p>
-        <a href="#men-department" id="exploreMenBtn" class="btn btn-primary" onclick="event.stopPropagation(); VeloraFilters.setDepartment('men');">
-          <span>Explore Men</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </a>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="men.html" id="exploreMenBtn" class="btn btn-primary" onclick="event.stopPropagation();">
+            <span>Explore Men</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+          <a href="virtual-fit-men.html" class="btn btn-outline-white" style="backdrop-filter: blur(8px); border-color: rgba(255,255,255,0.7); display: inline-flex; align-items: center; gap: 8px;" onclick="event.stopPropagation();">
+            <span>Try On in 3D Arc</span>
+            <span class="pulse-dot" style="background:#8B6FD8;"></span>
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- RIGHT SIDE: WOMEN -->
-    <div class="split-hero-side split-hero-women" onclick="document.getElementById('exploreWomenBtn').click()">
+    <div class="split-hero-side split-hero-women" onclick="window.location.href='women.html'">
       <img 
         src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1400&q=85" 
         alt="Contemporary Women's Haute Couture Model" 
@@ -172,9 +181,51 @@
       <div class="split-hero-content">
         <h2 class="split-hero-title">WOMEN</h2>
         <p class="split-hero-tagline">"Make Every Look Count."</p>
-        <a href="#women-department" id="exploreWomenBtn" class="btn btn-outline-white" onclick="event.stopPropagation(); VeloraFilters.setDepartment('women');">
+        <a href="women.html" id="exploreWomenBtn" class="btn btn-outline-white" onclick="event.stopPropagation();">
           <span>Explore Women</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       INNOVATION SECTION: SPATIAL VIRTUAL FITTING HERO FEATURE (visionOS 3D Arc)
+       ========================================================================= -->
+  <section class="container" style="padding-top: var(--space-48);">
+    <div class="virtual-fit-feature-card reveal-item">
+      <div>
+        <div class="vf-feature-tag">
+          <span class="pulse-dot" style="width: 6px; height: 6px; background: #8B6FD8;"></span>
+          <span>SPATIAL TRY-ON ARC // VISIONOS HERO</span>
+        </div>
+        <h2 class="vf-feature-title">VirtualFit: 3D Spatial Fitting Suite</h2>
+        <p class="vf-feature-desc">
+          Step into our flagship visionOS-style virtual try-on room. Rotate a frosted 3D garment arc in a sunlit Scandinavian living room, flick pieces with fluid momentum, and witness our live model try on signature shirts, tees, sweaters, and fleece with realtime scan-line projection.
+        </p>
+        <div class="vf-pills-row">
+          <span class="vf-feature-pill">✦ 3D Perspective Arc</span>
+          <span class="vf-feature-pill">✦ Laser Scan Projection</span>
+          <span class="vf-feature-pill">✦ Real-time Sizing & Colors</span>
+          <span class="vf-feature-pill">✦ 5 Signature Menswear Drops</span>
+        </div>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+          <a href="virtual-fit-men.html" class="btn-visionos">
+            <span>Launch 3D Virtual Fitting Room</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+          <a href="men.html" class="btn btn-outline" style="color: #FFFFFF; border-color: rgba(255,255,255,0.3);">
+            <span>Explore Men's Atelier</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="vf-preview-visual">
+        <a href="virtual-fit-men.html" class="vf-preview-glass-box" title="Enter 3D Spatial Fitting Room">
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6) 100%);"></div>
+          <div style="position: absolute; top: 16px; left: 16px; padding: 4px 10px; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); border-radius: 999px; font-family: var(--font-mono); font-size: 0.7rem; color: #FFF;">
+            VIRTUALFIT 3D ARC
+          </div>
         </a>
       </div>
     </div>
@@ -1642,11 +1693,14 @@
       </article>
     
       </div>
+
+      <div style="text-align: center; margin-top: var(--space-48);">
+        <a href="men.html" class="btn btn-charcoal" style="padding: 16px 36px; font-size: 1rem; border-radius: 999px;">
+          <span>Explore Complete Men's Atelier (All 18 Creations) →</span>
+        </a>
+      </div>
     </div>
   </section>
-
-  <!-- =========================================================================
-       SECTION 5: WOMEN'S FASHION DEPARTMENT
        ========================================================================= -->
   <section id="women-department" class="department-section section-spacing" style="background-color: var(--color-cream-light); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
     <div class="container">
@@ -3114,11 +3168,14 @@
       </article>
     
       </div>
+
+      <div style="text-align: center; margin-top: var(--space-48);">
+        <a href="women.html" class="btn btn-charcoal" style="padding: 16px 36px; font-size: 1rem; border-radius: 999px;">
+          <span>Explore Complete Women's Atelier (All 18 Creations) →</span>
+        </a>
+      </div>
     </div>
   </section>
-
-  <!-- =========================================================================
-       SECTION 6: TRENDING COLLECTIONS
        ========================================================================= -->
   <section id="trending" class="section-spacing">
     <div class="container">
@@ -5479,40 +5536,40 @@
 
         <!-- Col 2: Men's Department -->
         <div>
-          <h4 class="footer-col-title">Men's Fashion</h4>
+          <h4 class="footer-col-title">Men's Atelier</h4>
           <ul class="footer-links-list">
-            <li><a href="#men-department" onclick="VeloraFilters.setMenCategory('T-Shirts')">T-Shirts & Polos</a></li>
-            <li><a href="#men-department" onclick="VeloraFilters.setMenCategory('Shirts')">Oxford & Linen Shirts</a></li>
-            <li><a href="#men-department" onclick="VeloraFilters.setMenCategory('Hoodies')">Urban Hoodies</a></li>
-            <li><a href="#men-department" onclick="VeloraFilters.setMenCategory('Jackets')">Jackets & Coats</a></li>
-            <li><a href="#men-department" onclick="VeloraFilters.setMenCategory('Trousers')">Cargo & Wool Trousers</a></li>
-            <li><a href="#men-department" onclick="VeloraFilters.setMenCategory('Ethnic Wear')">Ethnic Kurta Jackets</a></li>
+            <li><a href="men.html">All Men's Creations</a></li>
+            <li><a href="virtual-fit-men.html" style="color: var(--color-soft-violet); font-weight: 600;">✨ 3D Spatial Virtual Fitting</a></li>
+            <li><a href="men.html">T-Shirts & Polos</a></li>
+            <li><a href="men.html">Oxford & Linen Shirts</a></li>
+            <li><a href="men.html">Urban Hoodies</a></li>
+            <li><a href="men.html">Jackets & Coats</a></li>
           </ul>
         </div>
 
         <!-- Col 3: Women's Department -->
         <div>
-          <h4 class="footer-col-title">Women's Fashion</h4>
+          <h4 class="footer-col-title">Women's Atelier</h4>
           <ul class="footer-links-list">
-            <li><a href="#women-department" onclick="VeloraFilters.setWomenCategory('Dresses')">Maxi & Slip Dresses</a></li>
-            <li><a href="#women-department" onclick="VeloraFilters.setWomenCategory('Tops')">Tops & Corset Blazers</a></li>
-            <li><a href="#women-department" onclick="VeloraFilters.setWomenCategory('Kurtis')">Anarkali Kurtis</a></li>
-            <li><a href="#women-department" onclick="VeloraFilters.setWomenCategory('Sarees')">Chanderi Sarees</a></li>
-            <li><a href="#women-department" onclick="VeloraFilters.setWomenCategory('Co-ord Sets')">Linen Co-ord Sets</a></li>
-            <li><a href="#women-department" onclick="VeloraFilters.setWomenCategory('Handbags')">Sculptural Handbags</a></li>
+            <li><a href="women.html">All Women's Creations</a></li>
+            <li><a href="women.html">Maxi & Slip Dresses</a></li>
+            <li><a href="women.html">Tops & Corset Blazers</a></li>
+            <li><a href="women.html">Anarkali Kurtis</a></li>
+            <li><a href="women.html">Chanderi Sarees</a></li>
+            <li><a href="women.html">Linen Co-ord Sets</a></li>
           </ul>
         </div>
 
-        <!-- Col 4: Customer Support -->
+        <!-- Col 4: Virtual Fit Lab & Innovation -->
         <div>
-          <h4 class="footer-col-title">Client Support</h4>
+          <h4 class="footer-col-title">Virtual Fit Lab</h4>
           <ul class="footer-links-list">
+            <li><a href="virtual-fit-men.html">Men's Spatial Try-On Arc</a></li>
+            <li><a href="virtual-fit-men.html">3D Garment Rotation</a></li>
+            <li><a href="virtual-fit-men.html">Optic Scan-Line Try-On</a></li>
             <li><a href="#offers">Shipping & Delivery</a></li>
-            <li><a href="#offers">Returns & Exchanges</a></li>
             <li><a href="#offers">Privilege Vouchers</a></li>
             <li><a href="#newsletter">VIP Concierge</a></li>
-            <li><a href="#footer">Garment Care Guide</a></li>
-            <li><a href="#footer">Contact Atelier</a></li>
           </ul>
         </div>
 
@@ -5562,9 +5619,13 @@
     </div>
     <div class="drawer-body">
       <nav style="display: flex; flex-direction: column; gap: 16px; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">
-        <a href="#hero" class="mobile-nav-link" style="color: var(--color-charcoal);">Home</a>
-        <a href="#men-department" class="mobile-nav-link" data-nav-dept="men" style="color: var(--color-charcoal);">Men's Fashion</a>
-        <a href="#women-department" class="mobile-nav-link" data-nav-dept="women" style="color: var(--color-charcoal);">Women's Fashion</a>
+        <a href="index.html" class="mobile-nav-link" style="color: var(--color-charcoal);">Home</a>
+        <a href="men.html" class="mobile-nav-link" style="color: var(--color-charcoal);">Men's Fashion Atelier</a>
+        <a href="women.html" class="mobile-nav-link" style="color: var(--color-charcoal);">Women's Fashion Atelier</a>
+        <a href="virtual-fit-men.html" class="mobile-nav-link" style="color: var(--color-soft-violet); display: flex; align-items: center; justify-content: space-between;">
+          <span>Virtual Fitting 3D</span>
+          <span class="visionOS-badge">visionOS</span>
+        </a>
         <a href="#trending" class="mobile-nav-link" style="color: var(--color-charcoal);">Trending Collections</a>
         <a href="#new-arrivals" class="mobile-nav-link" style="color: var(--color-charcoal);">New Arrivals</a>
         <a href="#offers" class="mobile-nav-link" style="color: var(--color-soft-violet);">Special Offers (50% Off)</a>

@@ -135,13 +135,19 @@ const VeloraFilters = {
   },
 
   bindSortControls() {
-    const sortSelect = document.getElementById("trendingSortSelect");
-    if (sortSelect) {
-      sortSelect.addEventListener("change", (e) => {
-        if (window.VeloraAudio) VeloraAudio.playClick();
-        this.setSort(e.target.value);
-      });
-    }
+    const sortSelects = [
+      document.getElementById("trendingSortSelect"),
+      document.getElementById("menSortSelect"),
+      document.getElementById("womenSortSelect")
+    ];
+    sortSelects.forEach(sortSelect => {
+      if (sortSelect) {
+        sortSelect.addEventListener("change", (e) => {
+          if (window.VeloraAudio) VeloraAudio.playClick();
+          this.setSort(e.target.value);
+        });
+      }
+    });
   }
 };
 
