@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VirtualFit: Spatial Try-On | VELORA Men's Atelier</title>
+  <meta name="description" content="VisionOS-style 3D Spatial Virtual Try-On Hero for VELORA Men's Fashion Department.">
+
+  <!-- Inter Google Font (Exact weights: 400, 500, 600, 700, 800, 900) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* --------------------------------------------------
+       1. Page basics & CSS Variables
+       -------------------------------------------------- */
+    :root {
+      --ease: cubic-bezier(.2,.8,.2,1);
+      --sans: "Inter", system-ui, -apple-system, sans-serif;
+      --MH: min(78vh, 62vw);
+      --CW: min(14.8vw, 33vh);
+      --room: url("https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261104_080623_c94c85a3-23d5-4a0c-afff-41be1b5b8191.png&w=2400&q=85");
+      --model: url("https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261104_080717_e02cb856-b812-4c9b-9b86-8a741c7f65eb.png&w=2688&q=85");
+      --garm: url("https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261104_080719_f5a4cca2-cf42-4957-ab3b-ddec34d2b71a.png&w=2048&q=85");
+    }
+
+    @media (max-width: 767px) {
+      :root {
+        --MH: min(62vh, 128vw);
+        --CW: min(30vw, 170px);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background-color: #e9e4dc;
+      color: #fff;
+      font-family: var(--sans);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: none;
+      -webkit-user-select: none;
+      position: relative;
+    }
+
+    button {
+      font-family: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      outline: none;
+    }
+
+    @media (pointer: fine) {
+      html, body, button, a {
+        cursor: none !important;
+      }
+    }
+
+    /* --------------------------------------------------
+       Glass Material (.glass)
+       -------------------------------------------------- */
+    .glass {
+      background: linear-gradient(155deg, rgba(250,248,245,.30), rgba(150,144,136,.20) 48%, rgba(205,200,192,.24));
+      backdrop-filter: blur(22px) saturate(1.5);
+      -webkit-backdrop-filter: blur(22px) saturate(1.5);
+      border: 1px solid rgba(255,255,255,.5);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), inset 0 -1px 0 rgba(255,255,255,.12), 0 20px 50px -24px rgba(40,30,20,.45);
+    }
+
+    /* --------------------------------------------------
+       1. .room (fixed, inset -3%)
+       -------------------------------------------------- */
+    .room {
+      position: fixed;
+      inset: -3%;
+      background-image: var(--room);
+      background-position: center;
+      background-size: cover;
+      filter: blur(2.5px) saturate(1.05);
+      transform: scale(1.08);
+      z-index: 0;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .room::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(70% 60% at 50% 45%, rgba(255,252,246,.10), rgba(40,30,20,.16));
+      pointer-events: none;
+    }
+
+    /* --------------------------------------------------
+       2. .ghost FIT text
+       -------------------------------------------------- */
+    .ghost {
+      position: fixed;
+      left: 50%;
+      top: calc(50% - var(--MH) * .42);
+      transform: translate(-50%, 0);
+      z-index: 2;
+      font-weight: 900;
+      font-size: calc(var(--MH) * .42);
+      line-height: .8;
+      letter-spacing: -.04em;
+      color: rgba(255,255,255,.3);
+      -webkit-text-stroke: 1px rgba(255,255,255,.35);
+      text-shadow: 0 1px 0 rgba(255,255,255,.35);
+      pointer-events: none;
+      white-space: nowrap;
+      display: flex;
+      will-change: transform;
+    }
+
+    .ghost span {
+      display: inline-block;
+      will-change: transform;
+    }
+
+    /* --------------------------------------------------
+       Brand Header Bar (VELORA link & Store Return)
+       -------------------------------------------------- */
+    .brand-top-bar {
+      position: fixed;
+      top: 18px;
+      left: max(20px, 2.5vw);
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #111;
+      text-decoration: none;
+      transition: transform .3s var(--ease), background .3s;
+    }
+    .brand-pill:hover {
+      transform: translateY(-1px);
+    }
+    .brand-pill .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 8px #10B981;
+    }
+
+    /* --------------------------------------------------
+       4. Tabs (.tabs.glass)
+       -------------------------------------------------- */
+    .tabs {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 4.2vh;
+      z-index: 30;
+      padding: 5px;
+      border-radius: 999px;
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+
+    .tab-btn {
+      height: 38px;
+      padding: 0 22px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(30,30,32,.72);
+      border-radius: 999px;
+      position: relative;
+      z-index: 2;
+      transition: color .3s var(--ease);
+      white-space: nowrap;
+    }
+
+    .tab-btn.is-active {
+      color: #111;
+      font-weight: 600;
+    }
+
+    .tab-pill {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      height: 38px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 4px 14px -6px rgba(0,0,0,.3);
+      border-radius: 999px;
+      z-index: 1;
+      pointer-events: none;
+      transition: transform .6s var(--ease), width .6s var(--ease);
+    }
+
+    /* --------------------------------------------------
+       5. Rail (.rail.glass)
+       -------------------------------------------------- */
+    .rail {
+      position: fixed;
+      left: max(18px, 1.8vw);
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 30;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-radius: 999px;
+    }
+
+    .rail-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(30,30,32,.8);
+      position: relative;
+      transition: color .3s var(--ease), background .3s var(--ease), transform .2s ease;
+    }
+
+    .rail-btn:hover {
+      color: rgba(255,255,255,.9);
+      background: rgba(255,255,255,.2);
+      transform: scale(1.05);
+    }
+
+    .rail-btn.is-active {
+      background: rgba(255,255,255,.9);
+      color: #111;
+      box-shadow: 0 4px 12px -3px rgba(0,0,0,.25);
+    }
+
+    .rail-badge {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: #111;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      border: 1px solid rgba(255,255,255,.8);
+    }
+
+    /* --------------------------------------------------
+       6. Stage (.stage) & Arc (.arc)
+       -------------------------------------------------- */
+    .stage {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      touch-action: pan-y;
+      overflow: hidden;
+    }
+
+    .arc {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      transform-style: flat;
+    }
+
+    .card {
+      position: absolute;
+      width: var(--CW);
+      height: calc(var(--CW) * 1.42);
+      left: calc(var(--CW) * -0.5);
+      top: calc(var(--CW) * -0.71);
+      border-radius: 22px;
+      overflow: hidden;
+      will-change: transform, opacity, filter;
+      transform-origin: center center;
+      cursor: pointer;
+    }
+
+    .card .g {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 5%;
+      height: 66%;
+      background-image: var(--garm);
+      background-size: 320% 212.5%;
+      background-repeat: no-repeat;
+      filter: drop-shadow(0 14px 14px rgba(40,30,20,.22));
+      pointer-events: none;
+    }
+
+    .card .card-name {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 17%;
+      text-align: center;
+      font-size: calc(var(--CW) * .068);
+      font-weight: 500;
+      color: #fff;
+      text-shadow: 0 1px 8px rgba(0,0,0,.18);
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card .card-price {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 7%;
+      text-align: center;
+      font-size: calc(var(--CW) * .095);
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 1px 8px rgba(0,0,0,.18);
+      pointer-events: none;
+    }
+
+    .card .sheen {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.5) 50%, transparent 60%);
+      transform: translateX(-150%);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .card.is-sheen .sheen {
+      animation: sheenSweep 1s var(--ease) forwards;
+    }
+
+    @keyframes sheenSweep {
+      0% { transform: translateX(-150%); }
+      100% { transform: translateX(150%); }
+    }
+
+    /* --------------------------------------------------
+       7. Model (.model)
+       -------------------------------------------------- */
+    .model {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      height: var(--MH);
+      aspect-ratio: 524 / 1360;
+      z-index: 50;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    #mCur, #mNext {
+      position: absolute;
+      inset: 0;
+      background-image: var(--model);
+      background-size: 513% 111.76%;
+      background-position-y: 100%;
+      background-repeat: no-repeat;
+    }
+
+    #mCur {
+      opacity: 0; /* Revealed on initial scan */
+    }
+
+    #mNext {
+      clip-path: inset(0 0 100% 0);
+    }
+
+    .model .grid {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent 0 5px, rgba(255,255,255,.22) 5px 6px);
+      mix-blend-mode: screen;
+      clip-path: inset(0 0 100% 0);
+      pointer-events: none;
+    }
+
+    .model .scan {
+      position: absolute;
+      left: -14%;
+      width: 128%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #fff 18%, #fff 82%, transparent);
+      box-shadow: 0 0 18px 4px rgba(255,255,255,.75), 0 0 60px 10px rgba(190,225,255,.45);
+      top: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: scaleX(.2);
+    }
+
+    .model .scan::after {
+      content: "";
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: calc(var(--MH) * .12);
+      background: linear-gradient(to top, rgba(220,238,255,.32), transparent);
+      pointer-events: none;
+    }
+
+    /* --------------------------------------------------
+       8. Arrow Navigation Controls
+       -------------------------------------------------- */
+    .arrow-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .2s ease, background .3s;
+    }
+
+    .arrow-btn:hover {
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .arrow-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: #222;
+      stroke-width: 2.5;
+    }
+
+    .arrow-left {
+      left: calc(max(18px, 1.8vw) + 76px);
+    }
+
+    .arrow-right {
+      right: max(18px, 1.8vw);
+    }
+
+    @media (max-width: 767px) {
+      .arrow-btn {
+        display: none !important;
+      }
+    }
+
+    /* --------------------------------------------------
+       9. Buy Card (.buy.glass)
+       -------------------------------------------------- */
+    .buy {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 4.6vh;
+      z-index: 60;
+      width: min(680px, calc(100vw - 32px));
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 12px 20px 12px 12px;
+      border-radius: 24px;
+      color: #fff;
+      text-shadow: 0 1px 6px rgba(0,0,0,.18);
+    }
+
+    .buy-thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.3);
+      position: relative;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .buy-thumb-img {
+      position: absolute;
+      inset: 6px;
+      background-image: var(--garm);
+      background-size: 320% 212.5%;
+      background-repeat: no-repeat;
+      transition: transform .65s var(--ease);
+    }
+
+    .buy-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .ln {
+      height: 1.15em;
+      line-height: 1.15em;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ln-roller {
+      display: block;
+      transition: transform .62s var(--ease);
+    }
+
+    .buy-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .buy-price {
+      font-size: 14px;
+      font-weight: 500;
+      opacity: .9;
+      color: #fff;
+    }
+
+    .buy-options {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-shrink: 0;
+    }
+
+    .size-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .opt-label {
+      font-size: 12px;
+      font-weight: 500;
+      opacity: .85;
+      color: #fff;
+    }
+
+    .chips-row {
+      display: flex;
+      gap: 4px;
+    }
+
+    .chip {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.22);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .2s ease, background .3s, color .3s;
+    }
+
+    .chip:active {
+      transform: scale(.9);
+    }
+
+    .chip.is-active {
+      background: #fff;
+      color: #111;
+      font-weight: 700;
+    }
+
+    .color-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dots-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .color-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,.4);
+      transition: transform .2s ease, box-shadow .3s ease;
+    }
+
+    .color-dot.is-active {
+      box-shadow: 0 0 0 2px rgba(255,255,255,.95), 0 0 0 4px rgba(0,0,0,.12);
+      transform: scale(1.1);
+    }
+
+    .buy-action-btn {
+      padding: 10px 18px;
+      background: rgba(255,255,255,.92);
+      color: #111;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px -6px rgba(0,0,0,.3);
+      transition: transform .2s ease, background .3s;
+      flex-shrink: 0;
+    }
+
+    .buy-action-btn:hover {
+      background: #fff;
+      transform: scale(1.04);
+    }
+
+    .buy-action-btn:active {
+      transform: scale(.96);
+    }
+
+    /* --------------------------------------------------
+       10. Custom Fluid Cursor (.cur)
+       -------------------------------------------------- */
+    .cur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 58px;
+      height: 58px;
+      margin-left: -29px;
+      margin-top: -29px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid rgba(255,255,255,.95);
+      background: rgba(255,255,255,.14);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 6px 20px -8px rgba(0,0,0,.35);
+      transition: width .5s var(--ease), height .5s var(--ease), background .5s var(--ease), transform .5s var(--ease), border-color .5s var(--ease);
+      will-change: transform;
+    }
+
+    .cur-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff;
+      transition: opacity .4s var(--ease), transform .4s var(--ease);
+    }
+
+    .cur-text {
+      position: absolute;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: scale(.7);
+      transition: opacity .45s var(--ease), transform .45s var(--ease);
+    }
+
+    .cur-text.try {
+      color: #111;
+    }
+
+    .cur-text.drag {
+      color: #fff;
+    }
+
+    /* Cursor States */
+    .cur.is-try {
+      transform: scale(1.5);
+      background: rgba(255,255,255,.92);
+      border-color: rgba(255,255,255,1);
+    }
+    .cur.is-try .cur-dot {
+      opacity: 0;
+      transform: scale(0);
+    }
+    .cur.is-try .cur-text.try {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .cur.is-drag {
+      transform: scale(1.2);
+    }
+    .cur.is-drag .cur-dot {
+      opacity: 0;
+      transform: scale(0);
+    }
+    .cur.is-drag .cur-text.drag {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .cur.is-btn {
+      transform: scale(.6);
+      background: rgba(255,255,255,.3);
+    }
+
+    .cur.is-down {
+      transform: scale(1.05);
+    }
+
+    /* --------------------------------------------------
+       Responsive & Reduced Motion
+       -------------------------------------------------- */
+    @media (max-width: 767px) {
+      .tabs {
+        top: 2.2vh;
+        max-width: calc(100vw - 32px);
+        overflow-x: auto;
+        padding: 4px;
+      }
+      .tab-btn {
+        height: 32px;
+        padding: 0 13px;
+        font-size: 12px;
+      }
+      .tab-pill {
+        height: 32px;
+      }
+      .rail {
+        left: 10px;
+        top: auto;
+        bottom: calc(4.6vh + 150px);
+        transform: none;
+      }
+      .rail-btn {
+        width: 34px;
+        height: 34px;
+      }
+      .buy {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px;
+        bottom: 2.5vh;
+      }
+      .buy-options {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .buy-action-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Toast Notification for Store Events */
+    .vf-toast {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 2000;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: rgba(20,20,22,.92);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(-20px);
+      opacity: 0;
+      transition: transform .3s var(--ease), opacity .3s var(--ease);
+      pointer-events: none;
+    }
+    .vf-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+
+  <!-- Core Store Integration Styles for Drawers -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 1. Background Scandinavian Room -->
+  <div class="room" id="roomEl" aria-hidden="true"></div>
+
+  <!-- 2. Ghost FIT Word -->
+  <div class="ghost" id="ghostEl" aria-hidden="true">
+    <span>F</span><span>I</span><span>T</span>
+  </div>
+
+  <!-- Brand Pill & Navigation Back to Store -->
+  <div class="brand-top-bar">
+    <a href="men.html" class="glass brand-pill" title="Return to VELORA Men's Boutique">
+      <span class="badge-dot"></span>
+      <span>VELORA // MEN'S ATELIER</span>
+    </a>
+  </div>
+
+  <!-- 3. Top Category Glass Tabs -->
+  <nav class="tabs glass" aria-label="Department Categories">
+    <div class="tab-pill" id="tabPill"></div>
+    <button type="button" class="tab-btn is-active" data-index="0">Tops</button>
+    <button type="button" class="tab-btn" data-index="1">Bottoms</button>
+    <button type="button" class="tab-btn" data-index="2">Outerwear</button>
+    <button type="button" class="tab-btn" data-index="3">Shoes</button>
+    <button type="button" class="tab-btn" data-index="4">Accessories</button>
+  </nav>
+
+  <!-- 4. Left Tool Rail -->
+  <aside class="rail glass" aria-label="Tool Rail">
+    <!-- 1: Filled Tee (Active try-on mode) -->
+    <button type="button" class="rail-btn is-active" title="Spatial Try-On Mode" aria-label="Try-On Mode">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.38 3.46L16 2 12 5.5 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.5a2 2 0 0 0 1.25 1.54L6 11.5V21a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9.5l1.89-.77a2 2 0 0 0 1.25-1.54l.58-3.5a2 2 0 0 0-1.34-2.23z"/>
+      </svg>
+    </button>
+    <!-- 2: Cart Trigger with live count -->
+    <button type="button" class="rail-btn" title="View Shopping Bag" aria-label="Shopping Bag" onclick="if(window.VeloraCart) VeloraCart.open()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span class="rail-badge cart-count-badge" id="vfCartBadge" style="display: none;">0</span>
+    </button>
+    <!-- 3: Wishlist Trigger with count -->
+    <button type="button" class="rail-btn" title="Saved Wishlist" aria-label="Wishlist" onclick="if(window.VeloraWishlist) VeloraWishlist.open()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      <span class="rail-badge wishlist-count-badge" id="vfWishlistBadge" style="display: none;">0</span>
+    </button>
+    <!-- 4: Return to Boutique / Catalog -->
+    <a href="men.html" class="rail-btn" title="Browse Full Men's Catalog" aria-label="Men's Catalog">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="7" r="4"/>
+        <path d="M5.5 21a8.38 8.38 0 0 1 13 0"/>
+      </svg>
+    </a>
+  </aside>
+
+  <!-- 5. Stage holding the 3D Garment Arc -->
+  <main class="stage" id="stageEl">
+    <div class="arc" id="arcEl">
+      <!-- 10 Garment Cards dynamically generated in JS -->
+    </div>
+  </main>
+
+  <!-- 6. Arrow Nav Controls -->
+  <button type="button" class="arrow-btn arrow-left glass" id="btnPrev" aria-label="Previous Garment">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button type="button" class="arrow-btn arrow-right glass" id="btnNext" aria-label="Next Garment">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+
+  <!-- 7. Virtual Model on Stage -->
+  <div class="model" id="modelEl" aria-label="Virtual Model Figure">
+    <div id="mCur"></div>
+    <div id="mNext"></div>
+    <div class="grid"></div>
+    <div class="scan"></div>
+  </div>
+
+  <!-- 8. Buy Card at bottom -->
+  <div class="buy glass" id="buyCard">
+    <!-- Thumbnail with crop -->
+    <div class="buy-thumb">
+      <div class="buy-thumb-img" id="buyThumb"></div>
+    </div>
+
+    <!-- Info with rolling text lines -->
+    <div class="buy-info">
+      <div class="ln">
+        <span class="ln-roller buy-name" id="buyName">Basic T-shirt</span>
+      </div>
+      <div class="ln">
+        <span class="ln-roller buy-price" id="buyPrice">$45</span>
+      </div>
+    </div>
+
+    <!-- Size and Color selectors -->
+    <div class="buy-options">
+      <!-- Sizes -->
+      <div class="size-group">
+        <span class="opt-label">Size</span>
+        <div class="chips-row" id="sizeChips">
+          <button type="button" class="chip" data-size="S">S</button>
+          <button type="button" class="chip is-active" data-size="M">M</button>
+          <button type="button" class="chip" data-size="L">L</button>
+          <button type="button" class="chip" data-size="XL">XL</button>
+        </div>
+      </div>
+
+      <!-- Colors -->
+      <div class="color-group">
+        <div class="ln">
+          <span class="ln-roller opt-label" id="colorLabel">Color · White</span>
+        </div>
+        <div class="dots-row" id="colorDots">
+          <!-- Injected dynamically based on item -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Add to Bag directly -->
+    <button type="button" class="buy-action-btn" id="addToBagBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+      <span>Add to Bag</span>
+    </button>
+  </div>
+
+  <!-- 9. VisionOS Fluid Cursor -->
+  <div class="cur" id="cursorEl" aria-hidden="true">
+    <div class="cur-dot"></div>
+    <span class="cur-text try">TRY ON</span>
+    <span class="cur-text drag">DRAG</span>
+  </div>
+
+  <!-- Toast for feedback -->
+  <div class="vf-toast" id="vfToast"></div>
+
+  <!-- Shopping Bag Off-Canvas Drawer (Store Integration) -->
+  <div id="cartOverlay" class="drawer-overlay" onclick="if(window.VeloraCart) VeloraCart.close()"></div>
+  <aside id="cartDrawer" class="cart-drawer" aria-label="Shopping Bag">
+    <div class="drawer-header">
+      <h3 class="drawer-title">Shopping Bag (<span id="cartDrawerCount">0</span>)</h3>
+      <button type="button" id="closeCartBtn" class="drawer-close-btn" aria-label="Close Shopping Bag" onclick="if(window.VeloraCart) VeloraCart.close()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="cartShippingProgress" style="padding: 12px 24px; background: var(--color-sand-light, #f5f0e8); border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 0.82rem; color: #111;">
+      <div id="shippingProgressText" style="margin-bottom: 6px;">Add items to unlock <strong>FREE Express Air Shipping</strong></div>
+      <div style="width: 100%; height: 5px; background: rgba(0,0,0,0.1); border-radius: 9999px; overflow: hidden;">
+        <div id="shippingProgressBar" style="width: 0%; height: 100%; background: #111; transition: width 0.3s ease;"></div>
+      </div>
+    </div>
+    <div id="cartEmptyState" style="display: none; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; text-align: center; flex: 1; color: #333;">
+      <div style="width: 64px; height: 64px; border-radius: 50%; background: #eee; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      </div>
+      <h4 style="font-size: 1.15rem; margin-bottom: 8px;">Your Shopping Bag is Empty</h4>
+      <p style="font-size: 0.9rem; color: #666; max-width: 260px; margin-bottom: 24px;">Add your tried-on pieces directly from the spatial fitting arc.</p>
+    </div>
+    <div id="cartItemsList" class="drawer-body"></div>
+    <div id="cartFooterSummary" class="drawer-footer">
+      <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 6px; color: #444;">
+        <span>Subtotal</span>
+        <span id="cartSubtotalVal">₹0</span>
+      </div>
+      <div class="cart-total-row" style="border-top: 1px solid rgba(0,0,0,0.08); padding-top: 12px; display: flex; justify-content: space-between; margin-bottom: 16px;">
+        <span style="font-weight: 700; color: #111;">Estimated Total</span>
+        <span id="cartGrandTotalVal" class="cart-total-amount" style="font-weight: 800; font-size: 1.3rem; color: #111;">₹0</span>
+      </div>
+      <a href="men.html" class="btn btn-charcoal" style="display: block; text-align: center; width: 100%; margin-bottom: 8px;">Explore Full Catalog</a>
+    </div>
+  </aside>
+
+  <!-- Wishlist Off-Canvas Drawer -->
+  <div id="wishlistOverlay" class="drawer-overlay" onclick="if(window.VeloraWishlist) VeloraWishlist.close()"></div>
+  <aside id="wishlistDrawer" class="wishlist-drawer" aria-label="Wishlist Favorites">
+    <div class="drawer-header">
+      <h3 class="drawer-title">Saved Wishlist (<span id="wishlistDrawerCount">0</span>)</h3>
+      <button type="button" id="closeWishlistBtn" class="drawer-close-btn" aria-label="Close Wishlist" onclick="if(window.VeloraWishlist) VeloraWishlist.close()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="wishlistEmptyState" style="display: none; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; text-align: center; flex: 1; color: #333;">
+      <h4 style="font-size: 1.15rem; margin-bottom: 8px;">No Saved Pieces Yet</h4>
+      <p style="font-size: 0.9rem; color: #666; max-width: 260px;">Your favorite styles will appear here.</p>
+    </div>
+    <div id="wishlistItemsList" class="drawer-body"></div>
+  </aside>
+
+  <!-- VELORA Data & Logic Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/wishlist.js"></script>
+
+  <!-- ==================================================
+       VirtualFit Core Script (Pure Vanilla JS)
+       ================================================== -->
+  <script>
+    (function () {
+      "use strict";
+
+      // --------------------------------------------------
+      // Section 3: Data Specification (Exact values + VELORA match)
+      // --------------------------------------------------
+      const ITEMS = [
+        {
+          id: "men-15",
+          n: "Basic T-shirt",
+          veloraName: "Heavyweight Boxy Pocket Tee",
+          p: 45,
+          veloraPrice: 1499,
+          g: [1.14, 3.06],
+          m: 0.37,
+          c: [
+            ["White", "#f4f2ee"],
+            ["Ash", "#c9c7c2"],
+            ["Charcoal", "#3b3c3f"],
+            ["Navy", "#27324d"]
+          ]
+        },
+        {
+          id: "men-01",
+          n: "Basic Sweater",
+          veloraName: "Oversized Studio Sweatshirt",
+          p: 105,
+          veloraPrice: 2499,
+          g: [49.7, 1.39],
+          m: 25.0,
+          c: [
+            ["White", "#f6f4ef"],
+            ["Oat", "#ddd3c2"],
+            ["Sage", "#b9c2ae"],
+            ["Black", "#1f1f21"]
+          ]
+        },
+        {
+          id: "men-09",
+          n: "Linen Shirt",
+          veloraName: "Tailored Linen Blend Shirt",
+          p: 95,
+          veloraPrice: 2299,
+          g: [98.2, 3.33],
+          m: 49.86,
+          c: [
+            ["White", "#f7f6f1"],
+            ["Sand", "#d9ccb4"],
+            ["Sky", "#bcd0e2"],
+            ["Olive", "#717556"]
+          ]
+        },
+        {
+          id: "men-03",
+          n: "Grey Hoodie",
+          veloraName: "Urban Zip Hoodie",
+          p: 110,
+          veloraPrice: 2999,
+          g: [1.14, 93.3],
+          m: 74.77,
+          c: [
+            ["Heather", "#a9a9a8"],
+            ["Bone", "#e6e1d6"],
+            ["Forest", "#33463a"],
+            ["Black", "#1f1f21"]
+          ]
+        },
+        {
+          id: "men-07",
+          n: "Ringer Tee",
+          veloraName: "Classic Contrast Polo",
+          p: 55,
+          veloraPrice: 1499,
+          g: [49.7, 95.3],
+          m: 99.35,
+          c: [
+            ["White / Black", "#f4f2ee"],
+            ["Cream / Navy", "#efe6d3"],
+            ["Grey / Red", "#c9c7c2"],
+            ["White / Green", "#e9efe8"]
+          ]
+        }
+      ];
+
+      // 10 cards in all (two copies of the 5 items so the arc loops seamlessly)
+      const CARDS_COUNT = 10;
+      const CARDS = [];
+      for (let i = 0; i < CARDS_COUNT; i++) {
+        CARDS.push(ITEMS[i % 5]);
+      }
+
+      // Check reduced motion preference
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // --------------------------------------------------
+      // DOM Elements
+      // --------------------------------------------------
+      const stageEl = document.getElementById("stageEl");
+      const arcEl = document.getElementById("arcEl");
+      const roomEl = document.getElementById("roomEl");
+      const ghostEl = document.getElementById("ghostEl");
+      const ghostSpans = ghostEl.querySelectorAll("span");
+      const mCur = document.getElementById("mCur");
+      const mNext = document.getElementById("mNext");
+      const modelGrid = document.querySelector(".model .grid");
+      const modelScan = document.querySelector(".model .scan");
+      const cursorEl = document.getElementById("cursorEl");
+
+      // Buy card elements
+      const buyThumb = document.getElementById("buyThumb");
+      const buyName = document.getElementById("buyName");
+      const buyPrice = document.getElementById("buyPrice");
+      const colorLabel = document.getElementById("colorLabel");
+      const colorDots = document.getElementById("colorDots");
+      const sizeChips = document.getElementById("sizeChips");
+      const addToBagBtn = document.getElementById("addToBagBtn");
+      const toastEl = document.getElementById("vfToast");
+
+      // Navigation & Buttons
+      const tabPill = document.getElementById("tabPill");
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      const btnPrev = document.getElementById("btnPrev");
+      const btnNext = document.getElementById("btnNext");
+
+      // --------------------------------------------------
+      // State Variables
+      // --------------------------------------------------
+      let pos = 0;
+      let target = 0;
+      let intro = prefersReducedMotion ? 1 : 0;
+      let currentOutfit = -1;
+      let activeSize = "M";
+      let activeColor = ITEMS[0].c[0][0];
+
+      // Drag state
+      let isDragging = false;
+      let startX = 0;
+      let startPos = 0;
+      let lastX = 0;
+      let lastTime = 0;
+      let velocity = 0;
+      let dragMoved = 0;
+
+      // Cursor smoothing state
+      let pointerX = window.innerWidth / 2;
+      let pointerY = window.innerHeight / 2;
+      let curX = pointerX;
+      let curY = pointerY;
+      let sx = 0;
+      let sy = 0;
+      let cursorMode = ""; // 'try' | 'drag' | 'btn' | ''
+      let isPointerDown = false;
+
+      // Card elements in DOM
+      const cardEls = [];
+      const cardSeeds = [];
+
+      // --------------------------------------------------
+      // Helper: Show Feedback Toast
+      // --------------------------------------------------
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add("show");
+        setTimeout(() => toastEl.classList.remove("show"), 2800);
+      }
+
+      // --------------------------------------------------
+      // Initialize Cards in Arc
+      // --------------------------------------------------
+      function buildCards() {
+        arcEl.innerHTML = "";
+        cardEls.length = 0;
+        cardSeeds.length = 0;
+
+        for (let i = 0; i < CARDS_COUNT; i++) {
+          const item = CARDS[i];
+          const card = document.createElement("div");
+          card.className = "card glass";
+          card.dataset.index = i;
+
+          card.innerHTML = `
+            <div class="g" style="background-position: ${item.g[0]}% ${item.g[1]}%;"></div>
+            <div class="card-name">${item.n}</div>
+            <div class="card-price">$${item.p}</div>
+            <div class="sheen"></div>
+          `;
+
+          // Sheen effect on cursor enter
+          if (!prefersReducedMotion) {
+            card.addEventListener("mouseenter", () => {
+              card.classList.remove("is-sheen");
+              void card.offsetWidth; // trigger reflow
+              card.classList.add("is-sheen");
+            });
+          }
+
+          arcEl.appendChild(card);
+          cardEls.push(card);
+          cardSeeds.push(Math.random() * Math.PI * 2);
+        }
+      }
+
+      // --------------------------------------------------
+      // Section 5: Arc Mathematics (every frame)
+      // --------------------------------------------------
+      function xAt(a, W, isPhone) {
+        const table = isPhone
+          ? [0, 0.36, 0.5, 0.56, 0.6, 0.62]
+          : [0, 0.215, 0.345, 0.432, 0.49, 0.52];
+
+        if (a <= 0) return 0;
+        if (a >= 5) return table[5] * W;
+
+        const k = Math.floor(a);
+        const f = a - k;
+        const v0 = table[k];
+        const v1 = table[Math.min(5, k + 1)];
+        return (v0 + (v1 - v0) * f) * W;
+      }
+
+      function updateArc(t) {
+        const W = window.innerWidth;
+        const H = window.innerHeight;
+        const isPhone = W <= 767;
+
+        // Spring position
+        if (prefersReducedMotion) {
+          pos = target;
+        } else if (!isDragging) {
+          pos += (target - pos) * 0.11;
+        }
+
+        // Intro ease
+        if (intro < 1) {
+          intro += 0.012;
+          if (intro > 1) intro = 1;
+        }
+        const ie = 1 - Math.pow(1 - intro, 3);
+
+        // Pointer offsets smoothed
+        const targetSx = (pointerX / W) - 0.5;
+        const targetSy = (pointerY / H) - 0.5;
+        sx += (targetSx - sx) * 0.06;
+        sy += (targetSy - sy) * 0.06;
+
+        // Parallax Room & Ghost
+        const roomTx = -sx * 22;
+        const roomTy = -sy * 14;
+        const roomScale = 1.08 - (0.03 * ie);
+        roomEl.style.transform = `translate3d(${roomTx}px, ${roomTy}px, 0) scale(${roomScale})`;
+
+        const ghostTx = -sx * 40;
+        const ghostTy = -sy * 16;
+        ghostEl.style.transform = `translate(calc(-50% + ${ghostTx}px), ${ghostTy}px)`;
+
+        // Ghost letters rising in
+        ghostSpans.forEach((span, i) => {
+          const riseY = (1 - ie) * (60 + 30 * i);
+          span.style.transform = `translateY(${riseY}px)`;
+        });
+
+        // Update each card
+        for (let i = 0; i < CARDS_COUNT; i++) {
+          const card = cardEls[i];
+          const u = ((i - pos + 5) % 10 + 10) % 10 - 5;
+          const a = Math.abs(u);
+          const sg = Math.sign(u) || 1;
+
+          const xVal = sg * xAt(a, W, isPhone) * ie;
+
+          let s, z, opacity, ry, blur;
+
+          if (a < 1) {
+            s = 0.55 + 0.45 * a;
+            z = -260 * (1 - a);
+            opacity = a;
+            ry = -sg * 16 * a;
+            blur = 0;
+          } else {
+            s = 1 / (1 + 0.3 * Math.pow(a - 1, 1.15));
+            z = -110 * (a - 1);
+            ry = -sg * (16 + 9 * Math.min(2, a - 1));
+            blur = Math.max(0, a - 1.6) * 2.4;
+          }
+
+          if (a > 3.4) {
+            opacity = Math.max(0, 1 - (a - 3.4) / 0.8);
+          }
+
+          // Bobbing calculation
+          const seed = cardSeeds[i];
+          const bob = prefersReducedMotion ? 0 : Math.sin(t * 0.0011 + seed) * H * 0.006 * Math.min(1, a);
+          const yVal = bob - (1 - s) * H * 0.04;
+
+          // Pointer tilt
+          ry += sx * 10;
+          const rx = -sy * 6;
+
+          const cardScale = s * (0.6 + 0.4 * ie);
+          const finalOpacity = opacity * ie;
+
+          if (finalOpacity < 0.01) {
+            card.style.display = "none";
+          } else {
+            card.style.display = "block";
+            card.style.opacity = finalOpacity;
+            card.style.filter = blur > 0 ? `blur(${blur.toFixed(1)}px)` : "none";
+            card.style.zIndex = a < 1 ? 1 : Math.round(100 - 10 * a);
+            card.style.transform = `translate(${xVal.toFixed(2)}px, ${yVal.toFixed(2)}px) perspective(1300px) translateZ(${z.toFixed(2)}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${cardScale.toFixed(4)})`;
+          }
+        }
+
+        // Settle trigger: test if arrived at a new outfit
+        if (Math.abs(target - pos) < 0.02 && !isDragging) {
+          const settledOutfit = ((Math.round(target) % 5) + 5) % 5;
+          if (settledOutfit !== currentOutfit) {
+            triggerTryOn(settledOutfit);
+          }
+        }
+      }
+
+      // --------------------------------------------------
+      // Section 6: Try-on Scan (950ms, cubic-bezier(.65,0,.35,1))
+      // --------------------------------------------------
+      let runningAnimations = [];
+
+      function triggerTryOn(itemIndex) {
+        currentOutfit = itemIndex;
+        const item = ITEMS[itemIndex];
+
+        // 1. Update Buy Card
+        updateBuyCard(item);
+
+        // Cancel previous running scan animations
+        runningAnimations.forEach(anim => {
+          try { anim.cancel(); } catch (e) {}
+        });
+        runningAnimations = [];
+
+        // Reduced motion bypass
+        if (prefersReducedMotion) {
+          mCur.style.backgroundPosition = `${item.m}% 100%`;
+          mCur.style.opacity = "1";
+          return;
+        }
+
+        // Set mNext to new figure
+        mNext.style.backgroundPosition = `${item.m}% 100%`;
+
+        // 2. Web Animations together
+        const animClip = mNext.animate(
+          [
+            { clipPath: "inset(0 0 100% 0)" },
+            { clipPath: "inset(0 0 0% 0)" }
+          ],
+          {
+            duration: 950,
+            easing: "cubic-bezier(.65,0,.35,1)",
+            fill: "forwards"
+          }
+        );
+
+        const animGrid = modelGrid.animate(
+          [
+            { clipPath: "inset(0 0 100% 0)", offset: 0 },
+            { clipPath: "inset(0 0 0 0)", offset: 0.5 },
+            { clipPath: "inset(100% 0 0 0)", offset: 1 }
+          ],
+          {
+            duration: 1092,
+            easing: "cubic-bezier(.65,0,.35,1)",
+            fill: "forwards"
+          }
+        );
+
+        const animScan = modelScan.animate(
+          [
+            { top: "0%", transform: "scaleX(.2)", opacity: 0, offset: 0 },
+            { top: "6%", transform: "scaleX(1)", opacity: 1, offset: 0.08 },
+            { top: "94%", transform: "scaleX(1)", opacity: 1, offset: 0.92 },
+            { top: "100%", transform: "scaleX(.2)", opacity: 0, offset: 1 }
+          ],
+          {
+            duration: 950,
+            easing: "cubic-bezier(.65,0,.35,1)",
+            fill: "forwards"
+          }
+        );
+
+        const animSettle = mNext.animate(
+          [
+            { transform: "scale(1.012)" },
+            { transform: "scale(1)" }
+          ],
+          {
+            duration: 1250,
+            easing: "ease-out",
+            fill: "forwards"
+          }
+        );
+
+        runningAnimations = [animClip, animGrid, animScan, animSettle];
+
+        // 3. On animation finish, copy to mCur
+        animClip.onfinish = () => {
+          mCur.style.backgroundPosition = `${item.m}% 100%`;
+          mCur.style.opacity = "1";
+          runningAnimations.forEach(anim => {
+            try { anim.cancel(); } catch (e) {}
+          });
+          runningAnimations = [];
+          mNext.style.clipPath = "inset(0 0 100% 0)";
+        };
+      }
+
+      // --------------------------------------------------
+      // Section 7: Buy Card Updates & Text Rolling
+      // --------------------------------------------------
+      function rollText(element, newText) {
+        if (prefersReducedMotion) {
+          element.textContent = newText;
+          return;
+        }
+
+        const oldText = element.textContent;
+        if (oldText === newText) return;
+
+        element.style.transition = "none";
+        element.style.transform = "translateY(0)";
+        void element.offsetWidth;
+
+        element.animate(
+          [
+            { transform: "translateY(0)" },
+            { transform: "translateY(-110%)" }
+          ],
+          {
+            duration: 310,
+            easing: "cubic-bezier(.2,.8,.2,1)"
+          }
+        ).onfinish = () => {
+          element.textContent = newText;
+          element.animate(
+            [
+              { transform: "translateY(110%)" },
+              { transform: "translateY(0)" }
+            ],
+            {
+              duration: 310,
+              easing: "cubic-bezier(.2,.8,.2,1)"
+            }
+          );
+        };
+      }
+
+      function updateBuyCard(item) {
+        // Name & Price roll
+        rollText(buyName, item.n);
+        rollText(buyPrice, `$${item.p}  ·  ₹${item.veloraPrice.toLocaleString("en-IN")}`);
+
+        // Thumbnail jump & animate
+        buyThumb.style.backgroundPosition = `${item.g[0]}% ${item.g[1]}%`;
+        if (!prefersReducedMotion) {
+          buyThumb.animate(
+            [
+              { transform: "translateY(70%) scale(.8)" },
+              { transform: "translateY(0) scale(1)" }
+            ],
+            {
+              duration: 650,
+              easing: "cubic-bezier(.2,.8,.2,1)",
+              fill: "forwards"
+            }
+          );
+        }
+
+        // Rebuild Color Dots
+        colorDots.innerHTML = "";
+        activeColor = item.c[0][0];
+        rollText(colorLabel, `Color · ${activeColor}`);
+
+        item.c.forEach(([colorName, hexVal], idx) => {
+          const dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = `color-dot ${idx === 0 ? "is-active" : ""}`;
+          dot.style.backgroundColor = hexVal;
+          dot.title = colorName;
+          dot.setAttribute("aria-label", colorName);
+
+          dot.addEventListener("click", () => {
+            colorDots.querySelectorAll(".color-dot").forEach(d => d.classList.remove("is-active"));
+            dot.classList.add("is-active");
+            activeColor = colorName;
+            rollText(colorLabel, `Color · ${colorName}`);
+          });
+
+          colorDots.appendChild(dot);
+        });
+      }
+
+      // Size Chips handling
+      sizeChips.querySelectorAll(".chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          sizeChips.querySelectorAll(".chip").forEach(c => c.classList.remove("is-active"));
+          chip.classList.add("is-active");
+          activeSize = chip.dataset.size || "M";
+        });
+      });
+
+      // --------------------------------------------------
+      // Add to Bag Integration with VELORA Cart
+      // --------------------------------------------------
+      addToBagBtn.addEventListener("click", () => {
+        const item = ITEMS[currentOutfit >= 0 ? currentOutfit : 0];
+        if (window.VeloraCart) {
+          const added = VeloraCart.addItem(item.id, activeSize, activeColor, 1);
+          if (added) {
+            showToast(`Added to Bag: ${item.n} (${activeSize} / ${activeColor})`);
+            updateStoreBadges();
+          } else {
+            showToast(`Product added to bag.`);
+          }
+        } else {
+          showToast(`Added to Bag: ${item.n} (${activeSize})`);
+        }
+      });
+
+      function updateStoreBadges() {
+        const cartBadge = document.getElementById("vfCartBadge");
+        const wishBadge = document.getElementById("vfWishlistBadge");
+
+        if (cartBadge && window.VeloraCart) {
+          const count = VeloraCart.getItemCount();
+          cartBadge.textContent = count;
+          cartBadge.style.display = count > 0 ? "flex" : "none";
+        }
+
+        if (wishBadge && window.VeloraWishlist) {
+          const count = VeloraWishlist.items ? VeloraWishlist.items.length : 0;
+          wishBadge.textContent = count;
+          wishBadge.style.display = count > 0 ? "flex" : "none";
+        }
+      }
+
+      // --------------------------------------------------
+      // Section 8: Input Controls
+      // --------------------------------------------------
+
+      // 1. Drag & Flick
+      stageEl.addEventListener("pointerdown", e => {
+        // Do not drag if clicking buttons or buy card
+        if (e.target.closest("button") || e.target.closest(".buy") || e.target.closest(".rail") || e.target.closest(".tabs")) return;
+
+        isDragging = true;
+        isPointerDown = true;
+        startX = e.clientX;
+        startPos = pos;
+        lastX = e.clientX;
+        lastTime = performance.now();
+        velocity = 0;
+        dragMoved = 0;
+
+        stageEl.setPointerCapture(e.pointerId);
+      });
+
+      window.addEventListener("pointermove", e => {
+        pointerX = e.clientX;
+        pointerY = e.clientY;
+
+        if (!isDragging) return;
+
+        const now = performance.now();
+        const dt = Math.max(1, now - lastTime);
+        const dx = e.clientX - startX;
+        const stepDx = e.clientX - lastX;
+
+        velocity = stepDx / dt;
+        lastX = e.clientX;
+        lastTime = now;
+        dragMoved += Math.abs(stepDx);
+
+        const W = window.innerWidth;
+        const isPhone = W <= 767;
+        const stepSize = xAt(1, W, isPhone);
+
+        pos = startPos - (dx / stepSize);
+      });
+
+      window.addEventListener("pointerup", e => {
+        isPointerDown = false;
+        if (!isDragging) return;
+        isDragging = false;
+
+        const flick = velocity * 1000; // px/sec approx
+        target = Math.round(pos - flick * 0.0032);
+      });
+
+      // 2. Click on Card
+      arcEl.addEventListener("click", e => {
+        if (dragMoved > 6) return; // Considered a drag, not click
+        const card = e.target.closest(".card");
+        if (!card) return;
+
+        const idx = parseInt(card.dataset.index, 10);
+        const u = ((idx - pos + 5) % 10 + 10) % 10 - 5;
+        target = Math.round(pos + u);
+      });
+
+      // 3. Wheel delta with 260ms cooldown
+      let wheelAcc = 0;
+      let lastWheelTime = 0;
+
+      window.addEventListener("wheel", e => {
+        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        wheelAcc += delta;
+
+        const now = performance.now();
+        if (Math.abs(wheelAcc) > 60 && (now - lastWheelTime > 260)) {
+          if (wheelAcc > 0) {
+            target += 1;
+          } else {
+            target -= 1;
+          }
+          wheelAcc = 0;
+          lastWheelTime = now;
+        }
+      }, { passive: true });
+
+      // 4. Arrow keys
+      window.addEventListener("keydown", e => {
+        if (e.key === "ArrowLeft") {
+          target -= 1;
+        } else if (e.key === "ArrowRight") {
+          target += 1;
+        }
+      });
+
+      // 5. Arrow Buttons
+      btnPrev.addEventListener("click", () => { target -= 1; });
+      btnNext.addEventListener("click", () => { target += 1; });
+
+      // 6. Tabs: slide pill & add 5 to target (full lap)
+      tabBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          tabBtns.forEach(b => b.classList.remove("is-active"));
+          btn.classList.add("is-active");
+
+          // Move sliding pill
+          const rect = btn.getBoundingClientRect();
+          const parentRect = btn.parentElement.getBoundingClientRect();
+          const pillOffset = rect.left - parentRect.left;
+          tabPill.style.width = `${rect.width}px`;
+          tabPill.style.transform = `translateX(${pillOffset - 5}px)`;
+
+          // Add 5 to target so the arc does a full lap and lands back on the same garment
+          target += 5;
+        });
+      });
+
+      function initTabPill() {
+        const activeBtn = document.querySelector(".tab-btn.is-active");
+        if (activeBtn) {
+          const rect = activeBtn.getBoundingClientRect();
+          const parentRect = activeBtn.parentElement.getBoundingClientRect();
+          tabPill.style.width = `${rect.width}px`;
+          tabPill.style.transform = `translateX(${rect.left - parentRect.left - 5}px)`;
+        }
+      }
+
+      // --------------------------------------------------
+      // Section 10: Custom Fluid Cursor (.cur)
+      // --------------------------------------------------
+      function updateCursor() {
+        curX += (pointerX - curX) * 0.22;
+        curY += (pointerY - curY) * 0.22;
+
+        cursorEl.style.left = `${curX.toFixed(2)}px`;
+        cursorEl.style.top = `${curY.toFixed(2)}px`;
+
+        // Check hover target
+        const elUnder = document.elementFromPoint(pointerX, pointerY);
+        let mode = "";
+
+        if (isDragging) {
+          mode = "drag";
+        } else if (elUnder) {
+          if (elUnder.closest(".card")) {
+            mode = "try";
+          } else if (elUnder.closest("button") || elUnder.closest("a")) {
+            mode = "btn";
+          } else if (elUnder.closest(".stage")) {
+            mode = "drag";
+          }
+        }
+
+        cursorEl.classList.toggle("is-try", mode === "try");
+        cursorEl.classList.toggle("is-drag", mode === "drag");
+        cursorEl.classList.toggle("is-btn", mode === "btn");
+        cursorEl.classList.toggle("is-down", isPointerDown);
+      }
+
+      // --------------------------------------------------
+      // Main Animation Loop (requestAnimationFrame)
+      // --------------------------------------------------
+      function loop(t) {
+        updateArc(t);
+        updateCursor();
+        requestAnimationFrame(loop);
+      }
+
+      // --------------------------------------------------
+      // Boot & Initial Reveal
+      // --------------------------------------------------
+      window.addEventListener("DOMContentLoaded", () => {
+        buildCards();
+        initTabPill();
+        if (window.VeloraCart) VeloraCart.init();
+        if (window.VeloraWishlist) VeloraWishlist.init();
+        updateStoreBadges();
+
+        // Reveal initial outfit on load (Section 6: initial scan reveals model from nothing)
+        setTimeout(() => {
+          triggerTryOn(0);
+        }, 150);
+
+        requestAnimationFrame(loop);
+      });
+
+      window.addEventListener("resize", () => {
+        initTabPill();
+      });
+
+    })();
+  </script>
+</body>
+</html>
