@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>VirtualFit: Spatial Try-On | VELORA Men's Atelier</title>
+  <title>VirtualFit: Spatial Try-On</title>
   <meta name="description" content="VisionOS-style 3D Spatial Virtual Try-On Hero for VELORA Men's Fashion Department.">
 
   <!-- Inter Google Font (Exact weights: 400, 500, 600, 700, 800, 900) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Core Store Integration Styles for Drawers (Loaded before page styles so VirtualFit takes precedence) -->
+  <link rel="stylesheet" href="css/style.css">
 
   <style>
     /* --------------------------------------------------
@@ -44,14 +47,15 @@
     }
 
     body {
-      background-color: #e9e4dc;
-      color: #fff;
-      font-family: var(--sans);
-      overflow: hidden;
+      background: #e9e4dc !important;
+      background-color: #e9e4dc !important;
+      color: #fff !important;
+      font-family: var(--sans) !important;
+      overflow: hidden !important;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      user-select: none;
-      -webkit-user-select: none;
+      user-select: none !important;
+      -webkit-user-select: none !important;
       position: relative;
     }
 
@@ -143,7 +147,7 @@
       z-index: 40;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .brand-pill {
@@ -158,10 +162,11 @@
       text-transform: uppercase;
       color: #111;
       text-decoration: none;
-      transition: transform .3s var(--ease), background .3s;
+      transition: transform .3s var(--ease), background .3s, color .3s;
     }
     .brand-pill:hover {
       transform: translateY(-1px);
+      color: #000;
     }
     .brand-pill .badge-dot {
       width: 7px;
@@ -169,6 +174,24 @@
       border-radius: 50%;
       background: #10B981;
       box-shadow: 0 0 8px #10B981;
+    }
+    .brand-pill-sub {
+      font-size: 12px;
+      padding: 8px 14px;
+      color: rgba(30,30,32,0.8);
+    }
+    .brand-pill-sub:hover {
+      color: #111;
+    }
+    @media (max-width: 767px) {
+      .brand-top-bar {
+        top: 10px;
+        left: 10px;
+        gap: 6px;
+      }
+      .brand-pill-sub {
+        display: none;
+      }
     }
 
     /* --------------------------------------------------
@@ -247,8 +270,8 @@
     }
 
     .rail-btn:hover {
-      color: rgba(255,255,255,.9);
-      background: rgba(255,255,255,.2);
+      color: rgba(255,255,255,.35);
+      background: rgba(255,255,255,.15);
       transform: scale(1.05);
     }
 
@@ -485,11 +508,11 @@
       transform: translateX(-50%);
       bottom: 4.6vh;
       z-index: 60;
-      width: min(680px, calc(100vw - 32px));
+      width: min(640px, calc(100vw - 32px));
       display: flex;
       align-items: center;
-      gap: 20px;
-      padding: 12px 20px 12px 12px;
+      gap: 22px;
+      padding: 12px 22px 12px 12px;
       border-radius: 24px;
       color: #fff;
       text-shadow: 0 1px 6px rgba(0,0,0,.18);
@@ -527,11 +550,13 @@
       line-height: 1.15em;
       overflow: hidden;
       position: relative;
+      display: block;
     }
 
     .ln-roller {
       display: block;
-      transition: transform .62s var(--ease);
+      white-space: nowrap;
+      will-change: transform;
     }
 
     .buy-name {
@@ -735,6 +760,21 @@
     .cur.is-down {
       transform: scale(1.05);
     }
+    .cur.is-try.is-down {
+      transform: scale(1.575);
+    }
+    .cur.is-drag.is-down {
+      transform: scale(1.26);
+    }
+    .cur.is-btn.is-down {
+      transform: scale(0.63);
+    }
+
+    @media (pointer: coarse) {
+      .cur {
+        display: none !important;
+      }
+    }
 
     /* --------------------------------------------------
        Responsive & Reduced Motion
@@ -808,9 +848,6 @@
       opacity: 1;
     }
   </style>
-
-  <!-- Core Store Integration Styles for Drawers -->
-  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -822,13 +859,19 @@
     <span>F</span><span>I</span><span>T</span>
   </div>
 
-  <!-- Brand Pill & Navigation Back to Store -->
-  <div class="brand-top-bar">
-    <a href="men.html" class="glass brand-pill" title="Return to VELORA Men's Boutique">
+  <!-- Brand Multi-Page Top Bar -->
+  <header class="brand-top-bar" aria-label="Store Navigation">
+    <a href="index.html" class="glass brand-pill" title="Return to VELORA Home">
       <span class="badge-dot"></span>
-      <span>VELORA // MEN'S ATELIER</span>
+      <span>VELORA</span>
     </a>
-  </div>
+    <a href="men.html" class="glass brand-pill brand-pill-sub" title="Return to VELORA Men's Boutique">
+      <span>MEN'S ATELIER</span>
+    </a>
+    <a href="women.html" class="glass brand-pill brand-pill-sub" title="Explore VELORA Women's Boutique">
+      <span>WOMEN</span>
+    </a>
+  </header>
 
   <!-- 3. Top Category Glass Tabs -->
   <nav class="tabs glass" aria-label="Department Categories">
@@ -1045,9 +1088,9 @@
         {
           id: "men-01",
           n: "Basic Sweater",
-          veloraName: "Oversized Studio Sweatshirt",
+          veloraName: "Oversized Graphic T-Shirt",
           p: 105,
-          veloraPrice: 2499,
+          veloraPrice: 1299,
           g: [49.7, 1.39],
           m: 25.0,
           c: [
@@ -1090,7 +1133,7 @@
         {
           id: "men-07",
           n: "Ringer Tee",
-          veloraName: "Classic Contrast Polo",
+          veloraName: "Classic Polo T-Shirt",
           p: 55,
           veloraPrice: 1499,
           g: [49.7, 95.3],
@@ -1103,6 +1146,17 @@
           ]
         }
       ];
+
+      // Synchronize with VELORA catalog data if available
+      if (typeof VeloraProducts !== "undefined" && VeloraProducts.getById) {
+        ITEMS.forEach(it => {
+          const p = VeloraProducts.getById(it.id);
+          if (p) {
+            it.veloraPrice = p.discountedPrice;
+            it.veloraName = p.name;
+          }
+        });
+      }
 
       // 10 cards in all (two copies of the 5 items so the arc loops seamlessly)
       const CARDS_COUNT = 10;
@@ -1153,8 +1207,9 @@
       let currentOutfit = -1;
       let activeSize = "M";
       let activeColor = ITEMS[0].c[0][0];
+      let hasInitialized = false;
 
-      // Drag state
+      // Drag and interaction state
       let isDragging = false;
       let startX = 0;
       let startPos = 0;
@@ -1162,6 +1217,10 @@
       let lastTime = 0;
       let velocity = 0;
       let dragMoved = 0;
+      let startCard = null;
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let totalDistance = 0;
 
       // Cursor smoothing state
       let pointerX = window.innerWidth / 2;
@@ -1214,6 +1273,13 @@
             <div class="card-price">$${item.p}</div>
             <div class="sheen"></div>
           `;
+
+          // Direct click listener
+          card.addEventListener("click", () => {
+            if (totalDistance > 6) return;
+            const u = ((i - pos + 5) % 10 + 10) % 10 - 5;
+            target = Math.round(pos + u);
+          });
 
           // Sheen effect on cursor enter
           if (!prefersReducedMotion) {
@@ -1277,16 +1343,18 @@
         const roomTx = -sx * 22;
         const roomTy = -sy * 14;
         const roomScale = 1.08 - (0.03 * ie);
-        roomEl.style.transform = `translate3d(${roomTx}px, ${roomTy}px, 0) scale(${roomScale})`;
+        roomEl.style.transform = `translate3d(${roomTx.toFixed(2)}px, ${roomTy.toFixed(2)}px, 0) scale(${roomScale.toFixed(4)})`;
 
-        const ghostTx = -sx * 40;
-        const ghostTy = -sy * 16;
-        ghostEl.style.transform = `translate(calc(-50% + ${ghostTx}px), ${ghostTy}px)`;
+        // Parallax Ghost Word with valid CSS arithmetic
+        const gx = -sx * 40;
+        const gy = -sy * 16;
+        const gxSign = gx >= 0 ? "+" : "-";
+        ghostEl.style.transform = `translate(calc(-50% ${gxSign} ${Math.abs(gx).toFixed(2)}px), ${gy.toFixed(2)}px)`;
 
         // Ghost letters rising in
         ghostSpans.forEach((span, i) => {
           const riseY = (1 - ie) * (60 + 30 * i);
-          span.style.transform = `translateY(${riseY}px)`;
+          span.style.transform = `translateY(${riseY.toFixed(2)}px)`;
         });
 
         // Update each card
@@ -1341,7 +1409,7 @@
         }
 
         // Settle trigger: test if arrived at a new outfit
-        if (Math.abs(target - pos) < 0.02 && !isDragging) {
+        if (hasInitialized && Math.abs(target - pos) < 0.02 && !isDragging) {
           const settledOutfit = ((Math.round(target) % 5) + 5) % 5;
           if (settledOutfit !== currentOutfit) {
             triggerTryOn(settledOutfit);
@@ -1444,49 +1512,76 @@
       }
 
       // --------------------------------------------------
-      // Section 7: Buy Card Updates & Text Rolling
+      // Section 7: Buy Card Updates & Simultaneous Text Rolling
       // --------------------------------------------------
-      function rollText(element, newText) {
+      function rollText(container, newText) {
+        if (!container) return;
+        const curSpan = container.querySelector(".ln-roller");
+        if (!curSpan) {
+          container.innerHTML = `<span class="ln-roller">${newText}</span>`;
+          return;
+        }
+        if (curSpan.textContent === newText) return;
+
         if (prefersReducedMotion) {
-          element.textContent = newText;
+          curSpan.textContent = newText;
           return;
         }
 
-        const oldText = element.textContent;
-        if (oldText === newText) return;
+        // Two spans rolling simultaneously: old rolls to -110% WHILE new rolls to 0 over 620ms
+        const nextSpan = document.createElement("span");
+        nextSpan.className = curSpan.className;
+        nextSpan.textContent = newText;
+        nextSpan.style.position = "absolute";
+        nextSpan.style.left = "0";
+        nextSpan.style.top = "0";
+        nextSpan.style.width = "100%";
+        nextSpan.style.transform = "translateY(110%)";
+        if (curSpan.id) {
+          nextSpan.id = curSpan.id;
+          curSpan.removeAttribute("id");
+        }
+        container.appendChild(nextSpan);
 
-        element.style.transition = "none";
-        element.style.transform = "translateY(0)";
-        void element.offsetWidth;
-
-        element.animate(
+        curSpan.animate(
           [
             { transform: "translateY(0)" },
             { transform: "translateY(-110%)" }
           ],
           {
-            duration: 310,
-            easing: "cubic-bezier(.2,.8,.2,1)"
+            duration: 620,
+            easing: "cubic-bezier(.2,.8,.2,1)",
+            fill: "forwards"
           }
-        ).onfinish = () => {
-          element.textContent = newText;
-          element.animate(
-            [
-              { transform: "translateY(110%)" },
-              { transform: "translateY(0)" }
-            ],
-            {
-              duration: 310,
-              easing: "cubic-bezier(.2,.8,.2,1)"
-            }
-          );
+        );
+
+        const nextAnim = nextSpan.animate(
+          [
+            { transform: "translateY(110%)" },
+            { transform: "translateY(0)" }
+          ],
+          {
+            duration: 620,
+            easing: "cubic-bezier(.2,.8,.2,1)",
+            fill: "forwards"
+          }
+        );
+
+        nextAnim.onfinish = () => {
+          curSpan.remove();
+          nextSpan.style.position = "";
+          nextSpan.style.transform = "";
         };
       }
 
       function updateBuyCard(item) {
-        // Name & Price roll
-        rollText(buyName, item.n);
-        rollText(buyPrice, `$${item.p}  ·  ₹${item.veloraPrice.toLocaleString("en-IN")}`);
+        const nameContainer = document.getElementById("buyName") ? document.getElementById("buyName").parentElement : document.querySelector(".buy-name").parentElement;
+        const priceContainer = document.getElementById("buyPrice") ? document.getElementById("buyPrice").parentElement : document.querySelector(".buy-price").parentElement;
+        const colorContainer = document.getElementById("colorLabel") ? document.getElementById("colorLabel").parentElement : document.querySelector("#colorLabel").parentElement;
+
+        // Rolling name and rolling price
+        rollText(nameContainer, `${item.n} · ${item.veloraName}`);
+        rollText(priceContainer, `$${item.p}  ·  ₹${item.veloraPrice.toLocaleString("en-IN")}`);
 
         // Thumbnail jump & animate
         buyThumb.style.backgroundPosition = `${item.g[0]}% ${item.g[1]}%`;
@@ -1507,7 +1602,8 @@
         // Rebuild Color Dots
         colorDots.innerHTML = "";
         activeColor = item.c[0][0];
-        rollText(colorLabel, `Color · ${activeColor}`);
+        const activeColorContainer = document.getElementById("colorLabel") ? document.getElementById("colorLabel").parentElement : colorContainer;
+        rollText(activeColorContainer, `Color · ${activeColor}`);
 
         item.c.forEach(([colorName, hexVal], idx) => {
           const dot = document.createElement("button");
@@ -1521,7 +1617,8 @@
             colorDots.querySelectorAll(".color-dot").forEach(d => d.classList.remove("is-active"));
             dot.classList.add("is-active");
             activeColor = colorName;
-            rollText(colorLabel, `Color · ${colorName}`);
+            const curColCont = document.getElementById("colorLabel") ? document.getElementById("colorLabel").parentElement : colorContainer;
+            rollText(curColCont, `Color · ${colorName}`);
           });
 
           colorDots.appendChild(dot);
@@ -1545,10 +1642,10 @@
         if (window.VeloraCart) {
           const added = VeloraCart.addItem(item.id, activeSize, activeColor, 1);
           if (added) {
-            showToast(`Added to Bag: ${item.n} (${activeSize} / ${activeColor})`);
+            showToast(`Added to Bag: ${item.veloraName} (${activeSize} / ${activeColor}) · ₹${item.veloraPrice.toLocaleString("en-IN")}`);
             updateStoreBadges();
           } else {
-            showToast(`Product added to bag.`);
+            showToast(`Piece added to Shopping Bag.`);
           }
         } else {
           showToast(`Added to Bag: ${item.n} (${activeSize})`);
@@ -1557,14 +1654,13 @@
 
       function updateStoreBadges() {
         const cartBadge = document.getElementById("vfCartBadge");
-        const wishBadge = document.getElementById("vfWishlistBadge");
-
         if (cartBadge && window.VeloraCart) {
           const count = VeloraCart.getItemCount();
           cartBadge.textContent = count;
           cartBadge.style.display = count > 0 ? "flex" : "none";
         }
 
+        const wishBadge = document.getElementById("vfWishlistBadge");
         if (wishBadge && window.VeloraWishlist) {
           const count = VeloraWishlist.items ? VeloraWishlist.items.length : 0;
           wishBadge.textContent = count;
@@ -1576,10 +1672,10 @@
       // Section 8: Input Controls
       // --------------------------------------------------
 
-      // 1. Drag & Flick
+      // 1. Drag, Flick & Card Selection
       stageEl.addEventListener("pointerdown", e => {
-        // Do not drag if clicking buttons or buy card
-        if (e.target.closest("button") || e.target.closest(".buy") || e.target.closest(".rail") || e.target.closest(".tabs")) return;
+        // Do not drag if clicking navigation buttons, tabs, rail, buy card, drawers
+        if (e.target.closest("button") || e.target.closest(".buy") || e.target.closest(".rail") || e.target.closest(".tabs") || e.target.closest(".drawer-overlay") || e.target.closest("aside") || e.target.closest(".brand-top-bar")) return;
 
         isDragging = true;
         isPointerDown = true;
@@ -1589,6 +1685,10 @@
         lastTime = performance.now();
         velocity = 0;
         dragMoved = 0;
+        totalDistance = 0;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        startCard = e.target.closest(".card");
 
         stageEl.setPointerCapture(e.pointerId);
       });
@@ -1604,10 +1704,11 @@
         const dx = e.clientX - startX;
         const stepDx = e.clientX - lastX;
 
-        velocity = stepDx / dt;
+        velocity = stepDx / dt; // tracked in px/ms
         lastX = e.clientX;
         lastTime = now;
         dragMoved += Math.abs(stepDx);
+        totalDistance = Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY);
 
         const W = window.innerWidth;
         const isPhone = W <= 767;
@@ -1620,14 +1721,27 @@
         isPointerDown = false;
         if (!isDragging) return;
         isDragging = false;
+        try { stageEl.releasePointerCapture(e.pointerId); } catch (err) {}
 
-        const flick = velocity * 1000; // px/sec approx
-        target = Math.round(pos - flick * 0.0032);
+        const now = performance.now();
+
+        // If movement was under 6px and user tapped/clicked on a card: bring card to centre
+        if (totalDistance <= 6 && startCard) {
+          const idx = parseInt(startCard.dataset.index, 10);
+          const u = ((idx - pos + 5) % 10 + 10) % 10 - 5;
+          target = Math.round(pos + u);
+          return;
+        }
+
+        // Spec: target = round(pos - flick * 3.2), flick in px/ms
+        const timeSinceMove = now - lastTime;
+        const flick = timeSinceMove > 60 ? 0 : velocity; // px/ms
+        target = Math.round(pos - flick * 3.2);
       });
 
-      // 2. Click on Card
+      // 2. Click on Card fallback
       arcEl.addEventListener("click", e => {
-        if (dragMoved > 6) return; // Considered a drag, not click
+        if (totalDistance > 6) return;
         const card = e.target.closest(".card");
         if (!card) return;
 
@@ -1745,14 +1859,16 @@
         updateCW();
         buildCards();
         initTabPill();
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(() => initTabPill());
+        }
         if (window.VeloraCart) VeloraCart.init();
         if (window.VeloraWishlist) VeloraWishlist.init();
         updateStoreBadges();
 
         // Reveal initial outfit on load (Section 6: initial scan reveals model from nothing)
-        setTimeout(() => {
-          triggerTryOn(0);
-        }, 150);
+        hasInitialized = true;
+        triggerTryOn(0);
 
         requestAnimationFrame(loop);
       });
