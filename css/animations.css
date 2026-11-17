@@ -54,38 +54,17 @@
    2. Scroll Reveal Animations (IntersectionObserver)
    -------------------------------------------------------------------------- */
 .reveal-item {
-  opacity: 0;
-  transform: translateY(28px);
+  opacity: 1;
+  transform: none;
   transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
-  will-change: opacity, transform;
 }
 
-.reveal-item.in-view {
+/* Stagger Grid Delays - Fully visible by default */
+.product-card,
+.offer-card {
   opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger Grid Delays */
-.stagger-grid .product-card,
-.stagger-grid .offer-card {
-  opacity: 0;
-  transform: translateY(24px);
+  transform: none;
   transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
-}
-
-.stagger-grid.in-view .product-card:nth-child(1) { transition-delay: 0.05s; }
-.stagger-grid.in-view .product-card:nth-child(2) { transition-delay: 0.1s; }
-.stagger-grid.in-view .product-card:nth-child(3) { transition-delay: 0.15s; }
-.stagger-grid.in-view .product-card:nth-child(4) { transition-delay: 0.2s; }
-.stagger-grid.in-view .product-card:nth-child(5) { transition-delay: 0.25s; }
-.stagger-grid.in-view .product-card:nth-child(6) { transition-delay: 0.3s; }
-.stagger-grid.in-view .product-card:nth-child(7) { transition-delay: 0.35s; }
-.stagger-grid.in-view .product-card:nth-child(8) { transition-delay: 0.4s; }
-
-.stagger-grid.in-view .product-card,
-.stagger-grid.in-view .offer-card {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* --------------------------------------------------------------------------

@@ -405,3 +405,12 @@ const VeloraToast = {
     toast.addEventListener("mouseenter", () => clearTimeout(timer));
   }
 };
+
+// Global Attachments
+if (typeof window !== "undefined") {
+  window.VeloraMotion = VeloraMotion;
+  window.VeloraToast = VeloraToast;
+}
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { VeloraMotion, VeloraToast };
+}

@@ -686,38 +686,3 @@ const VeloraCheckout = {
     location.reload();
   }
 };
-
-/**
- * Toast Notification Module
- */
-const VeloraToast = {
-  show({ title, message, type = "info", duration = 3500 }) {
-    let container = document.getElementById("toastContainer");
-    if (!container) {
-      container = document.createElement("div");
-      container.id = "toastContainer";
-      container.className = "toast-container";
-      document.body.appendChild(container);
-    }
-
-    const toast = document.createElement("div");
-    toast.className = `toast toast-${type}`;
-    toast.innerHTML = `
-      <div style="display: flex; flex-direction: column;">
-        <strong style="font-family: var(--font-heading); font-size: 0.9rem;">${title}</strong>
-        ${message ? `<span style="font-size: 0.8rem; opacity: 0.9;">${message}</span>` : ""}
-      </div>
-    `;
-
-    container.appendChild(toast);
-
-    setTimeout(() => {
-      toast.style.transition = "opacity 0.3s ease, transform 0.3s ease";
-      toast.style.opacity = "0";
-      toast.style.transform = "translateX(50px)";
-      setTimeout(() => toast.remove(), 300);
-    }, duration);
-  }
-};
-
-window.VeloraToast = VeloraToast;
