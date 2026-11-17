@@ -128,12 +128,17 @@ const VeloraWishlist = {
   },
 
   updateAllCardButtons() {
-    document.querySelectorAll(".wishlist-toggle-btn").forEach(btn => {
-      const id = btn.getAttribute("data-id");
+    document.querySelectorAll(".wishlist-toggle-btn, .card-wishlist-btn").forEach(btn => {
+      const id = btn.getAttribute("data-id") || btn.getAttribute("data-wishlist-id");
       if (id) {
         const isFavorited = this.has(id);
         btn.classList.toggle("is-active", isFavorited);
         btn.setAttribute("aria-label", isFavorited ? "Remove from wishlist" : "Add to wishlist");
+        const svg = btn.querySelector("svg");
+        if (svg) {
+          svg.setAttribute("fill", isFavorited ? "#E11D48" : "none");
+          svg.style.color = isFavorited ? "#E11D48" : "inherit";
+        }
       }
     });
   },
