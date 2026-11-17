@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VELORA — Haute Couture & Futuristic Fashion Atelier</title>
+  <meta name="description" content="VELORA. An independent luxury fashion house engineering the intersection of architectural form, haute couture craftsmanship, and progressive cybernetic streetwear.">
+
+  <!-- Editorial Typography: Cormorant Garamond, Space Grotesk, Inter & Space Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Film Grain Bespoke Texture Overlay -->
+  <div class="film-grain-overlay" aria-hidden="true"></div>
+
+  <!-- Dynamic Scroll Depth Bar -->
+  <div id="scrollProgressBar" class="scroll-progress-bar"></div>
+
+  <!-- Fluid Editorial Cursor (Desktop) -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- =========================================================================
+       SECTION A: EDITORIAL PROMOTIONAL RUNNER (Zero-Wrap Marquee)
+       ========================================================================= -->
+  <aside class="announcement-bar" aria-label="Boutique Notice">
+    <div class="marquee-track">
+      <div class="marquee-item">
+        <span class="marquee-tag">RUNWAY 2026</span>
+        <span class="marquee-text">MEGA STYLE SALE — UP TO 60% OFF SELECTED ARCHIVE</span>
+        <span class="marquee-dot">•</span>
+        <span class="marquee-text">USE PRIVILEGE CODE: <strong class="marquee-code">VELORA2026</strong> FOR EXTRA 15% OFF</span>
+        <span class="marquee-dot">•</span>
+        <span class="marquee-text">COMPLIMENTARY PRIORITY AIR FREIGHT ON ORDERS ABOVE ₹1,999</span>
+        <span class="marquee-dot">•</span>
+        <span class="marquee-text">PARIS • TOKYO • NEW YORK • MILAN</span>
+        <span class="marquee-dot">•</span>
+      </div>
+      <div class="marquee-item" aria-hidden="true">
+        <span class="marquee-tag">RUNWAY 2026</span>
+        <span class="marquee-text">MEGA STYLE SALE — UP TO 60% OFF SELECTED ARCHIVE</span>
+        <span class="marquee-dot">•</span>
+        <span class="marquee-text">USE PRIVILEGE CODE: <strong class="marquee-code">VELORA2026</strong> FOR EXTRA 15% OFF</span>
+        <span class="marquee-dot">•</span>
+        <span class="marquee-text">COMPLIMENTARY PRIORITY AIR FREIGHT ON ORDERS ABOVE ₹1,999</span>
+        <span class="marquee-dot">•</span>
+        <span class="marquee-text">PARIS • TOKYO • NEW YORK • MILAN</span>
+        <span class="marquee-dot">•</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       SECTION B: NAVIGATION ATELIER (Sticky Glassmorphic)
+       ========================================================================= -->
+  <header id="navbar" class="navbar">
+    <div class="container navbar-inner">
+      <!-- Mobile Hamburger Toggle -->
+      <button id="mobileNavToggle" class="mobile-menu-toggle" aria-label="Open Navigation Drawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Brand Identity -->
+      <a href="#hero" class="brand-logo" aria-label="VELORA Home">
+        <span class="logo-text">VELORA</span>
+        <span class="logo-subline">PARIS // 2026</span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="#hero" class="nav-link is-active">Home</a>
+        <a href="#trending" class="nav-link" data-filter-link="Women">Women</a>
+        <a href="#trending" class="nav-link" data-filter-link="Men">Men</a>
+        <a href="#trending" class="nav-link" data-filter-link="All">Collections</a>
+        <a href="#new-arrivals" class="nav-link">New Arrivals</a>
+        <a href="#promo-banner" class="nav-link nav-link-sale">
+          <span>Sale</span>
+          <span class="sale-indicator-dot"></span>
+        </a>
+      </nav>
+
+      <!-- Utilities (Search, Wishlist, Bag, Audio) -->
+      <div class="nav-actions">
+        <!-- Audio Haptic Toggle -->
+        <button type="button" id="audioToggleBtn" class="nav-icon-btn audio-toggle-btn" title="Toggle Studio Haptic Sound" aria-label="Toggle Sound" onclick="VeloraAudio.enabled = !VeloraAudio.enabled; this.classList.toggle('is-muted', !VeloraAudio.enabled); VeloraToast.show({ title: VeloraAudio.enabled ? 'Sound Enabled' : 'Sound Muted', message: VeloraAudio.enabled ? 'Subtle studio haptics active.' : 'Audio feedback muted.', type: 'info' })">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <!-- Search Button -->
+        <button type="button" class="nav-icon-btn open-search-btn" title="Search Collections (Ctrl+K)" aria-label="Search Collections">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <!-- Wishlist Button -->
+        <button type="button" class="nav-icon-btn open-wishlist-btn" title="Curated Favorites" aria-label="Wishlist">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="wishlist-count-badge" style="display: none;">0</span>
+        </button>
+
+        <!-- Shopping Bag Button -->
+        <button type="button" class="nav-icon-btn open-cart-btn" title="Shopping Bag" aria-label="Shopping Bag">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 01-8 0"></path>
+          </svg>
+          <span class="cart-count-badge" style="display: none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       SECTION C: HERO ATELIER (Cinematic Editorial Full-Screen)
+       ========================================================================= -->
+  <section id="hero" class="hero-section">
+    <!-- Refined Specular Glow Auras -->
+    <div class="hero-ambient-glow glow-violet"></div>
+    <div class="hero-ambient-glow glow-pink"></div>
+
+    <div class="container hero-grid">
+      <!-- Left Editorial Copy -->
+      <div class="hero-content reveal-item in-view">
+        <div class="hero-meta-label">
+          <span class="pulse-dot"></span>
+          <span>AUTUMN / WINTER 2026 — DROP 01</span>
+          <span class="meta-divider">•</span>
+          <span class="meta-city">PARIS ATELIER</span>
+        </div>
+
+        <h1 class="hero-heading hero-title-reveal" data-text-lines="STYLE IS|YOUR SIGNATURE.">
+          <span class="title-line"><span class="title-word">STYLE</span>&nbsp;<span class="title-word">IS</span></span>
+          <span class="title-line"><span class="title-word title-serif">YOUR</span>&nbsp;<span class="title-word title-serif">SIGNATURE.</span></span>
+        </h1>
+
+        <p class="hero-subtext">
+          Discover the next generation of fashion. Curated styles. Unmatched expression. Sculptural silhouettes engineered for progressive avant-garde spirits.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#trending" class="btn btn-primary magnetic-btn">
+            <span>Explore Collection</span>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="#new-arrivals" class="btn btn-outline magnetic-btn">
+            <span>Shop New Arrivals</span>
+          </a>
+        </div>
+
+        <!-- Credibility Indicators Strip -->
+        <div class="hero-credibility-strip">
+          <div class="credibility-item">
+            <span class="cred-dot">❖</span>
+            <span>100% Giza Cotton & Mulberry Raw Silk</span>
+          </div>
+          <div class="credibility-item">
+            <span class="cred-dot">❖</span>
+            <span>Carbon-Neutral Studio Craft</span>
+          </div>
+          <div class="credibility-item">
+            <span class="cred-dot">❖</span>
+            <span>Global Express Doorstep Delivery</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Editorial Visual Composition -->
+      <div class="hero-visual-wrapper">
+        <div class="geometric-ring ring-1"></div>
+        <div class="geometric-ring ring-2"></div>
+
+        <!-- Floating Glass Metadata Chip 1 -->
+        <div class="hero-floating-card card-top-left parallax-float">
+          <div class="floating-card-tag">EDITORIAL LOOK 01</div>
+          <div class="floating-card-title">Cyber-Silk Trench</div>
+          <div class="floating-card-meta">
+            <span class="floating-card-price">₹4,999</span>
+            <span>•</span>
+            <span>Archive Batch: 50 Units</span>
+          </div>
+        </div>
+
+        <!-- Hero Model Image Frame -->
+        <div class="hero-image-frame">
+          <img 
+            src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1200&q=85" 
+            alt="VELORA 2026 Haute Couture Collection Model" 
+            class="hero-model-img" 
+            loading="eager"
+            onerror="this.onerror=null; this.src='assets/images/fallback.svg'"
+          />
+          <div class="hero-frame-corner corner-tl"></div>
+          <div class="hero-frame-corner corner-br"></div>
+        </div>
+
+        <!-- Floating Glass Metadata Chip 2 -->
+        <div class="hero-floating-card card-bottom-right parallax-float">
+          <div class="floating-card-tag">LIMITED RUN</div>
+          <div class="floating-card-title">Obsidian Tailoring</div>
+          <div class="floating-card-meta">
+            <span>Studio Inspected</span>
+            <span>•</span>
+            <span class="floating-card-price">Express Dispatch</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION D: ASYMMETRIC CATEGORY SPREAD ("EXPLORE YOUR STYLE")
+       ========================================================================= -->
+  <section id="categories" class="section-spacing">
+    <div class="container">
+      <div class="section-header reveal-item">
+        <div class="header-pre-title">
+          <span class="section-tag">ARCHIVAL DISCIPLINES</span>
+          <span class="section-number-tag">01 // 04</span>
+        </div>
+        <h2 class="section-title">EXPLORE YOUR STYLE</h2>
+        <p class="section-subtitle">
+          From architectural streetwear to tailored tailoring and bespoke accessories, find the forms designed to define you.
+        </p>
+      </div>
+
+      <!-- Haute-Couture Asymmetric Editorial Bento Grid -->
+      <div class="editorial-category-bento stagger-grid">
+        <!-- Bento 1: Tall Feature — Women's Collection -->
+        <div class="bento-card bento-card-tall" data-bento-category="Women">
+          <img 
+            src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=85" 
+            alt="Women's Collection" 
+            class="bento-img" 
+            loading="lazy"
+            onerror="this.onerror=null; this.src='assets/images/fallback.svg'"
+          />
+          <div class="bento-overlay">
+            <span class="bento-num">01</span>
+            <div class="bento-content">
+              <span class="bento-tag">HAUTE COUTURE // 48 PIECES</span>
+              <h3 class="bento-title">Women's Collection</h3>
+              <p class="bento-desc">Sculptural silhouettes, liquid silks, structured corsetry, and sharp tailoring.</p>
+              <button type="button" class="bento-btn category-card-action" data-target-category="Women">
+                <span>Explore Women's Line</span>
+                <span class="bento-arrow">→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento 2: Wide Feature — Streetwear -->
+        <div class="bento-card bento-card-wide" data-bento-category="Streetwear">
+          <img 
+            src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=1200&q=85" 
+            alt="Streetwear Collection" 
+            class="bento-img" 
+            loading="lazy"
+            onerror="this.onerror=null; this.src='assets/images/fallback.svg'"
+          />
+          <div class="bento-overlay">
+            <span class="bento-num">02</span>
+            <div class="bento-content">
+              <span class="bento-tag">AVANT-GARDE STREET // MODULAR UTILITY</span>
+              <h3 class="bento-title">Cyber-Streetwear</h3>
+              <p class="bento-desc">Heavyweight 460 GSM cottons, articulated knee twills, and tactical layers.</p>
+              <button type="button" class="bento-btn category-card-action" data-target-category="Streetwear">
+                <span>Explore Streetwear</span>
+                <span class="bento-arrow">→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento 3: Square — Men's Collection -->
+        <div class="bento-card bento-card-square" data-bento-category="Men">
+          <img 
+            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=85" 
+            alt="Men's Collection" 
+            class="bento-img" 
+            loading="lazy"
+            onerror="this.onerror=null; this.src='assets/images/fallback.svg'"
+          />
+          <div class="bento-overlay">
+            <span class="bento-num">03</span>
+            <div class="bento-content">
+              <span class="bento-tag">TAILORED ARCHIVE // SARTORIAL FORMS</span>
+              <h3 class="bento-title">Men's Collection</h3>
+              <p class="bento-desc">Double-breasted melton coats, Japanese selvedge denim, and cashmere knits.</p>
+              <button type="button" class="bento-btn category-card-action" data-target-category="Men">
+                <span>Explore Men's Line</span>
+                <span class="bento-arrow">→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento 4: Square — Accessories -->
+        <div class="bento-card bento-card-square" data-bento-category="Footwear & Bags">
+          <img 
+            src="https://images.unsplash.com/photo-1576053139778-7e32f2ae3cfd?auto=format&fit=crop&w=900&q=85" 
+            alt="Accessories Collection" 
+            class="bento-img" 
+            loading="lazy"
+            onerror="this.onerror=null; this.src='assets/images/fallback.svg'"
+          />
+          <div class="bento-overlay">
+            <span class="bento-num">04</span>
+            <div class="bento-content">
+              <span class="bento-tag">BESPOKE ACCENTS</span>
+              <h3 class="bento-title">Accessories</h3>
+              <p class="bento-desc">Sculptural crossbody bags, minimal trainers, and handcrafted leather goods.</p>
+              <button type="button" class="bento-btn category-card-action" data-target-category="Footwear & Bags">
+                <span>Explore Pieces</span>
+                <span class="bento-arrow">→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION E: TRENDING CURATIONS ("TRENDING THIS SEASON")
+       ========================================================================= -->
+  <section id="trending" class="section-spacing">
+    <div class="container">
+      <div class="section-header reveal-item">
+        <div class="header-pre-title">
+          <span class="section-tag">CURATED ARCHIVE</span>
+          <span class="section-number-tag">SEASON FW26</span>
+        </div>
+        <h2 class="section-title">TRENDING THIS SEASON</h2>
+        <p class="section-subtitle">
+          Precision crafted designs in limited seasonal batches. Hand-finished details, tailored silhouettes, and durable textiles.
+        </p>
+      </div>
+
+      <!-- Filter Tabs & Sort Controls -->
+      <div class="filter-bar reveal-item">
+        <div class="category-tabs">
+          <button type="button" class="category-tab-btn is-active" data-category="All">All Creations</button>
+          <button type="button" class="category-tab-btn" data-category="Women">Women's Wear</button>
+          <button type="button" class="category-tab-btn" data-category="Men">Men's Wear</button>
+          <button type="button" class="category-tab-btn" data-category="Streetwear">Streetwear</button>
+          <button type="button" class="category-tab-btn" data-category="Jackets">Outerwear</button>
+          <button type="button" class="category-tab-btn" data-category="Essentials">Essentials</button>
+          <button type="button" class="category-tab-btn" data-category="Footwear & Bags">Footwear & Bags</button>
+        </div>
+
+        <div class="sort-wrap">
+          <label for="productSortSelect" class="sort-label">Arrange by:</label>
+          <select id="productSortSelect" class="sort-select">
+            <option value="featured">Editorial Highlights</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="discount">Greatest Discount</option>
+            <option value="rating">Top Customer Rated</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Dynamic Product Cards Grid -->
+      <div id="trendingProductsGrid" class="products-grid stagger-grid">
+        <!-- Injected via JavaScript with quick-size selector and swatches -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION: THE ATELIER MANIFESTO (Luxury Brand Story)
+       ========================================================================= -->
+  <section class="atelier-manifesto-section section-spacing">
+    <div class="container">
+      <div class="manifesto-card reveal-item">
+        <div class="manifesto-top-tag">THE PHILOSOPHY // 001</div>
+        <blockquote class="manifesto-quote">
+          "Fashion is architectural sculpture for the human spirit. Every seam is intentional. Every silhouette is finite."
+        </blockquote>
+        <div class="manifesto-pillars">
+          <div class="pillar-item">
+            <span class="pillar-num">I</span>
+            <h4>Carbon-Zero Craft</h4>
+            <p>100% GOTS certified organic Egyptian cottons and zero-waste pattern drafting in our Paris studio.</p>
+          </div>
+          <div class="pillar-item">
+            <span class="pillar-num">II</span>
+            <h4>Artisan Durability</h4>
+            <p>Triple-needle chainstitching, Excella hardware, and 460 GSM heavyweight textiles engineered for a lifetime.</p>
+          </div>
+          <div class="pillar-item">
+            <span class="pillar-num">III</span>
+            <h4>Archival Registry</h4>
+            <p>Each piece is individually numbered and logged in our digital atelier register for verifiable provenance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION F: PROMOTIONAL RUNWAY BANNER ("REDEFINE YOUR EVERYDAY")
+       ========================================================================= -->
+  <section id="promo-banner" class="section-spacing promo-banner-section">
+    <div class="container">
+      <div class="promo-banner-card reveal-item">
+        <div class="hero-ambient-glow glow-violet" style="top: -200px; right: -100px;"></div>
+
+        <div class="promo-banner-grid">
+          <!-- Banner Copy -->
+          <div class="promo-content">
+            <span class="promo-badge-tag">FLASH EDITORIAL DROP — 50% OFF</span>
+            <h2 class="promo-banner-title">REDEFINE YOUR EVERYDAY.</h2>
+            <p class="promo-banner-subtext">
+              Your wardrobe deserves an upgrade. Discover exclusive seasonal pieces engineered with structural draping, breathable cottons, and weather-defying outerwear.
+            </p>
+
+            <!-- Live Ticking Countdown -->
+            <div id="promoCountdown" class="promo-countdown-wrap">
+              <div class="countdown-unit">
+                <span id="cdHours" class="countdown-digits">47</span>
+                <span class="countdown-label">Hours</span>
+              </div>
+              <span class="countdown-divider">:</span>
+              <div class="countdown-unit">
+                <span id="cdMins" class="countdown-digits">59</span>
+                <span class="countdown-label">Mins</span>
+              </div>
+              <span class="countdown-divider">:</span>
+              <div class="countdown-unit">
+                <span id="cdSecs" class="countdown-digits">35</span>
+                <span class="countdown-label">Secs</span>
+              </div>
+            </div>
+
+            <div class="hero-cta-group">
+              <a href="#trending" class="btn btn-primary magnetic-btn">
+                <span>Shop the Sale</span>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+              <button type="button" class="btn btn-outline magnetic-btn" onclick="VeloraToast.show({ title: 'Lookbook Downloaded', message: 'VELORA Autumn/Winter 2026 Editorial sent.', type: 'info' })">
+                <span>View Lookbook</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Banner Visual -->
+          <div class="promo-visual-wrap">
+            <div class="promo-model-frame">
+              <img 
+                src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85" 
+                alt="VELORA Seasonal Editorial Showcase" 
+                loading="lazy"
+                onerror="this.onerror=null; this.src='assets/images/fallback.svg'"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION G: NEW ARRIVALS HORIZONTAL SHOWCASE
+       ========================================================================= -->
+  <section id="new-arrivals" class="section-spacing">
+    <div class="container">
+      <div class="section-header-row reveal-item">
+        <div>
+          <div class="header-pre-title">
+            <span class="section-tag">FRESH OFF THE RUNWAY</span>
+            <span class="section-number-tag">DROP 02</span>
+          </div>
+          <h2 class="section-title">NEW ARRIVALS / DROP 02</h2>
+          <p class="section-subtitle" style="margin-bottom: 0;">
+            Fresh cuts just landed in the studio. Limited release quantities with complimentary priority tailoring.
+          </p>
+        </div>
+
+        <!-- Carousel Nav Buttons -->
+        <div class="arrivals-header-actions">
+          <button id="carouselPrevBtn" type="button" class="carousel-nav-btn" aria-label="Previous pieces">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button id="carouselNextBtn" type="button" class="carousel-nav-btn" aria-label="Next pieces">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Horizontal Drag & Scroll Track -->
+      <div class="carousel-track-wrapper">
+        <div id="newArrivalsTrack" class="carousel-track">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION H: SPECIAL OFFERS SECTION (Architectural Privileges)
+       ========================================================================= -->
+  <section class="section-spacing">
+    <div class="container">
+      <div class="section-header text-center reveal-item">
+        <span class="section-tag">ATELIER PRIVILEGES</span>
+        <h2 class="section-title">SPECIAL OFFERS</h2>
+        <p class="section-subtitle">
+          Curated member codes to elevate your wardrobe with complimentary upgrades and archived collector editions.
+        </p>
+      </div>
+
+      <div class="offers-grid stagger-grid">
+        <!-- Offer 1 -->
+        <div class="offer-card offer-card-1">
+          <div class="offer-roman">I</div>
+          <span class="badge badge-sale" style="align-self: flex-start; margin-bottom: 12px;">TIME SENSITIVE</span>
+          <h3 class="offer-title">FLAT 30% OFF</h3>
+          <p class="offer-desc">Applicable across the entire Fall/Winter collection. Unlock instant savings at shopping bag review.</p>
+          <div class="offer-action-row">
+            <span class="promo-code-pill">VELORA30</span>
+            <button type="button" class="copy-promo-btn" data-code="VELORA30">Copy Code</button>
+          </div>
+        </div>
+
+        <!-- Offer 2 -->
+        <div class="offer-card offer-card-2">
+          <div class="offer-roman">II</div>
+          <span class="badge badge-new" style="align-self: flex-start; margin-bottom: 12px;">BUNDLE SPECIAL</span>
+          <h3 class="offer-title">BUY 2 GET 1 FREE</h3>
+          <p class="offer-desc">Order any two pieces from our Streetwear or Essentials line and receive a third curated item free.</p>
+          <div class="offer-action-row">
+            <span class="promo-code-pill">TRIO2026</span>
+            <button type="button" class="copy-promo-btn" data-code="TRIO2026">Copy Code</button>
+          </div>
+        </div>
+
+        <!-- Offer 3 -->
+        <div class="offer-card offer-card-3">
+          <div class="offer-roman">III</div>
+          <span class="badge badge-accent" style="align-self: flex-start; margin-bottom: 12px;">AUTO PRIVILEGE</span>
+          <h3 class="offer-title">FREE EXPRESS SHIPPING</h3>
+          <p class="offer-desc">Enjoy complimentary priority air freight on all shopping bags above ₹1,999 with luxury gift packaging.</p>
+          <div class="offer-action-row">
+            <span class="promo-code-pill">FREESHIP</span>
+            <button type="button" class="copy-promo-btn" data-code="FREESHIP">Copy Code</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION I: NEWSLETTER SECTION ("BE FIRST. BE DIFFERENT.")
+       ========================================================================= -->
+  <section class="section-spacing">
+    <div class="container">
+      <div class="newsletter-card reveal-item">
+        <div class="hero-ambient-glow glow-pink" style="bottom: -150px; left: 10%;"></div>
+
+        <div class="newsletter-content-wrap">
+          <span class="section-tag">THE INNER CIRCLE</span>
+          <h2 class="newsletter-title">BE FIRST. BE DIFFERENT.</h2>
+          <p class="newsletter-desc">
+            Gain private access to restricted seasonal drops, secret previews, and our quarterly digital journal on modern aesthetics.
+          </p>
+
+          <form id="newsletterForm" class="newsletter-form" novalidate>
+            <input 
+              type="email" 
+              id="newsletterEmail" 
+              class="newsletter-input" 
+              placeholder="Enter your email for private drop access..." 
+              required
+            />
+            <button type="submit" class="btn btn-primary magnetic-btn">
+              <span>Subscribe</span>
+            </button>
+          </form>
+
+          <div id="newsletterSuccessMsg" class="newsletter-success">
+            <h4>Welcome to the VELORA Vanguard.</h4>
+            <p>Your 15% welcome code is <strong>VELORA15</strong>. Look out for private drop notifications in your inbox.</p>
+          </div>
+
+          <p class="newsletter-privacy">We respect your privacy. No spam. One-click unsubscribe anytime.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION J: FOOTER ATELIER
+       ========================================================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1: Brand & Bio -->
+        <div class="footer-brand-col">
+          <a href="#hero" class="brand-logo">
+            <span class="logo-text">VELORA</span>
+            <span class="logo-subline">HAUTE COUTURE 2026</span>
+          </a>
+          <p>
+            An independent luxury fashion house engineering the intersection of architectural form, haute couture craftsmanship, and progressive subculture.
+          </p>
+          <div class="footer-social-row">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-icon-btn" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener" class="social-icon-btn" aria-label="TikTok">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="social-icon-btn" aria-label="Twitter">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+            </a>
+            <a href="https://pinterest.com" target="_blank" rel="noopener" class="social-icon-btn" aria-label="Pinterest">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="18" y1="10" x2="6" y2="10"></line></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Shop Links -->
+        <div>
+          <h4 class="footer-heading">Collections</h4>
+          <ul class="footer-link-list">
+            <li><a href="#categories" class="footer-link">Women's Line</a></li>
+            <li><a href="#categories" class="footer-link">Men's Line</a></li>
+            <li><a href="#categories" class="footer-link">Cyber-Streetwear</a></li>
+            <li><a href="#categories" class="footer-link">Bespoke Accessories</a></li>
+            <li><a href="#new-arrivals" class="footer-link">New Arrivals 2026</a></li>
+            <li><a href="#promo-banner" class="footer-link">Archival Sale</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Customer Care -->
+        <div>
+          <h4 class="footer-heading">Client Services</h4>
+          <ul class="footer-link-list">
+            <li><a href="javascript:void(0)" onclick="VeloraToast.show({ title: 'Order Tracking', message: 'Enter your order ID in the checkout view.', type: 'info' })" class="footer-link">Track Your Order</a></li>
+            <li><a href="javascript:void(0)" onclick="VeloraToast.show({ title: 'Complimentary Returns', message: '30-day global doorstep exchange available.', type: 'info' })" class="footer-link">Returns & Exchanges</a></li>
+            <li><a href="javascript:void(0)" onclick="VeloraToast.show({ title: 'Bespoke Size Studio', message: 'Virtual tailoring consultations available.', type: 'info' })" class="footer-link">Size & Fit Guide</a></li>
+            <li><a href="javascript:void(0)" onclick="VeloraToast.show({ title: 'Sustainability', message: '100% GOTS organic cotton & recycled packaging.', type: 'info' })" class="footer-link">Sustainability Report</a></li>
+            <li><a href="javascript:void(0)" onclick="VeloraToast.show({ title: 'Studio Concierge', message: 'concierge@velorafashion.com', type: 'info' })" class="footer-link">Contact Studio</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Studio & Legal -->
+        <div>
+          <h4 class="footer-heading">Boutique & Legal</h4>
+          <ul class="footer-link-list">
+            <li><a href="javascript:void(0)" class="footer-link">Tokyo Atelier</a></li>
+            <li><a href="javascript:void(0)" class="footer-link">Milan Showroom</a></li>
+            <li><a href="javascript:void(0)" class="footer-link">Privacy Policy</a></li>
+            <li><a href="javascript:void(0)" class="footer-link">Terms of Service</a></li>
+            <li><a href="javascript:void(0)" class="footer-link">Authenticity Certificate</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom-bar">
+        <div>
+          &copy; 2026 VELORA INC. ALL RIGHTS RESERVED. DESIGNED FOR THE PROGRESSIVE AVANT-GARDE.
+        </div>
+        <div class="payment-badges-row">
+          <span class="pay-badge">UPI</span>
+          <span class="pay-badge">VISA</span>
+          <span class="pay-badge">MASTERCARD</span>
+          <span class="pay-badge">APPLE PAY</span>
+          <span class="pay-badge">AMEX</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MOBILE QUICK ACTION FLOATING BOTTOM PILL
+       ========================================================================= -->
+  <nav class="mobile-bottom-quickbar" aria-label="Mobile Quick Actions">
+    <a href="#hero" class="mobile-quick-btn" aria-label="Home">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>Home</span>
+    </a>
+    <a href="#trending" class="mobile-quick-btn" aria-label="Shop">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      <span>Shop</span>
+    </a>
+    <button type="button" class="mobile-quick-btn open-search-btn" aria-label="Search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <span>Search</span>
+    </button>
+    <button type="button" class="mobile-quick-btn open-wishlist-btn" aria-label="Wishlist">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      <span>Saved</span>
+    </button>
+    <button type="button" class="mobile-quick-btn open-cart-btn" aria-label="Bag">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 01-8 0"></path></svg>
+      <span>Bag</span>
+      <span class="cart-count-badge" style="display: none;">0</span>
+    </button>
+  </nav>
+
+  <!-- =========================================================================
+       DRAWERS & MODAL OVERLAYS
+       ========================================================================= -->
+
+  <!-- 1. Off-Canvas Mobile Navigation Drawer -->
+  <div id="mobileNavOverlay" class="drawer-overlay"></div>
+  <aside id="mobileNavDrawer" class="mobile-nav-drawer" aria-label="Mobile Navigation">
+    <div class="mobile-nav-header">
+      <a href="#hero" class="brand-logo">
+        <span class="logo-text">VELORA</span>
+        <span class="logo-subline">PARIS</span>
+      </a>
+      <button id="closeMobileNavBtn" class="drawer-close-btn" aria-label="Close Navigation">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="mobile-nav-list">
+      <a href="#hero" class="mobile-nav-link"><span>Home</span> <span>→</span></a>
+      <a href="#trending" class="mobile-nav-link" data-filter-link="Women"><span>Women's Wear</span> <span>→</span></a>
+      <a href="#trending" class="mobile-nav-link" data-filter-link="Men"><span>Men's Wear</span> <span>→</span></a>
+      <a href="#trending" class="mobile-nav-link" data-filter-link="All"><span>All Collections</span> <span>→</span></a>
+      <a href="#new-arrivals" class="mobile-nav-link"><span>New Arrivals</span> <span>→</span></a>
+      <a href="#promo-banner" class="mobile-nav-link" style="color: var(--color-hot-pink);"><span>Archive Sale (60% Off)</span> <span>⚡</span></a>
+    </nav>
+    <div class="mobile-nav-footer">
+      <button type="button" class="btn btn-outline open-search-btn" style="width: 100%;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        Search Boutique
+      </button>
+      <button type="button" class="btn btn-primary open-cart-btn" style="width: 100%;">
+        View Shopping Bag
+      </button>
+    </div>
+  </aside>
+
+  <!-- 2. Shopping Bag Off-Canvas Drawer -->
+  <div id="cartOverlay" class="drawer-overlay"></div>
+  <aside id="cartDrawer" class="side-drawer" aria-label="Shopping Bag">
+    <div class="drawer-header">
+      <h3 class="drawer-title">Shopping Bag</h3>
+      <button id="closeCartBtn" class="drawer-close-btn" aria-label="Close Bag">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress Meter -->
+    <div id="cartShippingProgress" class="shipping-meter-wrap">
+      <p id="shippingProgressText" class="shipping-meter-text">
+        Add <strong>₹1,999</strong> more to unlock <strong>FREE Express Shipping</strong>
+      </p>
+      <div class="shipping-meter-bar">
+        <div id="shippingProgressBar" class="shipping-meter-progress"></div>
+      </div>
+    </div>
+
+    <!-- Items List Body -->
+    <div class="drawer-body">
+      <!-- Empty Bag State -->
+      <div id="cartEmptyState" class="drawer-empty-state">
+        <div class="drawer-empty-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 01-8 0"></path></svg>
+        </div>
+        <h4>Your Shopping Bag is Empty</h4>
+        <p>Explore the 2026 seasonal drops to find your signature piece.</p>
+        <button type="button" class="btn btn-primary" onclick="VeloraCart.close(); document.getElementById('trending').scrollIntoView({ behavior: 'smooth' });">
+          Explore Collection
+        </button>
+      </div>
+
+      <!-- Item Rows Container -->
+      <div id="cartItemsList"></div>
+    </div>
+
+    <!-- Bag Summary Footer -->
+    <div id="cartFooterSummary" class="drawer-footer">
+      <div id="cartActivePromoTag" class="cart-active-promo-tag"></div>
+
+      <form id="cartPromoForm" class="cart-promo-form">
+        <input type="text" id="cartPromoInput" class="cart-promo-input" placeholder="Privilege code (e.g. VELORA2026)" />
+        <button type="submit" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.825rem;">Apply</button>
+      </form>
+
+      <div class="summary-rows">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="cartSubtotalVal">₹0</span>
+        </div>
+        <div id="cartDiscountRow" class="summary-row" style="display: none; color: var(--color-hot-pink);">
+          <span>Privilege Discount</span>
+          <span id="cartDiscountVal">- ₹0</span>
+        </div>
+        <div class="summary-row">
+          <span>Priority Express Delivery</span>
+          <span id="cartShippingVal">Calculated</span>
+        </div>
+        <div class="summary-row grand-total">
+          <span>Estimated Total</span>
+          <span id="cartGrandTotalVal">₹0</span>
+        </div>
+      </div>
+
+      <button id="cartCheckoutBtn" type="button" class="btn btn-primary checkout-btn magnetic-btn">
+        <span>Proceed to Checkout</span>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- 3. Wishlist Drawer -->
+  <div id="wishlistOverlay" class="drawer-overlay"></div>
+  <aside id="wishlistDrawer" class="side-drawer" aria-label="Curated Favorites">
+    <div class="drawer-header">
+      <h3 class="drawer-title">Curated Favorites</h3>
+      <button id="closeWishlistBtn" class="drawer-close-btn" aria-label="Close Wishlist">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <div id="wishlistEmptyState" class="drawer-empty-state">
+        <div class="drawer-empty-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        </div>
+        <h4>Your Wishlist is Empty</h4>
+        <p>Save pieces as you browse to build your personalized 2026 capsule.</p>
+        <button type="button" class="btn btn-primary" onclick="VeloraWishlist.close(); document.getElementById('trending').scrollIntoView({ behavior: 'smooth' });">
+          Explore Trending
+        </button>
+      </div>
+      <div id="wishlistItemsList"></div>
+    </div>
+    <div id="wishlistFooter" class="drawer-footer" style="display: none;">
+      <button id="wishlistMoveAllBtn" type="button" class="btn btn-primary checkout-btn">
+        Move All to Shopping Bag
+      </button>
+    </div>
+  </aside>
+
+  <!-- 4. Quick View Inspection Modal -->
+  <div id="quickViewOverlay" class="modal-overlay"></div>
+  <div id="quickViewModal" class="modal-window" role="dialog" aria-modal="true" aria-label="Product Quick View">
+    <button id="closeQuickViewBtn" class="modal-close-btn" aria-label="Close Quick View">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="quickViewContent"></div>
+  </div>
+
+  <!-- 5. Real-Time Search Overlay -->
+  <div id="searchOverlay" class="search-overlay-container" role="dialog" aria-modal="true" aria-label="Site Search">
+    <div class="search-box-wrap">
+      <div class="search-input-inner">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-soft-lavender)" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="siteSearchInput" placeholder="Search by garment, silhouette, or textile (e.g. Jacket, Silk, Selvedge)..." autocomplete="off" />
+        <button id="closeSearchBtn" class="search-close-x" aria-label="Close search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="search-results-area">
+      <div id="searchCountText" class="search-count-header"></div>
+      <div id="searchResultsGrid" class="search-results-grid"></div>
+    </div>
+  </div>
+
+  <!-- 6. Simulated Luxury Checkout Modal -->
+  <div id="checkoutOverlay" class="modal-overlay"></div>
+  <div id="checkoutModal" class="modal-window checkout-modal-window" role="dialog" aria-modal="true" aria-label="Checkout">
+    <button id="closeCheckoutBtn" class="modal-close-btn" aria-label="Close checkout">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="checkoutModalBody">
+      <div class="checkout-grid">
+        <!-- Delivery Address & Payment Form -->
+        <div class="checkout-form-col">
+          <h3>Atelier Delivery Verification</h3>
+          <form id="checkoutOrderForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control" required placeholder="Alexander" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-control" required placeholder="Vance" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Destination Address</label>
+              <input type="text" class="form-control" required placeholder="Penthouse 4B, Cyber Promenade" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">City</label>
+                <input type="text" class="form-control" required placeholder="Mumbai / New Delhi" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Postal Code</label>
+                <input type="text" class="form-control" required placeholder="400001" />
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 20px;">
+              <label class="form-label">Payment Authorization Method</label>
+              <div class="payment-radio-group">
+                <label class="payment-radio-card">
+                  <input type="radio" name="paymethod" checked />
+                  <span>Instant UPI / Secure QR Verification</span>
+                </label>
+                <label class="payment-radio-card">
+                  <input type="radio" name="paymethod" />
+                  <span>Luxury Card (Visa Platinum / Amex Centurion)</span>
+                </label>
+                <label class="payment-radio-card">
+                  <input type="radio" name="paymethod" />
+                  <span>Cash on Doorstep Delivery</span>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary magnetic-btn" style="width: 100%; margin-top: 24px;">
+              <span>Authorize & Seal Order</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Order Summary Column -->
+        <div class="checkout-summary-col">
+          <h4 style="margin-bottom: 16px; font-size: 1.1rem;">Capsule Overview</h4>
+          <div id="checkoutSummaryList" class="checkout-summary-list"></div>
+          <div class="summary-row grand-total" style="margin-top: auto;">
+            <span>Grand Total:</span>
+            <span id="checkoutModalTotal">₹0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Stack Container -->
+  <div id="toastContainer" class="toast-stack"></div>
+
+  <!-- =========================================================================
+       SCRIPTS (Separated Vanilla Architecture)
+       ========================================================================= -->
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/wishlist.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

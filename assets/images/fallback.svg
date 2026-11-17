@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A122C"/>
+      <stop offset="50%" stop-color="#25183E"/>
+      <stop offset="100%" stop-color="#130D22"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#EC4899"/>
+    </linearGradient>
+    <radialGradient id="aura" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#1A122C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <circle cx="300" cy="350" r="240" fill="url(#aura)"/>
+  
+  <!-- Silhouette Architectural Fashion Form -->
+  <g fill="none" stroke="url(#brand)" stroke-width="2" opacity="0.6">
+    <ellipse cx="300" cy="220" rx="45" ry="60"/>
+    <path d="M 230 320 Q 300 280 370 320 L 410 520 L 190 520 Z"/>
+    <path d="M 260 520 L 250 720"/>
+    <path d="M 340 520 L 350 720"/>
+    <circle cx="300" cy="350" r="160" stroke-dasharray="6,6"/>
+  </g>
+  
+  <text x="300" y="620" font-family="'Space Grotesk', sans-serif" font-size="28" font-weight="700" fill="#F8F5F0" text-anchor="middle" letter-spacing="4">VELORA</text>
+  <text x="300" y="655" font-family="'Inter', sans-serif" font-size="13" font-weight="500" fill="#C4B5FD" text-anchor="middle" letter-spacing="2">AUTUMN / WINTER 2026</text>
+</svg>

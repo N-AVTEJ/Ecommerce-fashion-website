@@ -1,0 +1,252 @@
+/* ==========================================================================
+   VELORA — Cinematic Motion & Animation Engine
+   High-performance GPU-accelerated transforms & keyframes
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Luxury Fluid Custom Cursor (Desktop Only)
+   -------------------------------------------------------------------------- */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background-color: var(--color-warm-cream);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+  transform: translate3d(-100px, -100px, 0);
+  margin-top: -2.5px;
+  margin-left: -2.5px;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(196, 181, 253, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.3s ease, width 0.3s var(--ease-smooth), height 0.3s var(--ease-smooth), border-color 0.3s ease, background-color 0.3s ease;
+  transform: translate3d(-100px, -100px, 0);
+  margin-top: -18px;
+  margin-left: -18px;
+}
+
+/* Cursor Hover State */
+.cursor-ring.cursor-hover {
+  width: 60px;
+  height: 60px;
+  margin-top: -30px;
+  margin-left: -30px;
+  border-color: var(--color-electric-violet);
+  background-color: rgba(139, 92, 246, 0.12);
+  backdrop-filter: blur(2px);
+}
+
+.cursor-dot.cursor-hover {
+  background-color: var(--color-hot-pink);
+  transform: scale(1.4);
+}
+
+/* Hide on touch devices */
+body.touch-device .cursor-dot,
+body.touch-device .cursor-ring {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. Scroll Reveal & Intersection Observer Animations
+   -------------------------------------------------------------------------- */
+.reveal-item {
+  opacity: 0;
+  transform: perspective(900px) translateY(32px) rotateX(3deg);
+  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+  will-change: opacity, transform;
+}
+
+.reveal-item.in-view {
+  opacity: 1;
+  transform: perspective(900px) translateY(0) rotateX(0deg);
+}
+
+/* Stagger Grid Delays */
+.stagger-grid .product-card,
+.stagger-grid .bento-card,
+.stagger-grid .offer-card {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s var(--ease-smooth), transform 0.65s var(--ease-smooth);
+}
+
+.stagger-grid.in-view .product-card.in-view,
+.stagger-grid.in-view .bento-card.in-view,
+.stagger-grid.in-view .offer-card.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   3. Keyframe Animations
+   -------------------------------------------------------------------------- */
+
+/* Continuous Announcement Marquee */
+@keyframes marqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Ambient Sphere Glow Float */
+@keyframes floatSphere {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(30px, 40px, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-20px, 20px, 0) scale(0.95);
+  }
+}
+
+/* Hero Floating Glass Cards */
+@keyframes floatCard1 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes floatCard2 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 10px, 0);
+  }
+}
+
+/* Geometric Ring Rotation */
+@keyframes rotateRing {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulsing Status Dot */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 8px currentColor;
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+    box-shadow: 0 0 2px currentColor;
+  }
+}
+
+/* Split-Text Letter/Word Reveal */
+@keyframes letterReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+/* Wishlist Heartbeat Pulse */
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.35);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  75% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heart-pulse {
+  animation: heartBeat 0.5s var(--ease-spring);
+}
+
+/* Cart Badge Bounce on Add */
+@keyframes badgeBounce {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.5);
+  }
+  60% {
+    transform: scale(0.85);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cart-count-badge.bounce,
+.wishlist-count-badge.bounce {
+  animation: badgeBounce 0.45s var(--ease-spring);
+}
+
+/* --------------------------------------------------------------------------
+   4. Reduced Motion (Accessibility WCAG 2.2)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-item,
+  .stagger-grid .product-card,
+  .stagger-grid .bento-card,
+  .stagger-grid .offer-card,
+  .hero-heading .title-word {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
+  }
+}
