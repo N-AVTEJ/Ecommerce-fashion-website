@@ -342,18 +342,24 @@ button {
   height: var(--announcement-height);
   min-height: var(--announcement-height);
   max-height: var(--announcement-height);
+  line-height: var(--announcement-height);
   overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
   position: relative;
   z-index: 100;
   display: flex !important;
   align-items: center !important;
   white-space: nowrap !important;
   user-select: none;
+  -webkit-user-select: none;
   scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
   contain: paint;
 }
 
-.announcement-bar::-webkit-scrollbar {
+.announcement-bar::-webkit-scrollbar,
+.marquee-track::-webkit-scrollbar {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
@@ -365,9 +371,15 @@ button {
   flex-wrap: nowrap !important;
   align-items: center !important;
   width: max-content !important;
+  height: 100% !important;
   white-space: nowrap !important;
   animation: marqueeScroll 26s linear infinite;
   will-change: transform;
+  overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 .marquee-track:hover {
@@ -377,6 +389,8 @@ button {
 .marquee-item {
   display: inline-flex !important;
   align-items: center !important;
+  flex-wrap: nowrap !important;
+  height: 100% !important;
   gap: var(--space-24);
   padding-right: var(--space-28);
   font-family: var(--font-mono);
