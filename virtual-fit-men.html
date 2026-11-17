@@ -857,18 +857,20 @@
       </svg>
       <span class="rail-badge cart-count-badge" id="vfCartBadge" style="display: none;">0</span>
     </button>
-    <!-- 3: Wishlist Trigger with count -->
-    <button type="button" class="rail-btn" title="Saved Wishlist" aria-label="Wishlist" onclick="if(window.VeloraWishlist) VeloraWishlist.open()">
+    <!-- 3: Calendar -->
+    <button type="button" class="rail-btn" title="Private VIP Fitting Consultation" aria-label="Fitting Calendar" onclick="showToast('VIP Concierge: Virtual Fitting Consultation reservation active.')">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
       </svg>
-      <span class="rail-badge wishlist-count-badge" id="vfWishlistBadge" style="display: none;">0</span>
     </button>
-    <!-- 4: Return to Boutique / Catalog -->
-    <a href="men.html" class="rail-btn" title="Browse Full Men's Catalog" aria-label="Men's Catalog">
+    <!-- 4: Profile / Men's Atelier -->
+    <a href="men.html" class="rail-btn" title="Client Profile & Men's Atelier" aria-label="Client Profile">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="7" r="4"/>
-        <path d="M5.5 21a8.38 8.38 0 0 1 13 0"/>
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
       </svg>
     </a>
   </aside>
@@ -1176,12 +1178,20 @@
       const cardSeeds = [];
 
       // --------------------------------------------------
-      // Helper: Show Feedback Toast
+      // Helper: Show Feedback Toast & Card Width
       // --------------------------------------------------
       function showToast(msg) {
         toastEl.textContent = msg;
         toastEl.classList.add("show");
         setTimeout(() => toastEl.classList.remove("show"), 2800);
+      }
+      window.showToast = showToast;
+
+      function updateCW() {
+        const W = window.innerWidth;
+        const H = window.innerHeight;
+        const cw = (W <= 767) ? Math.min(W * 0.3, 170) : Math.min(W * 0.148, H * 0.33);
+        document.documentElement.style.setProperty('--CW', `${cw}px`);
       }
 
       // --------------------------------------------------
@@ -1732,6 +1742,7 @@
       // Boot & Initial Reveal
       // --------------------------------------------------
       window.addEventListener("DOMContentLoaded", () => {
+        updateCW();
         buildCards();
         initTabPill();
         if (window.VeloraCart) VeloraCart.init();
@@ -1747,6 +1758,7 @@
       });
 
       window.addEventListener("resize", () => {
+        updateCW();
         initTabPill();
       });
 

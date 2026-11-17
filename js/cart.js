@@ -94,6 +94,10 @@ const VeloraCart = {
     return true;
   },
 
+  getItemCount() {
+    return this.items.reduce((sum, item) => sum + Number(item.quantity || 1), 0);
+  },
+
   removeItem(productId, size, color) {
     const initialLen = this.items.length;
     this.items = this.items.filter(
@@ -401,3 +405,11 @@ const VeloraCart = {
     }
   }
 };
+
+// Global Attachments
+if (typeof window !== "undefined") {
+  window.VeloraCart = VeloraCart;
+}
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { VeloraCart };
+}

@@ -237,3 +237,11 @@ const VeloraWishlist = {
     if (moveAllBtn) moveAllBtn.addEventListener("click", () => this.moveAllToCart());
   }
 };
+
+// Global Attachments
+if (typeof window !== "undefined") {
+  window.VeloraWishlist = VeloraWishlist;
+}
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { VeloraWishlist };
+}
