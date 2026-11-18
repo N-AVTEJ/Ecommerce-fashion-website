@@ -334,7 +334,7 @@ button {
 }
 
 /* --------------------------------------------------------------------------
-   4. SECTION 1 — Slim Announcement Bar
+   4. SECTION 1 — Slim Announcement Bar (Zero-Wrap / Zero-Scrollbar Guarantee)
    -------------------------------------------------------------------------- */
 .announcement-bar {
   background: var(--color-charcoal);
@@ -356,13 +356,25 @@ button {
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
   contain: paint;
+  box-sizing: border-box !important;
+}
+
+.announcement-bar,
+.announcement-bar * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 .announcement-bar::-webkit-scrollbar,
-.marquee-track::-webkit-scrollbar {
+.announcement-bar *::-webkit-scrollbar,
+.marquee-track::-webkit-scrollbar,
+.marquee-track *::-webkit-scrollbar,
+.marquee-item::-webkit-scrollbar,
+.marquee-item *::-webkit-scrollbar {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
+  opacity: 0 !important;
 }
 
 .marquee-track {
@@ -373,7 +385,7 @@ button {
   width: max-content !important;
   height: 100% !important;
   white-space: nowrap !important;
-  animation: marqueeScroll 26s linear infinite;
+  animation: marqueeScroll 28s linear infinite;
   will-change: transform;
   overflow: hidden !important;
   overflow-x: hidden !important;
@@ -388,6 +400,7 @@ button {
 
 .marquee-item {
   display: inline-flex !important;
+  flex-direction: row !important;
   align-items: center !important;
   flex-wrap: nowrap !important;
   height: 100% !important;
@@ -402,9 +415,20 @@ button {
   white-space: nowrap !important;
   flex-shrink: 0 !important;
   line-height: 1 !important;
+  overflow: visible !important;
 }
 
 .marquee-item * {
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  line-height: 1 !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+}
+
+.marquee-text {
   white-space: nowrap !important;
   flex-shrink: 0 !important;
   display: inline-flex !important;
@@ -922,6 +946,19 @@ button {
 .card-quickview-btn:hover {
   background: #FFFFFF;
   color: var(--color-charcoal);
+}
+
+.card-tryon-btn {
+  background: var(--gradient-violet) !important;
+  color: #FFFFFF !important;
+  text-decoration: none !important;
+  box-shadow: 0 2px 8px rgba(139, 111, 216, 0.4);
+}
+
+.card-tryon-btn:hover {
+  background: #7A5CC9 !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px);
 }
 
 /* Card Body Content */

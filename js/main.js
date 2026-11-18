@@ -205,14 +205,22 @@ const VeloraStoreUI = {
               class="card-action-btn card-quickview-btn"
               onclick="VeloraQuickView.open('${prod.id}')"
             >
-              <span>Quick View</span>
+              <span>Quick</span>
             </button>
+            <a 
+              href="${prod.department === 'men' ? 'virtual-fit-men.html' : 'virtual-fit-women.html'}" 
+              class="card-action-btn card-tryon-btn"
+              title="Try on ${prod.name} in Virtual Fitting Room"
+              onclick="event.stopPropagation();"
+            >
+              <span>✨ Try On</span>
+            </a>
             <button 
               type="button" 
               class="card-action-btn"
               onclick="VeloraCart.addItem('${prod.id}', '${defaultSize}', '${defaultColor}', 1)"
             >
-              <span>+ Add to Bag</span>
+              <span>+ Add</span>
             </button>
           </div>
         </div>
@@ -434,6 +442,18 @@ const VeloraQuickView = {
           <button type="button" class="btn btn-primary" style="flex: 1;" onclick="VeloraQuickView.submitAddToCart()">
             <span>Add to Shopping Bag</span>
           </button>
+        </div>
+
+        <div style="margin-top: 12px;">
+          <a 
+            href="${prod.department === 'men' ? 'virtual-fit-men.html' : 'virtual-fit-women.html'}" 
+            class="btn btn-outline-charcoal" 
+            style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; padding: 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--color-charcoal); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; transition: all 0.25s ease;"
+            onmouseenter="this.style.background='var(--color-charcoal)'; this.style.color='#FFFFFF';"
+            onmouseleave="this.style.background='transparent'; this.style.color='var(--color-charcoal)';"
+          >
+            <span>✨ Try On in ${prod.department === 'men' ? "Men's 3D Spatial Arc" : "Women's 360° Maison Edit"}</span>
+          </a>
         </div>
       </div>
     `;
