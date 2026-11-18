@@ -163,8 +163,72 @@
 
   .card-quick-actions {
     opacity: 1;
-    transform: translateY(0);
-    background: linear-gradient(180deg, rgba(23, 23, 23, 0) 0%, rgba(23, 23, 23, 0.75) 100%);
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+    position: absolute;
+    bottom: 8px;
+    width: calc(100% - 12px);
+    padding: 4px;
+  }
+
+  .card-action-btn {
+    padding: 6px 8px;
+    font-size: 0.68rem;
+  }
+
+  /* Luxury Mobile Floating Bottom Bar */
+  .mobile-bottom-bar {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    max-width: 380px;
+    height: 54px;
+    background: rgba(14, 14, 14, 0.94);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 8px;
+    z-index: 850;
+  }
+
+  .mobile-bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: #FAF8F5;
+    font-size: 0.62rem;
+    font-family: var(--font-heading);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    position: relative;
+    padding: 6px 10px;
+  }
+
+  .mobile-bar-item svg {
+    width: 17px;
+    height: 17px;
+    stroke: currentColor;
+  }
+
+  .mobile-bar-item:hover,
+  .mobile-bar-item:active {
+    color: var(--color-accent-gold, #C5A880);
+  }
+
+  .mobile-bar-item .cart-count-badge,
+  .mobile-bar-item .wishlist-count-badge {
+    position: absolute;
+    top: 2px;
+    right: 8px;
   }
 
   .trending-controls-bar {

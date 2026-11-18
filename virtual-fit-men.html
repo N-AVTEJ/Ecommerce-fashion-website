@@ -409,41 +409,20 @@
       user-select: none;
     }
 
-    .model-tint, .model-tint-highlight {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 7;
-      opacity: 0;
-      transition: opacity 0.35s ease, background-color 0.35s ease, clip-path 0.35s cubic-bezier(.2,.8,.2,1);
-    }
-
     .model-tint {
-      mix-blend-mode: multiply;
-    }
-
-    .model-tint-highlight {
-      mix-blend-mode: color;
-      opacity: 0;
-    }
-
-    .model-bottom-wear {
       position: absolute;
-      top: 68.2%;
-      left: 0;
-      width: 100%;
-      height: 29.5%;
+      top: 26.5%;
+      left: 14%;
+      width: 72%;
+      height: 36%;
+      border-radius: 24px 24px 30px 30px;
       pointer-events: none;
       z-index: 5;
-      transition: opacity 0.4s ease, filter 0.4s ease;
-    }
-
-    .bottom-wear-svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-      overflow: visible;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));
+      mix-blend-mode: multiply;
+      opacity: 0;
+      transition: opacity 0.4s ease, background-color 0.4s ease;
+      -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, rgba(0,0,0,0.85) 75%, transparent 100%);
+      mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, rgba(0,0,0,0.85) 75%, transparent 100%);
     }
 
     #mCur, #mNext {
@@ -910,8 +889,8 @@
     <a href="women.html" class="glass brand-pill brand-pill-sub" title="Explore VELORA Women's Boutique">
       <span>WOMEN</span>
     </a>
-    <a href="virtual-fit-women.html" class="glass brand-pill brand-pill-sub" title="Women's Maison Edit 360° Studio" style="background: rgba(139,111,216,0.3); border-color: rgba(139,111,216,0.6);">
-      <span>✨ WOMEN'S 360° STUDIO</span>
+    <a href="virtual-fit-women.html" class="glass brand-pill brand-pill-sub" title="Women's Maison Edit 360° Studio" style="background: rgba(197,168,128,0.22); border-color: rgba(197,168,128,0.45);">
+      <span>WOMEN'S 360° STUDIO</span>
     </a>
   </header>
 
@@ -979,9 +958,7 @@
   <div class="model" id="modelEl" aria-label="Virtual Model Figure">
     <div id="mCur"></div>
     <div id="mNext"></div>
-    <div id="modelBottomWear" class="model-bottom-wear"></div>
     <div id="modelTint" class="model-tint"></div>
-    <div id="modelTintHighlight" class="model-tint-highlight"></div>
     <div class="grid"></div>
     <div class="scan"></div>
   </div>
@@ -1112,35 +1089,17 @@
       "use strict";
 
       // --------------------------------------------------
-      // Upper Garment Photoreal Silhouette Masks
+      // Section 3: Data Specification (Exact values + VELORA match)
       // --------------------------------------------------
-      const UPPER_SILHOUETTES = {
-        // Short sleeve boxy pocket tee (covers collar, shoulders, sleeves, full torso down to hem)
-        shortSleeveTee: "polygon(50% 24.5%, 41% 23.5%, 33% 22.5%, 26% 23%, 16% 25%, 11% 29%, 5% 36%, 1% 41.5%, 17% 42.5%, 19% 44%, 18% 52%, 17% 60%, 15.5% 69.8%, 30% 70.3%, 50% 70.6%, 70% 70.3%, 84.5% 69.8%, 83% 60%, 82% 52%, 81% 44%, 83% 42.5%, 99% 41.5%, 95% 36%, 89% 29%, 84% 25%, 74% 23%, 67% 22.5%, 59% 23.5%)",
-        // Oversized drop-shoulder tee (covers drop shoulders, extended wide sleeves, wide boxy body down to hem)
-        oversizedTee: "polygon(50% 24%, 40% 23%, 33% 22%, 25% 23%, 15% 25%, 9% 28%, 4% 33%, 1% 40%, 0% 48%, 0% 58%, 0% 64%, 2% 67%, 6% 67%, 10% 65%, 12% 67%, 6% 69.5%, 25% 70.2%, 50% 70.5%, 75% 70.2%, 94% 69.5%, 88% 67%, 90% 65%, 94% 67%, 98% 67%, 100% 64%, 100% 58%, 100% 48%, 99% 40%, 96% 33%, 91% 28%, 85% 25%, 75% 23%, 67% 22%, 60% 23%)",
-        // Tailored linen button-up shirt (collar, long sleeves to cuffs, full torso down to curved hem)
-        linenShirt: "polygon(50% 22%, 42% 21.5%, 34% 21%, 26% 22%, 16% 24%, 10% 28%, 5% 34%, 2% 42%, 0% 52%, 0% 60%, 4% 62%, 8% 61%, 12% 58%, 14% 62%, 15% 67%, 15% 69.8%, 30% 70.4%, 50% 70.6%, 70% 70.4%, 85% 69.8%, 85% 67%, 86% 62%, 88% 58%, 92% 61%, 96% 62%, 100% 60%, 100% 52%, 98% 42%, 95% 34%, 90% 28%, 84% 24%, 74% 22%, 66% 21%, 58% 21.5%)",
-        // Urban zip hoodie (hood neckline, full long sleeves to ribbed wrists, kangaroo torso, and ribbed waist hem)
-        hoodie: "polygon(50% 20%, 39% 20.5%, 32% 21%, 23% 22.5%, 15% 24%, 9% 29%, 4% 37%, 1% 46%, 0% 56%, 0% 64%, 2% 67%, 7% 68%, 11% 66%, 12% 67%, 8% 69.8%, 30% 70.2%, 50% 70.5%, 70% 70.2%, 92% 69.8%, 88% 67%, 89% 66%, 93% 68%, 98% 67%, 100% 64%, 100% 56%, 99% 46%, 96% 37%, 91% 29%, 85% 24%, 77% 22.5%, 68% 21%, 61% 20.5%)",
-        // Classic polo t-shirt (structured collar, short sleeves with ribbed bands, torso down to vented hem)
-        polo: "polygon(50% 24%, 41% 23%, 33% 22%, 26% 22.5%, 16% 24.5%, 11% 28%, 5% 35%, 1% 41%, 7% 42%, 17% 42%, 18% 44%, 18% 50%, 17% 58%, 16% 65%, 15.5% 69.8%, 30% 70.2%, 50% 70.5%, 70% 70.2%, 84.5% 69.8%, 84% 65%, 83% 58%, 82% 50%, 82% 44%, 83% 42%, 93% 42%, 99% 41%, 95% 35%, 89% 28%, 84% 24.5%, 74% 22.5%, 67% 22%, 59% 23%)"
-      };
-
-      // --------------------------------------------------
-      // Men's Upper Wear (Tops) Collection
-      // --------------------------------------------------
-      const MEN_TOPS = [
+      const ITEMS = [
         {
           id: "men-15",
           n: "Basic T-shirt",
           veloraName: "Heavyweight Boxy Pocket Tee",
           p: 1499,
           veloraPrice: 1499,
-          category: "T-Shirts",
           g: [1.14, 3.06],
           m: 0.37,
-          silhouette: "shortSleeveTee",
           c: [
             ["Vintage Chalk", "#F4F2EE"],
             ["Ash Grey", "#C9C7C2"],
@@ -1160,10 +1119,8 @@
           veloraName: "Oversized Graphic T-Shirt",
           p: 1299,
           veloraPrice: 1299,
-          category: "T-Shirts",
           g: [49.7, 1.39],
           m: 25.0,
-          silhouette: "oversizedTee",
           c: [
             ["Chalk White", "#F6F4EF"],
             ["Sand Oat", "#DDD3C2"],
@@ -1183,10 +1140,8 @@
           veloraName: "Tailored Linen Blend Shirt",
           p: 2299,
           veloraPrice: 2299,
-          category: "Shirts",
           g: [98.2, 3.33],
           m: 49.86,
-          silhouette: "linenShirt",
           c: [
             ["Pure White", "#F7F6F1"],
             ["Natural Sand", "#D9CCB4"],
@@ -1206,10 +1161,8 @@
           veloraName: "Urban Zip Hoodie",
           p: 2999,
           veloraPrice: 2999,
-          category: "Hoodies",
           g: [1.14, 93.3],
           m: 74.77,
-          silhouette: "hoodie",
           c: [
             ["Heather Slate", "#A9A9A8"],
             ["Bone Ecru", "#E6E1D6"],
@@ -1229,10 +1182,8 @@
           veloraName: "Classic Polo T-Shirt",
           p: 1499,
           veloraPrice: 1499,
-          category: "T-Shirts",
           g: [49.7, 95.3],
           m: 99.35,
-          silhouette: "polo",
           c: [
             ["Ivory Cream", "#F5F0E8"],
             ["Midnight Navy", "#1E293B"],
@@ -1248,102 +1199,25 @@
         }
       ];
 
-      // --------------------------------------------------
-      // Men's Bottom Wear Collection (3 Distinct Photoreal Styles)
-      // --------------------------------------------------
-      const MEN_BOTTOMS = [
-        {
-          id: "men-11",
-          n: "Pleated Trousers",
-          veloraName: "Tailored Pleated Trousers",
-          p: 2499,
-          veloraPrice: 2499,
-          category: "Trousers",
-          g: [25.0, 50.0],
-          bottomStyle: "tailored",
-          image: "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=900&q=85",
-          c: [
-            ["Flannel Charcoal", "#242424"],
-            ["Warm Taupe", "#B9A58F"],
-            ["Midnight Navy", "#182030"],
-            ["Ivory Cream", "#F5F0E8"],
-            ["Olive Moss", "#4D5D36"],
-            ["Sand Oat", "#DDD3C2"],
-            ["Pitch Black", "#171717"]
-          ]
-        },
-        {
-          id: "men-05",
-          n: "Denim Jeans",
-          veloraName: "Vintage Washed Denim Jeans",
-          p: 2799,
-          veloraPrice: 2799,
-          category: "Jeans",
-          g: [50.0, 50.0],
-          bottomStyle: "denim",
-          image: "https://images.unsplash.com/photo-1542272604-780c96856592?auto=format&fit=crop&w=900&q=85",
-          c: [
-            ["Vintage Indigo", "#22354B"],
-            ["Washed Black", "#2A2A2A"],
-            ["Bleached Blue", "#8DAEC4"],
-            ["Raw Midnight", "#192231"],
-            ["Smoked Grey", "#4B5563"],
-            ["Chalk White", "#F4F2EE"]
-          ]
-        },
-        {
-          id: "men-06",
-          n: "Cargo Pants",
-          veloraName: "Relaxed Cargo Pants",
-          p: 2199,
-          veloraPrice: 2199,
-          category: "Trousers",
-          g: [75.0, 50.0],
-          bottomStyle: "cargo",
-          image: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&w=900&q=85",
-          c: [
-            ["Earthy Taupe", "#B9A58F"],
-            ["Midnight Charcoal", "#1F1F1F"],
-            ["Military Olive", "#3B4235"],
-            ["Sand Dune", "#D9CCB4"],
-            ["Slate Grey", "#64748B"],
-            ["Vintage Black", "#181818"]
-          ]
-        }
-      ];
-
       // Synchronize with VELORA catalog data if available
       if (typeof VeloraProducts !== "undefined" && VeloraProducts.getById) {
-        MEN_TOPS.forEach(it => {
+        ITEMS.forEach(it => {
           const p = VeloraProducts.getById(it.id);
           if (p) {
             it.veloraPrice = p.discountedPrice;
             it.veloraName = p.name;
-          }
-        });
-        MEN_BOTTOMS.forEach(it => {
-          const p = VeloraProducts.getById(it.id);
-          if (p) {
-            it.veloraPrice = p.discountedPrice;
-            it.veloraName = p.name;
+            if (p.colors && p.colors.length) {
+              it.c = p.colors.map(col => [col.name, col.hex]);
+            }
           }
         });
       }
 
-      // Active state
-      let currentCategory = "tops";
-      let activeTopIndex = 0;
-      let activeBottomIndex = 0;
-      let activeTopColor = MEN_TOPS[0].c[0];
-      let activeBottomColor = MEN_BOTTOMS[0].c[0];
-      let activeTopSize = "M";
-      let activeBottomSize = "32";
-
-      // 10 cards in all (repeats items so the arc loops seamlessly)
+      // 10 cards in all (two copies of the 5 items so the arc loops seamlessly)
       const CARDS_COUNT = 10;
       const CARDS = [];
       for (let i = 0; i < CARDS_COUNT; i++) {
-        CARDS.push(MEN_TOPS[i % MEN_TOPS.length]);
+        CARDS.push(ITEMS[i % 5]);
       }
 
       // Check reduced motion preference
@@ -1387,7 +1261,7 @@
       let intro = prefersReducedMotion ? 1 : 0;
       let currentOutfit = -1;
       let activeSize = "M";
-      let activeColor = MEN_TOPS[0].c[0][0];
+      let activeColor = ITEMS[0].c[0][0];
       let hasInitialized = false;
 
       // Drag and interaction state
@@ -1449,7 +1323,7 @@
           card.dataset.index = i;
 
           card.innerHTML = `
-            <div class="g" style="${item.image ? `background-image: url('${item.image}'); background-size: cover; background-position: center; border-radius: 14px;` : `background-position: ${item.g[0]}% ${item.g[1]}%;`}"></div>
+            <div class="g" style="background-position: ${item.g[0]}% ${item.g[1]}%;"></div>
             <div class="card-name">${item.veloraName || item.n}</div>
             <div class="card-price">₹${item.veloraPrice.toLocaleString("en-IN")}</div>
             <div class="sheen"></div>
@@ -1591,8 +1465,7 @@
 
         // Settle trigger: test if arrived at a new outfit
         if (hasInitialized && Math.abs(target - pos) < 0.02 && !isDragging) {
-          const numItems = currentCategory === "tops" ? MEN_TOPS.length : MEN_BOTTOMS.length;
-          const settledOutfit = ((Math.round(target) % numItems) + numItems) % numItems;
+          const settledOutfit = ((Math.round(target) % 5) + 5) % 5;
           if (settledOutfit !== currentOutfit) {
             triggerTryOn(settledOutfit);
           }
@@ -1606,313 +1479,95 @@
 
       function triggerTryOn(itemIndex) {
         currentOutfit = itemIndex;
+        const item = ITEMS[itemIndex];
 
-        if (currentCategory === "tops") {
-          activeTopIndex = itemIndex;
-          const item = MEN_TOPS[itemIndex];
+        // 1. Update Buy Card
+        updateBuyCard(item);
 
-          // 1. Update Buy Card
-          updateBuyCard(item);
+        // Cancel previous running scan animations
+        runningAnimations.forEach(anim => {
+          try { anim.cancel(); } catch (e) {}
+        });
+        runningAnimations = [];
 
-          // Apply upper silhouette mask & color
-          const silhouette = item.silhouette || "shortSleeveTee";
-          const clip = UPPER_SILHOUETTES[silhouette] || UPPER_SILHOUETTES.shortSleeveTee;
-          const modelTint = document.getElementById("modelTint");
-          const modelTintHighlight = document.getElementById("modelTintHighlight");
-          if (modelTint) modelTint.style.clipPath = clip;
-          if (modelTintHighlight) modelTintHighlight.style.clipPath = clip;
+        // Reduced motion bypass
+        if (prefersReducedMotion) {
+          mCur.style.backgroundPosition = `${item.m}% 100%`;
+          mCur.style.opacity = "1";
+          return;
+        }
 
-          // Re-apply top color
-          const colorIdx = item.c.findIndex(c => c[0] === activeTopColor[0]);
-          const hex = colorIdx >= 0 ? item.c[colorIdx][1] : item.c[0][1];
-          const name = colorIdx >= 0 ? item.c[colorIdx][0] : item.c[0][0];
-          activeTopColor = [name, hex];
-          applyGarmentColor(Math.max(0, colorIdx), hex, name);
+        // Set mNext to new figure
+        mNext.style.backgroundPosition = `${item.m}% 100%`;
 
-          // Keep active bottom wear rendered
-          const botItem = MEN_BOTTOMS[activeBottomIndex];
-          if (botItem) {
-            const botColorIdx = botItem.c.findIndex(c => c[0] === activeBottomColor[0]);
-            renderBottomWear(activeBottomIndex, Math.max(0, botColorIdx));
+        // 2. Web Animations together
+        const animClip = mNext.animate(
+          [
+            { clipPath: "inset(0 0 100% 0)" },
+            { clipPath: "inset(0 0 0% 0)" }
+          ],
+          {
+            duration: 950,
+            easing: "cubic-bezier(.65,0,.35,1)",
+            fill: "forwards"
           }
+        );
 
-          // Cancel previous running scan animations
+        const animGrid = modelGrid.animate(
+          [
+            { clipPath: "inset(0 0 100% 0)", offset: 0 },
+            { clipPath: "inset(0 0 0 0)", offset: 0.5 },
+            { clipPath: "inset(100% 0 0 0)", offset: 1 }
+          ],
+          {
+            duration: 1092,
+            easing: "cubic-bezier(.65,0,.35,1)",
+            fill: "forwards"
+          }
+        );
+
+        const animScan = modelScan.animate(
+          [
+            { top: "0%", transform: "scaleX(.2)", opacity: 0, offset: 0 },
+            { top: "6%", transform: "scaleX(1)", opacity: 1, offset: 0.08 },
+            { top: "94%", transform: "scaleX(1)", opacity: 1, offset: 0.92 },
+            { top: "100%", transform: "scaleX(.2)", opacity: 0, offset: 1 }
+          ],
+          {
+            duration: 950,
+            easing: "cubic-bezier(.65,0,.35,1)",
+            fill: "forwards"
+          }
+        );
+
+        const animSettle = mNext.animate(
+          [
+            { transform: "scale(1.012)" },
+            { transform: "scale(1)" }
+          ],
+          {
+            duration: 1250,
+            easing: "ease-out",
+            fill: "forwards"
+          }
+        );
+
+        runningAnimations = [animClip, animGrid, animScan, animSettle];
+
+        // 3. On animation finish, copy to mCur
+        animClip.onfinish = () => {
+          mCur.style.backgroundPosition = `${item.m}% 100%`;
+          mCur.style.opacity = "1";
           runningAnimations.forEach(anim => {
             try { anim.cancel(); } catch (e) {}
           });
           runningAnimations = [];
-
-          // Reduced motion bypass
-          if (prefersReducedMotion) {
-            mCur.style.backgroundPosition = `${item.m}% 100%`;
-            mCur.style.opacity = "1";
-            return;
-          }
-
-          // Set mNext to new figure
-          mNext.style.backgroundPosition = `${item.m}% 100%`;
-
-          // 2. Web Animations together
-          const animClip = mNext.animate(
-            [
-              { clipPath: "inset(0 0 100% 0)" },
-              { clipPath: "inset(0 0 0% 0)" }
-            ],
-            {
-              duration: 950,
-              easing: "cubic-bezier(.65,0,.35,1)",
-              fill: "forwards"
-            }
-          );
-
-          const animGrid = modelGrid.animate(
-            [
-              { clipPath: "inset(0 0 100% 0)", offset: 0 },
-              { clipPath: "inset(0 0 0 0)", offset: 0.5 },
-              { clipPath: "inset(100% 0 0 0)", offset: 1 }
-            ],
-            {
-              duration: 1092,
-              easing: "cubic-bezier(.65,0,.35,1)",
-              fill: "forwards"
-            }
-          );
-
-          const animScan = modelScan.animate(
-            [
-              { top: "0%", transform: "scaleX(.2)", opacity: 0, offset: 0 },
-              { top: "6%", transform: "scaleX(1)", opacity: 1, offset: 0.08 },
-              { top: "94%", transform: "scaleX(1)", opacity: 1, offset: 0.92 },
-              { top: "100%", transform: "scaleX(.2)", opacity: 0, offset: 1 }
-            ],
-            {
-              duration: 950,
-              easing: "cubic-bezier(.65,0,.35,1)",
-              fill: "forwards"
-            }
-          );
-
-          const animSettle = mNext.animate(
-            [
-              { transform: "scale(1.012)" },
-              { transform: "scale(1)" }
-            ],
-            {
-              duration: 1250,
-              easing: "ease-out",
-              fill: "forwards"
-            }
-          );
-
-          runningAnimations = [animClip, animGrid, animScan, animSettle];
-
-          // 3. On animation finish, copy to mCur
-          animClip.onfinish = () => {
-            mCur.style.backgroundPosition = `${item.m}% 100%`;
-            mCur.style.opacity = "1";
-            runningAnimations.forEach(anim => {
-              try { anim.cancel(); } catch (e) {}
-            });
-            runningAnimations = [];
-            mNext.style.clipPath = "inset(0 0 100% 0)";
-          };
-
-        } else if (currentCategory === "bottoms") {
-          activeBottomIndex = itemIndex;
-          const item = MEN_BOTTOMS[itemIndex];
-
-          // 1. Update Buy Card
-          updateBuyCard(item);
-
-          // 2. Render bottom wear on model
-          const colorIdx = item.c.findIndex(c => c[0] === activeBottomColor[0]);
-          const resolvedIdx = colorIdx >= 0 ? colorIdx : 0;
-          activeBottomColor = item.c[resolvedIdx];
-          renderBottomWear(itemIndex, resolvedIdx);
-
-          // Maintain active top silhouette and color
-          const topItem = MEN_TOPS[activeTopIndex];
-          if (topItem) {
-            const silhouette = topItem.silhouette || "shortSleeveTee";
-            const clip = UPPER_SILHOUETTES[silhouette] || UPPER_SILHOUETTES.shortSleeveTee;
-            const modelTint = document.getElementById("modelTint");
-            const modelTintHighlight = document.getElementById("modelTintHighlight");
-            if (modelTint) modelTint.style.clipPath = clip;
-            if (modelTintHighlight) modelTintHighlight.style.clipPath = clip;
-            const topColorIdx = topItem.c.findIndex(c => c[0] === activeTopColor[0]);
-            const hex = topColorIdx >= 0 ? topItem.c[topColorIdx][1] : topItem.c[0][1];
-            const name = topColorIdx >= 0 ? topItem.c[topColorIdx][0] : topItem.c[0][0];
-            applyGarmentColor(Math.max(0, topColorIdx), hex, name);
-          }
-
-          // Animate bottom scan shimmer
-          if (modelScan && !prefersReducedMotion) {
-            modelScan.animate(
-              [
-                { top: "48%", transform: "scaleX(0.4)", opacity: 0 },
-                { top: "68%", transform: "scaleX(1)", opacity: 0.9 },
-                { top: "89%", transform: "scaleX(0.4)", opacity: 0 }
-              ],
-              {
-                duration: 680,
-                easing: "cubic-bezier(.2,.8,.2,1)"
-              }
-            );
-          }
-        }
+          mNext.style.clipPath = "inset(0 0 100% 0)";
+        };
       }
 
       // --------------------------------------------------
-      // Section 7: Bottom Wear Photoreal Vector Compositing
-      // --------------------------------------------------
-      function renderBottomWear(bottomIdx, colorIdx) {
-        const container = document.getElementById("modelBottomWear");
-        if (!container) return;
-
-        const item = MEN_BOTTOMS[bottomIdx];
-        if (!item) return;
-        const colorEntry = item.c[colorIdx] || item.c[0];
-        const hexVal = colorEntry[1];
-        const colorName = colorEntry[0];
-
-        const basePath = "M 20,0 L 504,0 C 506,50 495,90 480,132 L 443,172 C 438,212 436,252 436,252 L 429,332 L 431,377 L 298,377 L 293,332 L 280,252 L 268,172 L 262,142 L 256,172 L 243,252 L 230,332 L 225,377 L 95,377 L 94,332 L 87,252 L 81,172 C 60,132 30,90 18,50 Z";
-
-        let svgContent = "";
-
-        if (item.bottomStyle === "tailored") {
-          // Tailored Pleated Trousers (knife-edge press crease, inward waist pleats, slant welt pockets, shoe break)
-          svgContent = `
-            <svg class="bottom-wear-svg" viewBox="0 0 524 401" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="tailoredShade" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#000" stop-opacity="0.35"/>
-                  <stop offset="15%" stop-color="#fff" stop-opacity="0.10"/>
-                  <stop offset="31%" stop-color="#000" stop-opacity="0.40"/>
-                  <stop offset="50%" stop-color="#000" stop-opacity="0.65"/>
-                  <stop offset="69%" stop-color="#000" stop-opacity="0.40"/>
-                  <stop offset="85%" stop-color="#fff" stop-opacity="0.10"/>
-                  <stop offset="100%" stop-color="#000" stop-opacity="0.35"/>
-                </linearGradient>
-                <linearGradient id="waistShadow" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#000" stop-opacity="0.55"/>
-                  <stop offset="100%" stop-color="#000" stop-opacity="0.0"/>
-                </linearGradient>
-              </defs>
-              <path d="${basePath}" fill="${hexVal}"/>
-              <path d="${basePath}" fill="url(#tailoredShade)" style="mix-blend-mode: multiply;"/>
-              <rect x="0" y="0" width="524" height="45" fill="url(#waistShadow)" style="mix-blend-mode: multiply;"/>
-              <line x1="160" y1="20" x2="160" y2="375" stroke="rgba(255,255,255,0.24)" stroke-width="1.8"/>
-              <line x1="162" y1="20" x2="162" y2="375" stroke="rgba(0,0,0,0.38)" stroke-width="1.5"/>
-              <line x1="364" y1="20" x2="364" y2="375" stroke="rgba(255,255,255,0.24)" stroke-width="1.8"/>
-              <line x1="366" y1="20" x2="366" y2="375" stroke="rgba(0,0,0,0.38)" stroke-width="1.5"/>
-              <path d="M 135,5 C 138,30 144,55 142,75" stroke="rgba(0,0,0,0.35)" stroke-width="1.8" fill="none"/>
-              <path d="M 389,5 C 386,30 380,55 382,75" stroke="rgba(0,0,0,0.35)" stroke-width="1.8" fill="none"/>
-              <line x1="35" y1="15" x2="68" y2="78" stroke="rgba(0,0,0,0.40)" stroke-width="2.2"/>
-              <line x1="489" y1="15" x2="456" y2="78" stroke="rgba(0,0,0,0.40)" stroke-width="2.2"/>
-              <path d="M 262,0 L 262,110 C 262,126 248,135 248,135" stroke="rgba(0,0,0,0.38)" stroke-width="1.8" fill="none"/>
-              <line x1="95" y1="373" x2="225" y2="373" stroke="rgba(0,0,0,0.35)" stroke-width="2.0"/>
-              <line x1="298" y1="373" x2="431" y2="373" stroke="rgba(0,0,0,0.35)" stroke-width="2.0"/>
-            </svg>
-          `;
-        } else if (item.bottomStyle === "denim") {
-          // Vintage Washed Denim Jeans (whiskering creases, knee wash highlights, gold contrast topstitching, rivets)
-          svgContent = `
-            <svg class="bottom-wear-svg" viewBox="0 0 524 401" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="denimShade" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#000" stop-opacity="0.42"/>
-                  <stop offset="16%" stop-color="#fff" stop-opacity="0.15"/>
-                  <stop offset="31%" stop-color="#000" stop-opacity="0.45"/>
-                  <stop offset="50%" stop-color="#000" stop-opacity="0.70"/>
-                  <stop offset="69%" stop-color="#000" stop-opacity="0.45"/>
-                  <stop offset="84%" stop-color="#fff" stop-opacity="0.15"/>
-                  <stop offset="100%" stop-color="#000" stop-opacity="0.42"/>
-                </linearGradient>
-                <radialGradient id="kneeWashL" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#fff" stop-opacity="0.35"/>
-                  <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-                </radialGradient>
-                <radialGradient id="kneeWashR" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#fff" stop-opacity="0.35"/>
-                  <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-                </radialGradient>
-                <linearGradient id="waistShadowDenim" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#000" stop-opacity="0.60"/>
-                  <stop offset="100%" stop-color="#000" stop-opacity="0.0"/>
-                </linearGradient>
-              </defs>
-              <path d="${basePath}" fill="${hexVal}"/>
-              <path d="${basePath}" fill="url(#denimShade)" style="mix-blend-mode: multiply;"/>
-              <rect x="0" y="0" width="524" height="45" fill="url(#waistShadowDenim)" style="mix-blend-mode: multiply;"/>
-              <ellipse cx="160" cy="245" rx="42" ry="68" fill="url(#kneeWashL)"/>
-              <ellipse cx="364" cy="245" rx="42" ry="68" fill="url(#kneeWashR)"/>
-              <path d="M 80,65 Q 155,100 235,125" stroke="rgba(255,255,255,0.30)" stroke-width="2.5" fill="none"/>
-              <path d="M 90,95 Q 165,125 242,142" stroke="rgba(255,255,255,0.26)" stroke-width="2.2" fill="none"/>
-              <path d="M 105,125 Q 175,150 250,165" stroke="rgba(255,255,225,0.22)" stroke-width="2.0" fill="none"/>
-              <path d="M 444,65 Q 369,100 289,125" stroke="rgba(255,255,255,0.30)" stroke-width="2.5" fill="none"/>
-              <path d="M 434,95 Q 359,125 282,142" stroke="rgba(255,255,255,0.26)" stroke-width="2.2" fill="none"/>
-              <path d="M 419,125 Q 349,150 274,165" stroke="rgba(255,255,255,0.22)" stroke-width="2.0" fill="none"/>
-              <line x1="22" y1="10" x2="95" y2="375" stroke="rgba(218,165,32,0.72)" stroke-width="1.4" stroke-dasharray="4,3"/>
-              <line x1="502" y1="10" x2="431" y2="375" stroke="rgba(218,165,32,0.72)" stroke-width="1.4" stroke-dasharray="4,3"/>
-              <path d="M 38,15 C 65,45 105,65 130,70" stroke="rgba(218,165,32,0.78)" stroke-width="1.5" fill="none" stroke-dasharray="4,2.5"/>
-              <path d="M 486,15 C 459,45 419,65 394,70" stroke="rgba(218,165,32,0.78)" stroke-width="1.5" fill="none" stroke-dasharray="4,2.5"/>
-              <path d="M 405,20 L 445,52" stroke="rgba(218,165,32,0.75)" stroke-width="1.3" fill="none" stroke-dasharray="3,2"/>
-              <path d="M 262,0 L 262,105 C 262,122 248,130 248,130" stroke="rgba(218,165,32,0.85)" stroke-width="1.6" fill="none"/>
-              <circle cx="38" cy="17" r="3.5" fill="#B87333" stroke="#5C3A21" stroke-width="0.8"/>
-              <circle cx="128" cy="69" r="3.5" fill="#B87333" stroke="#5C3A21" stroke-width="0.8"/>
-              <circle cx="486" cy="17" r="3.5" fill="#B87333" stroke="#5C3A21" stroke-width="0.8"/>
-              <circle cx="396" cy="69" r="3.5" fill="#B87333" stroke="#5C3A21" stroke-width="0.8"/>
-              <line x1="95" y1="373" x2="225" y2="373" stroke="rgba(218,165,32,0.70)" stroke-width="2.2" stroke-dasharray="4,2"/>
-              <line x1="298" y1="373" x2="431" y2="373" stroke="rgba(218,165,32,0.70)" stroke-width="2.2" stroke-dasharray="4,2"/>
-            </svg>
-          `;
-        } else {
-          // Relaxed Cargo Pants (3D bellows utility flap pockets with buttons, knee articulation darts, gathered cuffs)
-          svgContent = `
-            <svg class="bottom-wear-svg" viewBox="0 0 524 401" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="cargoShade" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#000" stop-opacity="0.40"/>
-                  <stop offset="18%" stop-color="#fff" stop-opacity="0.10"/>
-                  <stop offset="31%" stop-color="#000" stop-opacity="0.42"/>
-                  <stop offset="50%" stop-color="#000" stop-opacity="0.65"/>
-                  <stop offset="69%" stop-color="#000" stop-opacity="0.42"/>
-                  <stop offset="82%" stop-color="#fff" stop-opacity="0.10"/>
-                  <stop offset="100%" stop-color="#000" stop-opacity="0.40"/>
-                </linearGradient>
-                <linearGradient id="waistShadowCargo" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#000" stop-opacity="0.58"/>
-                  <stop offset="100%" stop-color="#000" stop-opacity="0.0"/>
-                </linearGradient>
-              </defs>
-              <path d="${basePath}" fill="${hexVal}"/>
-              <path d="${basePath}" fill="url(#cargoShade)" style="mix-blend-mode: multiply;"/>
-              <rect x="0" y="0" width="524" height="45" fill="url(#waistShadowCargo)" style="mix-blend-mode: multiply;"/>
-              <rect x="42" y="145" width="60" height="90" rx="3" fill="rgba(0,0,0,0.22)" stroke="rgba(0,0,0,0.45)" stroke-width="1.5"/>
-              <line x1="72" y1="145" x2="72" y2="235" stroke="rgba(0,0,0,0.32)" stroke-width="1.8"/>
-              <path d="M 40,145 L 104,145 L 102,165 L 72,175 L 42,165 Z" fill="rgba(0,0,0,0.30)" stroke="rgba(0,0,0,0.52)" stroke-width="1.4"/>
-              <circle cx="72" cy="166" r="3.5" fill="#222" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/>
-              <rect x="422" y="145" width="60" height="90" rx="3" fill="rgba(0,0,0,0.22)" stroke="rgba(0,0,0,0.45)" stroke-width="1.5"/>
-              <line x1="452" y1="145" x2="452" y2="235" stroke="rgba(0,0,0,0.32)" stroke-width="1.8"/>
-              <path d="M 420,145 L 484,145 L 482,165 L 452,175 L 422,165 Z" fill="rgba(0,0,0,0.30)" stroke="rgba(0,0,0,0.52)" stroke-width="1.4"/>
-              <circle cx="452" cy="166" r="3.5" fill="#222" stroke="rgba(255,255,255,0.35)" stroke-width="0.8"/>
-              <path d="M 88,245 Q 160,258 241,245" stroke="rgba(0,0,0,0.38)" stroke-width="1.8" fill="none"/>
-              <path d="M 90,265 Q 160,278 238,265" stroke="rgba(0,0,0,0.38)" stroke-width="1.8" fill="none"/>
-              <path d="M 283,245 Q 364,258 435,245" stroke="rgba(0,0,0,0.38)" stroke-width="1.8" fill="none"/>
-              <path d="M 286,265 Q 364,278 433,265" stroke="rgba(0,0,0,0.38)" stroke-width="1.8" fill="none"/>
-              <path d="M 262,0 L 262,110 C 262,126 248,135 248,135" stroke="rgba(0,0,0,0.40)" stroke-width="2.0" fill="none"/>
-              <path d="M 95,373 Q 160,380 225,373" stroke="rgba(0,0,0,0.50)" stroke-width="2.8" fill="none"/>
-              <path d="M 298,373 Q 364,380 431,373" stroke="rgba(0,0,0,0.50)" stroke-width="2.8" fill="none"/>
-            </svg>
-          `;
-        }
-
-        container.innerHTML = svgContent;
-        container.style.opacity = "1";
-      }
-
-      // --------------------------------------------------
-      // Section 8: Buy Card Updates & Simultaneous Text Rolling
+      // Section 7: Buy Card Updates & Simultaneous Text Rolling
       // --------------------------------------------------
       function rollText(container, newText) {
         if (!container) return;
@@ -1928,6 +1583,7 @@
           return;
         }
 
+        // Two spans rolling simultaneously: old rolls to -110% WHILE new rolls to 0 over 620ms
         const nextSpan = document.createElement("span");
         nextSpan.className = curSpan.className;
         nextSpan.textContent = newText;
@@ -1973,35 +1629,6 @@
         };
       }
 
-      function updateSizeChips() {
-        sizeChips.innerHTML = "";
-        const sizes = currentCategory === "tops" ? ["S", "M", "L", "XL"] : ["30", "32", "34", "36"];
-        const curActive = currentCategory === "tops" ? activeTopSize : activeBottomSize;
-
-        sizes.forEach(sz => {
-          const chip = document.createElement("button");
-          chip.type = "button";
-          chip.className = `chip ${sz === curActive ? "is-active" : ""}`;
-          chip.dataset.size = sz;
-          chip.textContent = sz;
-
-          chip.addEventListener("click", () => {
-            sizeChips.querySelectorAll(".chip").forEach(c => c.classList.remove("is-active"));
-            chip.classList.add("is-active");
-            if (currentCategory === "tops") {
-              activeTopSize = sz;
-              applySizeFit(activeTopSize);
-              showToast(`Fitted Top Size ${activeTopSize} to Model`);
-            } else {
-              activeBottomSize = sz;
-              showToast(`Fitted Waist Size ${activeBottomSize} to Model`);
-            }
-          });
-
-          sizeChips.appendChild(chip);
-        });
-      }
-
       function updateBuyCard(item) {
         const nameContainer = document.getElementById("buyName") ? document.getElementById("buyName").parentElement : document.querySelector(".buy-name").parentElement;
         const priceContainer = document.getElementById("buyPrice") ? document.getElementById("buyPrice").parentElement : document.querySelector(".buy-price").parentElement;
@@ -2012,16 +1639,7 @@
         rollText(priceContainer, `₹${item.veloraPrice.toLocaleString("en-IN")}`);
 
         // Thumbnail jump & animate
-        if (item.image) {
-          buyThumb.style.backgroundImage = `url('${item.image}')`;
-          buyThumb.style.backgroundSize = "cover";
-          buyThumb.style.backgroundPosition = "center";
-        } else {
-          buyThumb.style.backgroundImage = "var(--garm)";
-          buyThumb.style.backgroundSize = "320% 212.5%";
-          buyThumb.style.backgroundPosition = `${item.g[0]}% ${item.g[1]}%`;
-        }
-
+        buyThumb.style.backgroundPosition = `${item.g[0]}% ${item.g[1]}%`;
         if (!prefersReducedMotion) {
           buyThumb.animate(
             [
@@ -2036,20 +1654,23 @@
           );
         }
 
-        // Rebuild Size Chips for this category
-        updateSizeChips();
+        // Reset Garment Tint layer for fresh outfit
+        const modelTint = document.getElementById("modelTint");
+        if (modelTint) {
+          modelTint.style.opacity = "0";
+          modelTint.style.backgroundColor = "transparent";
+        }
 
         // Rebuild Color Dots
         colorDots.innerHTML = "";
-        const curColorEntry = currentCategory === "tops" ? activeTopColor : activeBottomColor;
+        activeColor = item.c[0][0];
         const activeColorContainer = document.getElementById("colorLabel") ? document.getElementById("colorLabel").parentElement : colorContainer;
-        rollText(activeColorContainer, `Color · ${curColorEntry[0]}`);
+        rollText(activeColorContainer, `Color · ${activeColor}`);
 
         item.c.forEach(([colorName, hexVal], idx) => {
           const dot = document.createElement("button");
           dot.type = "button";
-          const isActive = colorName === curColorEntry[0];
-          dot.className = `color-dot ${isActive ? "is-active" : ""}`;
+          dot.className = `color-dot ${idx === 0 ? "is-active" : ""}`;
           dot.style.backgroundColor = hexVal;
           dot.title = colorName;
           dot.setAttribute("aria-label", colorName);
@@ -2057,18 +1678,12 @@
           dot.addEventListener("click", () => {
             colorDots.querySelectorAll(".color-dot").forEach(d => d.classList.remove("is-active"));
             dot.classList.add("is-active");
+            activeColor = colorName;
             const curColCont = document.getElementById("colorLabel") ? document.getElementById("colorLabel").parentElement : colorContainer;
             rollText(curColCont, `Color · ${colorName}`);
 
-            if (currentCategory === "tops") {
-              activeTopColor = [colorName, hexVal];
-              applyGarmentColor(idx, hexVal, colorName);
-            } else {
-              activeBottomColor = [colorName, hexVal];
-              renderBottomWear(activeBottomIndex, idx);
-              pulseScanLine();
-              showToast(`Bottom color fitted: ${colorName}`);
-            }
+            // Live photoreal color fitting on model
+            applyGarmentColor(idx, hexVal, colorName);
           });
 
           colorDots.appendChild(dot);
@@ -2077,35 +1692,16 @@
 
       function applyGarmentColor(colorIdx, hexVal, colorName) {
         const modelTint = document.getElementById("modelTint");
-        const modelTintHighlight = document.getElementById("modelTintHighlight");
         if (!modelTint) return;
 
-        const curTop = MEN_TOPS[activeTopIndex];
-        const silhouette = curTop.silhouette || "shortSleeveTee";
-        const clip = UPPER_SILHOUETTES[silhouette] || UPPER_SILHOUETTES.shortSleeveTee;
-
-        modelTint.style.clipPath = clip;
-        if (modelTintHighlight) modelTintHighlight.style.clipPath = clip;
-
-        const upperHex = hexVal ? hexVal.toUpperCase() : "";
-        const isBaselineOffWhite = (colorIdx === 0 && (upperHex === "#F4F2EE" || upperHex === "#F6F4EF" || upperHex === "#F7F6F1" || upperHex === "#FFFFFF"));
-
-        if (isBaselineOffWhite) {
-          // Baseline original photoshoot color (Chalk White / Vintage Chalk)
+        if (colorIdx === 0) {
+          // Baseline original photoshoot color
           modelTint.style.opacity = "0";
           modelTint.style.backgroundColor = "transparent";
-          if (modelTintHighlight) {
-            modelTintHighlight.style.opacity = "0";
-            modelTintHighlight.style.backgroundColor = "transparent";
-          }
         } else {
-          // Whole-garment color dye tinting covering shoulders, collar, both sleeves, torso, and hem
+          // Natural fabric tinting preserving all realistic creases and shadows
           modelTint.style.backgroundColor = hexVal;
-          modelTint.style.opacity = "0.90";
-          if (modelTintHighlight) {
-            modelTintHighlight.style.backgroundColor = hexVal;
-            modelTintHighlight.style.opacity = "0.65";
-          }
+          modelTint.style.opacity = "0.78";
         }
 
         pulseScanLine();
@@ -2145,24 +1741,32 @@
         }
       }
 
+      // Size Chips handling
+      sizeChips.querySelectorAll(".chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          sizeChips.querySelectorAll(".chip").forEach(c => c.classList.remove("is-active"));
+          chip.classList.add("is-active");
+          activeSize = chip.dataset.size || "M";
+          applySizeFit(activeSize);
+          showToast(`Fitted Size ${activeSize} to Model`);
+        });
+      });
+
       // --------------------------------------------------
       // Add to Bag Integration with VELORA Cart
       // --------------------------------------------------
       addToBagBtn.addEventListener("click", () => {
-        const item = currentCategory === "tops" ? MEN_TOPS[activeTopIndex] : MEN_BOTTOMS[activeBottomIndex];
-        const curSize = currentCategory === "tops" ? activeTopSize : activeBottomSize;
-        const curColor = currentCategory === "tops" ? activeTopColor[0] : activeBottomColor[0];
-
+        const item = ITEMS[currentOutfit >= 0 ? currentOutfit : 0];
         if (window.VeloraCart) {
-          const added = VeloraCart.addItem(item.id, curSize, curColor, 1);
+          const added = VeloraCart.addItem(item.id, activeSize, activeColor, 1);
           if (added) {
-            showToast(`Added to Bag: ${item.veloraName} (${curSize} / ${curColor}) · ₹${item.veloraPrice.toLocaleString("en-IN")}`);
+            showToast(`Added to Bag: ${item.veloraName} (${activeSize} / ${activeColor}) · ₹${item.veloraPrice.toLocaleString("en-IN")}`);
             updateStoreBadges();
           } else {
             showToast(`Piece added to Shopping Bag.`);
           }
         } else {
-          showToast(`Added to Bag: ${item.veloraName || item.n} (${curSize})`);
+          showToast(`Added to Bag: ${item.n} (${activeSize})`);
         }
       });
 
@@ -2179,72 +1783,6 @@
           const count = VeloraWishlist.items ? VeloraWishlist.items.length : 0;
           wishBadge.textContent = count;
           wishBadge.style.display = count > 0 ? "flex" : "none";
-        }
-      }
-
-      // --------------------------------------------------
-      // Section 9: Category Switching & Glass Tabs
-      // --------------------------------------------------
-      function switchCategory(catName) {
-        if (currentCategory === catName) return;
-        currentCategory = catName;
-
-        tabBtns.forEach(b => {
-          b.classList.toggle("is-active", b.textContent.trim().toLowerCase() === catName);
-        });
-
-        // Update pill position
-        const activeBtn = Array.from(tabBtns).find(b => b.textContent.trim().toLowerCase() === catName);
-        if (activeBtn) {
-          const rect = activeBtn.getBoundingClientRect();
-          const parentRect = activeBtn.parentElement.getBoundingClientRect();
-          tabPill.style.width = `${rect.width}px`;
-          tabPill.style.transform = `translateX(${rect.left - parentRect.left - 5}px)`;
-        }
-
-        // Rebuild CARDS array
-        CARDS.length = 0;
-        if (currentCategory === "tops") {
-          for (let i = 0; i < CARDS_COUNT; i++) {
-            CARDS.push(MEN_TOPS[i % MEN_TOPS.length]);
-          }
-          buildCards();
-          target = activeTopIndex;
-          pos = activeTopIndex;
-          currentOutfit = -1;
-          triggerTryOn(activeTopIndex);
-        } else if (currentCategory === "bottoms") {
-          for (let i = 0; i < CARDS_COUNT; i++) {
-            CARDS.push(MEN_BOTTOMS[i % MEN_BOTTOMS.length]);
-          }
-          buildCards();
-          target = activeBottomIndex;
-          pos = activeBottomIndex;
-          currentOutfit = -1;
-          triggerTryOn(activeBottomIndex);
-        }
-
-        showToast(`Viewing ${catName.toUpperCase()} Collection`);
-      }
-
-      tabBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const cat = btn.textContent.trim().toLowerCase();
-          if (cat === "tops" || cat === "bottoms") {
-            switchCategory(cat);
-          } else {
-            showToast(`${btn.textContent.trim()} collection coming soon`);
-          }
-        });
-      });
-
-      function initTabPill() {
-        const activeBtn = document.querySelector(".tab-btn.is-active");
-        if (activeBtn) {
-          const rect = activeBtn.getBoundingClientRect();
-          const parentRect = activeBtn.parentElement.getBoundingClientRect();
-          tabPill.style.width = `${rect.width}px`;
-          tabPill.style.transform = `translateX(${rect.left - parentRect.left - 5}px)`;
         }
       }
 
@@ -2363,6 +1901,34 @@
       btnPrev.addEventListener("click", () => { target -= 1; });
       btnNext.addEventListener("click", () => { target += 1; });
 
+      // 6. Tabs: slide pill & add 5 to target (full lap)
+      tabBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          tabBtns.forEach(b => b.classList.remove("is-active"));
+          btn.classList.add("is-active");
+
+          // Move sliding pill
+          const rect = btn.getBoundingClientRect();
+          const parentRect = btn.parentElement.getBoundingClientRect();
+          const pillOffset = rect.left - parentRect.left;
+          tabPill.style.width = `${rect.width}px`;
+          tabPill.style.transform = `translateX(${pillOffset - 5}px)`;
+
+          // Add 5 to target so the arc does a full lap and lands back on the same garment
+          target += 5;
+        });
+      });
+
+      function initTabPill() {
+        const activeBtn = document.querySelector(".tab-btn.is-active");
+        if (activeBtn) {
+          const rect = activeBtn.getBoundingClientRect();
+          const parentRect = activeBtn.parentElement.getBoundingClientRect();
+          tabPill.style.width = `${rect.width}px`;
+          tabPill.style.transform = `translateX(${rect.left - parentRect.left - 5}px)`;
+        }
+      }
+
       // --------------------------------------------------
       // Section 10: Custom Fluid Cursor (.cur)
       // --------------------------------------------------
@@ -2420,7 +1986,6 @@
 
         // Reveal initial outfit on load (Section 6: initial scan reveals model from nothing)
         hasInitialized = true;
-        renderBottomWear(0, 0);
         triggerTryOn(0);
 
         requestAnimationFrame(loop);

@@ -213,14 +213,14 @@ const VeloraStoreUI = {
               title="Try on ${prod.name} in Virtual Fitting Room"
               onclick="event.stopPropagation();"
             >
-              <span>✨ Try On</span>
+              <span>3D Fit</span>
             </a>
             <button 
               type="button" 
               class="card-action-btn"
               onclick="VeloraCart.addItem('${prod.id}', '${defaultSize}', '${defaultColor}', 1)"
             >
-              <span>+ Add</span>
+              <span>+ Bag</span>
             </button>
           </div>
         </div>
@@ -452,7 +452,7 @@ const VeloraQuickView = {
             onmouseenter="this.style.background='var(--color-charcoal)'; this.style.color='#FFFFFF';"
             onmouseleave="this.style.background='transparent'; this.style.color='var(--color-charcoal)';"
           >
-            <span>✨ Try On in ${prod.department === 'men' ? "Men's 3D Spatial Arc" : "Women's 360° Maison Edit"}</span>
+            <span>Virtual Try-On // ${prod.department === 'men' ? "Men's 3D Spatial Arc" : "Women's 360° Maison Studio"}</span>
           </a>
         </div>
       </div>

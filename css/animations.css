@@ -27,27 +27,27 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid rgba(139, 111, 216, 0.45);
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(197, 168, 128, 0.45);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
   opacity: 0;
   transition: opacity 0.3s ease, width 0.3s var(--ease-smooth), height 0.3s var(--ease-smooth), border-color 0.3s ease, background-color 0.3s ease;
   transform: translate3d(-100px, -100px, 0);
-  margin-top: -18px;
-  margin-left: -18px;
+  margin-top: -17px;
+  margin-left: -17px;
 }
 
 /* Cursor Hover State */
 .cursor-ring.cursor-hover {
-  width: 56px;
-  height: 56px;
-  margin-top: -28px;
-  margin-left: -28px;
-  border-color: var(--color-soft-violet);
-  background-color: var(--color-soft-violet-subtle);
+  width: 52px;
+  height: 52px;
+  margin-top: -26px;
+  margin-left: -26px;
+  border-color: var(--color-accent-gold, #C5A880);
+  background-color: rgba(197, 168, 128, 0.08);
 }
 
 /* --------------------------------------------------------------------------

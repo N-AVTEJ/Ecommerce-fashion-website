@@ -168,7 +168,7 @@
     <div class="virtual-fit-feature-card reveal-item">
       <div>
         <div class="vf-feature-tag">
-          <span class="pulse-dot" style="width: 6px; height: 6px; background: #8B6FD8;"></span>
+          <span class="pulse-dot" style="width: 6px; height: 6px; background: #C5A880;"></span>
           <span>SPATIAL TRY-ON ARC // VISIONOS HERO</span>
         </div>
         <h2 class="vf-feature-title">VirtualFit: 3D Spatial Fitting Suite</h2>
@@ -3383,7 +3383,7 @@
         <button type="button" id="cartApplyPromoBtn" class="btn btn-outline" style="padding: 8px 14px; font-size: 0.8rem;" onclick="const inp = document.getElementById('cartPromoInput'); const res = VeloraCart.applyPromo(inp ? inp.value : ''); if (window.VeloraToast) VeloraToast.show({ title: res.success ? 'Privilege Applied' : 'Notice', message: res.message, type: res.success ? 'success' : 'warning' });">Apply</button>
       </div>
 
-      <div id="cartActivePromoTag" style="display: none; align-items: center; justify-content: space-between; padding: 6px 12px; background: rgba(139, 111, 216, 0.12); border-radius: 4px; margin-bottom: 12px; font-size: 0.8rem; color: var(--color-soft-violet);">
+      <div id="cartActivePromoTag" style="display: none; align-items: center; justify-content: space-between; padding: 6px 12px; background: rgba(197, 168, 128, 0.14); border-radius: 4px; margin-bottom: 12px; font-size: 0.8rem; color: var(--color-accent-gold, #C5A880);">
         <span>Active: <strong id="cartActivePromoName"></strong></span>
         <button type="button" style="color: #EF4444; font-weight: 700; cursor: pointer;" onclick="VeloraCart.removePromo()">✕</button>
       </div>
@@ -3486,6 +3486,28 @@
       </form>
     </div>
   </div>
+
+  <!-- Floating Luxury Mobile Navigation Bar (Mobile Devices) -->
+  <nav class="mobile-bottom-bar" aria-label="Mobile Quick Navigation">
+    <a href="virtual-fit-men.html" class="mobile-bar-item" title="Men's Spatial 3D Arc">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Men's Arc</span>
+    </a>
+    <a href="virtual-fit-women.html" class="mobile-bar-item" title="Women's Maison 360° Studio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+      <span>360° Studio</span>
+    </a>
+    <button type="button" class="mobile-bar-item" aria-label="View Saved Wishlist" onclick="VeloraWishlist.open()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span>Wishlist</span>
+      <span class="wishlist-count-badge" style="display: none;">0</span>
+    </button>
+    <button type="button" class="mobile-bar-item" aria-label="View Shopping Bag" onclick="VeloraCart.open()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span>Bag</span>
+      <span class="cart-count-badge" style="display: none;">0</span>
+    </button>
+  </nav>
 
   <!-- Toast Notification Stack Container -->
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
