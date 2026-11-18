@@ -409,22 +409,6 @@
       user-select: none;
     }
 
-    .model-tint {
-      position: absolute;
-      top: 26.5%;
-      left: 14%;
-      width: 72%;
-      height: 36%;
-      border-radius: 24px 24px 30px 30px;
-      pointer-events: none;
-      z-index: 5;
-      mix-blend-mode: multiply;
-      opacity: 0;
-      transition: opacity 0.4s ease, background-color 0.4s ease;
-      -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, rgba(0,0,0,0.85) 75%, transparent 100%);
-      mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, rgba(0,0,0,0.85) 75%, transparent 100%);
-    }
-
     #mCur, #mNext {
       position: absolute;
       inset: 0;
@@ -526,10 +510,10 @@
       transform: translateX(-50%);
       bottom: 4.6vh;
       z-index: 60;
-      width: min(640px, calc(100vw - 32px));
+      width: min(690px, calc(100vw - 32px));
       display: flex;
       align-items: center;
-      gap: 22px;
+      gap: 18px;
       padding: 12px 22px 12px 12px;
       border-radius: 24px;
       color: #fff;
@@ -958,7 +942,6 @@
   <div class="model" id="modelEl" aria-label="Virtual Model Figure">
     <div id="mCur"></div>
     <div id="mNext"></div>
-    <div id="modelTint" class="model-tint"></div>
     <div class="grid"></div>
     <div class="scan"></div>
   </div>
@@ -973,10 +956,10 @@
     <!-- Info with rolling text lines -->
     <div class="buy-info">
       <div class="ln">
-        <span class="ln-roller buy-name" id="buyName">Heavyweight Boxy Pocket Tee</span>
+        <span class="ln-roller buy-name" id="buyName">Basic T-shirt</span>
       </div>
       <div class="ln">
-        <span class="ln-roller buy-price" id="buyPrice">₹1,499</span>
+        <span class="ln-roller buy-price" id="buyPrice">$45 · ₹1,435</span>
       </div>
     </div>
 
@@ -1095,123 +1078,74 @@
         {
           id: "men-15",
           n: "Basic T-shirt",
-          veloraName: "Heavyweight Boxy Pocket Tee",
-          p: 1499,
-          veloraPrice: 1499,
+          p: 45,
+          inr: 1435,
           g: [1.14, 3.06],
           m: 0.37,
           c: [
-            ["Vintage Chalk", "#F4F2EE"],
-            ["Ash Grey", "#C9C7C2"],
-            ["Charcoal Heather", "#374151"],
-            ["Deep Navy", "#1E3A8A"],
-            ["Olive Moss", "#4D5D36"],
-            ["Terracotta Rust", "#9C4221"],
-            ["Burgundy Wine", "#5B1D2E"],
-            ["Natural Sand", "#DDD3C2"],
-            ["Sky Chambray", "#93C5FD"],
-            ["Obsidian Black", "#18181B"]
+            ["White", "#f4f2ee"],
+            ["Ash", "#c9c7c2"],
+            ["Charcoal", "#3b3c3f"],
+            ["Navy", "#27324d"]
           ]
         },
         {
           id: "men-01",
           n: "Basic Sweater",
-          veloraName: "Oversized Graphic T-Shirt",
-          p: 1299,
-          veloraPrice: 1299,
+          p: 105,
+          inr: 3350,
           g: [49.7, 1.39],
           m: 25.0,
           c: [
-            ["Chalk White", "#F6F4EF"],
-            ["Sand Oat", "#DDD3C2"],
-            ["Sage Mist", "#94A388"],
-            ["Sky Slate", "#64748B"],
-            ["Burgundy Wine", "#5B1D2E"],
-            ["Deep Navy", "#1E3A8A"],
-            ["Olive Moss", "#4D5D36"],
-            ["Terracotta", "#9C4221"],
-            ["Ash Grey", "#C9C7C2"],
-            ["Pitch Black", "#171717"]
+            ["White", "#f6f4ef"],
+            ["Oat", "#ddd3c2"],
+            ["Sage", "#b9c2ae"],
+            ["Black", "#1f1f21"]
           ]
         },
         {
           id: "men-09",
           n: "Linen Shirt",
-          veloraName: "Tailored Linen Blend Shirt",
-          p: 2299,
-          veloraPrice: 2299,
+          p: 95,
+          inr: 3030,
           g: [98.2, 3.33],
           m: 49.86,
           c: [
-            ["Pure White", "#F7F6F1"],
-            ["Natural Sand", "#D9CCB4"],
-            ["Sky Chambray", "#93C5FD"],
-            ["Olive Sage", "#556B2F"],
-            ["Dusty Rose", "#E2A8A8"],
-            ["Midnight Navy", "#172554"],
-            ["Charcoal", "#374151"],
-            ["Terracotta", "#9C4221"],
-            ["Sage Mist", "#94A388"],
-            ["Vintage Black", "#1F1F21"]
+            ["White", "#f7f6f1"],
+            ["Sand", "#d9ccb4"],
+            ["Sky", "#bcd0e2"],
+            ["Olive", "#717556"]
           ]
         },
         {
           id: "men-03",
           n: "Grey Hoodie",
-          veloraName: "Urban Zip Hoodie",
-          p: 2999,
-          veloraPrice: 2999,
+          p: 110,
+          inr: 3510,
           g: [1.14, 93.3],
           m: 74.77,
           c: [
-            ["Heather Slate", "#A9A9A8"],
-            ["Bone Ecru", "#E6E1D6"],
-            ["Pine Green", "#1B3B2B"],
-            ["Rich Mocha", "#5C4033"],
-            ["Deep Navy", "#1E3A8A"],
-            ["Charcoal", "#374151"],
-            ["Burgundy Wine", "#5B1D2E"],
-            ["Sand Oat", "#DDD3C2"],
-            ["Vintage Chalk", "#F4F2EE"],
-            ["Jet Black", "#181818"]
+            ["Heather", "#a9a9a8"],
+            ["Bone", "#e6e1d6"],
+            ["Forest", "#33463a"],
+            ["Black", "#1f1f21"]
           ]
         },
         {
           id: "men-07",
           n: "Ringer Tee",
-          veloraName: "Classic Polo T-Shirt",
-          p: 1499,
-          veloraPrice: 1499,
+          p: 55,
+          inr: 1755,
           g: [49.7, 95.3],
           m: 99.35,
           c: [
-            ["Ivory Cream", "#F5F0E8"],
-            ["Midnight Navy", "#1E293B"],
-            ["Forest Emerald", "#14532D"],
-            ["Deep Crimson", "#881337"],
-            ["Smoked Grey", "#4B5563"],
-            ["Vintage Chalk", "#F4F2EE"],
-            ["Sand Oat", "#DDD3C2"],
-            ["Sky Slate", "#64748B"],
-            ["Terracotta", "#9C4221"],
-            ["Obsidian", "#18181B"]
+            ["White / Black", "#f4f2ee"],
+            ["Cream / Navy", "#efe6d3"],
+            ["Grey / Red", "#c9c7c2"],
+            ["White / Green", "#e9efe8"]
           ]
         }
       ];
-
-      // Synchronize with VELORA catalog data if available
-      if (typeof VeloraProducts !== "undefined" && VeloraProducts.getById) {
-        ITEMS.forEach(it => {
-          const p = VeloraProducts.getById(it.id);
-          if (p) {
-            it.veloraPrice = p.discountedPrice;
-            it.veloraName = p.name;
-            if (p.colors && p.colors.length) {
-              it.c = p.colors.map(col => [col.name, col.hex]);
-            }
-          }
-        });
-      }
 
       // 10 cards in all (two copies of the 5 items so the arc loops seamlessly)
       const CARDS_COUNT = 10;
@@ -1324,8 +1258,8 @@
 
           card.innerHTML = `
             <div class="g" style="background-position: ${item.g[0]}% ${item.g[1]}%;"></div>
-            <div class="card-name">${item.veloraName || item.n}</div>
-            <div class="card-price">₹${item.veloraPrice.toLocaleString("en-IN")}</div>
+            <div class="card-name">${item.n}</div>
+            <div class="card-price">$${item.p}</div>
             <div class="sheen"></div>
           `;
 
@@ -1634,9 +1568,9 @@
         const priceContainer = document.getElementById("buyPrice") ? document.getElementById("buyPrice").parentElement : document.querySelector(".buy-price").parentElement;
         const colorContainer = document.getElementById("colorLabel") ? document.getElementById("colorLabel").parentElement : document.querySelector("#colorLabel").parentElement;
 
-        // Rolling name and rolling price in Indian Rupees
-        rollText(nameContainer, `${item.veloraName || item.n}`);
-        rollText(priceContainer, `₹${item.veloraPrice.toLocaleString("en-IN")}`);
+        // Rolling name and rolling price ($ and ₹)
+        rollText(nameContainer, item.n);
+        rollText(priceContainer, `$${item.p} · ₹${item.inr.toLocaleString("en-IN")}`);
 
         // Thumbnail jump & animate
         buyThumb.style.backgroundPosition = `${item.g[0]}% ${item.g[1]}%`;
@@ -1652,13 +1586,6 @@
               fill: "forwards"
             }
           );
-        }
-
-        // Reset Garment Tint layer for fresh outfit
-        const modelTint = document.getElementById("modelTint");
-        if (modelTint) {
-          modelTint.style.opacity = "0";
-          modelTint.style.backgroundColor = "transparent";
         }
 
         // Rebuild Color Dots
@@ -1681,31 +1608,12 @@
             activeColor = colorName;
             const curColCont = document.getElementById("colorLabel") ? document.getElementById("colorLabel").parentElement : colorContainer;
             rollText(curColCont, `Color · ${colorName}`);
-
-            // Live photoreal color fitting on model
-            applyGarmentColor(idx, hexVal, colorName);
+            pulseScanLine();
+            showToast(`Selected Color: ${colorName}`);
           });
 
           colorDots.appendChild(dot);
         });
-      }
-
-      function applyGarmentColor(colorIdx, hexVal, colorName) {
-        const modelTint = document.getElementById("modelTint");
-        if (!modelTint) return;
-
-        if (colorIdx === 0) {
-          // Baseline original photoshoot color
-          modelTint.style.opacity = "0";
-          modelTint.style.backgroundColor = "transparent";
-        } else {
-          // Natural fabric tinting preserving all realistic creases and shadows
-          modelTint.style.backgroundColor = hexVal;
-          modelTint.style.opacity = "0.78";
-        }
-
-        pulseScanLine();
-        showToast(`Color fitted: ${colorName}`);
       }
 
       function pulseScanLine() {
@@ -1760,7 +1668,7 @@
         if (window.VeloraCart) {
           const added = VeloraCart.addItem(item.id, activeSize, activeColor, 1);
           if (added) {
-            showToast(`Added to Bag: ${item.veloraName} (${activeSize} / ${activeColor}) · ₹${item.veloraPrice.toLocaleString("en-IN")}`);
+            showToast(`Added to Bag: ${item.n} (${activeSize} / ${activeColor}) · ₹${item.inr.toLocaleString("en-IN")}`);
             updateStoreBadges();
           } else {
             showToast(`Piece added to Shopping Bag.`);
