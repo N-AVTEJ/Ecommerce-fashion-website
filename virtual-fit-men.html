@@ -399,12 +399,30 @@
       position: fixed;
       left: 50%;
       bottom: 0;
-      transform: translateX(-50%);
+      transform: translateX(-50%) scale(var(--size-scale-x, 1), var(--size-scale-y, 1));
+      transform-origin: bottom center;
+      transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
       height: var(--MH);
       aspect-ratio: 524 / 1360;
       z-index: 50;
       pointer-events: none;
       user-select: none;
+    }
+
+    .model-tint {
+      position: absolute;
+      top: 26.5%;
+      left: 14%;
+      width: 72%;
+      height: 36%;
+      border-radius: 24px 24px 30px 30px;
+      pointer-events: none;
+      z-index: 5;
+      mix-blend-mode: multiply;
+      opacity: 0;
+      transition: opacity 0.4s ease, background-color 0.4s ease;
+      -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, rgba(0,0,0,0.85) 75%, transparent 100%);
+      mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, rgba(0,0,0,0.85) 75%, transparent 100%);
     }
 
     #mCur, #mNext {
@@ -940,6 +958,7 @@
   <div class="model" id="modelEl" aria-label="Virtual Model Figure">
     <div id="mCur"></div>
     <div id="mNext"></div>
+    <div id="modelTint" class="model-tint"></div>
     <div class="grid"></div>
     <div class="scan"></div>
   </div>
@@ -954,10 +973,10 @@
     <!-- Info with rolling text lines -->
     <div class="buy-info">
       <div class="ln">
-        <span class="ln-roller buy-name" id="buyName">Basic T-shirt</span>
+        <span class="ln-roller buy-name" id="buyName">Heavyweight Boxy Pocket Tee</span>
       </div>
       <div class="ln">
-        <span class="ln-roller buy-price" id="buyPrice">$45</span>
+        <span class="ln-roller buy-price" id="buyPrice">₹1,499</span>
       </div>
     </div>
 
@@ -1077,75 +1096,85 @@
           id: "men-15",
           n: "Basic T-shirt",
           veloraName: "Heavyweight Boxy Pocket Tee",
-          p: 45,
+          p: 1499,
           veloraPrice: 1499,
           g: [1.14, 3.06],
           m: 0.37,
           c: [
-            ["White", "#f4f2ee"],
-            ["Ash", "#c9c7c2"],
-            ["Charcoal", "#3b3c3f"],
-            ["Navy", "#27324d"]
+            ["Vintage Chalk", "#f4f2ee"],
+            ["Ash Grey", "#c9c7c2"],
+            ["Charcoal", "#374151"],
+            ["Deep Navy", "#1e3a8a"],
+            ["Olive Moss", "#4d5d36"],
+            ["Terracotta", "#9c4221"],
+            ["Vintage Black", "#1f1f21"]
           ]
         },
         {
           id: "men-01",
           n: "Basic Sweater",
           veloraName: "Oversized Graphic T-Shirt",
-          p: 105,
+          p: 1299,
           veloraPrice: 1299,
           g: [49.7, 1.39],
           m: 25.0,
           c: [
-            ["White", "#f6f4ef"],
-            ["Oat", "#ddd3c2"],
-            ["Sage", "#b9c2ae"],
-            ["Black", "#1f1f21"]
+            ["Chalk White", "#f6f4ef"],
+            ["Sand Oat", "#ddd3c2"],
+            ["Sage Mist", "#94a388"],
+            ["Sky Slate", "#64748b"],
+            ["Burgundy Wine", "#5b1d2e"],
+            ["Pitch Black", "#171717"]
           ]
         },
         {
           id: "men-09",
           n: "Linen Shirt",
           veloraName: "Tailored Linen Blend Shirt",
-          p: 95,
+          p: 2299,
           veloraPrice: 2299,
           g: [98.2, 3.33],
           m: 49.86,
           c: [
-            ["White", "#f7f6f1"],
-            ["Sand", "#d9ccb4"],
-            ["Sky", "#bcd0e2"],
-            ["Olive", "#717556"]
+            ["Pure White", "#f7f6f1"],
+            ["Natural Sand", "#d9ccb4"],
+            ["Sky Chambray", "#93c5fd"],
+            ["Olive Sage", "#556b2f"],
+            ["Dusty Rose", "#e2a8a8"],
+            ["Midnight Navy", "#172554"]
           ]
         },
         {
           id: "men-03",
           n: "Grey Hoodie",
           veloraName: "Urban Zip Hoodie",
-          p: 110,
+          p: 2999,
           veloraPrice: 2999,
           g: [1.14, 93.3],
           m: 74.77,
           c: [
-            ["Heather", "#a9a9a8"],
-            ["Bone", "#e6e1d6"],
-            ["Forest", "#33463a"],
-            ["Black", "#1f1f21"]
+            ["Heather Slate", "#a9a9a8"],
+            ["Bone Ecru", "#e6e1d6"],
+            ["Pine Green", "#1b3b2b"],
+            ["Rich Mocha", "#5c4033"],
+            ["Jet Black", "#181818"]
           ]
         },
         {
           id: "men-07",
           n: "Ringer Tee",
           veloraName: "Classic Polo T-Shirt",
-          p: 55,
+          p: 1499,
           veloraPrice: 1499,
           g: [49.7, 95.3],
           m: 99.35,
           c: [
-            ["White / Black", "#f4f2ee"],
-            ["Cream / Navy", "#efe6d3"],
-            ["Grey / Red", "#c9c7c2"],
-            ["White / Green", "#e9efe8"]
+            ["Ivory Cream", "#f5f0e8"],
+            ["Midnight Navy", "#1e293b"],
+            ["Forest Emerald", "#14532d"],
+            ["Deep Crimson", "#881337"],
+            ["Smoked Grey", "#4b5563"],
+            ["Obsidian", "#18181b"]
           ]
         }
       ];
@@ -1272,8 +1301,8 @@
 
           card.innerHTML = `
             <div class="g" style="background-position: ${item.g[0]}% ${item.g[1]}%;"></div>
-            <div class="card-name">${item.n}</div>
-            <div class="card-price">$${item.p}</div>
+            <div class="card-name">${item.veloraName || item.n}</div>
+            <div class="card-price">₹${item.veloraPrice.toLocaleString("en-IN")}</div>
             <div class="sheen"></div>
           `;
 
@@ -1582,9 +1611,9 @@
         const priceContainer = document.getElementById("buyPrice") ? document.getElementById("buyPrice").parentElement : document.querySelector(".buy-price").parentElement;
         const colorContainer = document.getElementById("colorLabel") ? document.getElementById("colorLabel").parentElement : document.querySelector("#colorLabel").parentElement;
 
-        // Rolling name and rolling price
-        rollText(nameContainer, `${item.n} · ${item.veloraName}`);
-        rollText(priceContainer, `$${item.p}  ·  ₹${item.veloraPrice.toLocaleString("en-IN")}`);
+        // Rolling name and rolling price in Indian Rupees
+        rollText(nameContainer, `${item.veloraName || item.n}`);
+        rollText(priceContainer, `₹${item.veloraPrice.toLocaleString("en-IN")}`);
 
         // Thumbnail jump & animate
         buyThumb.style.backgroundPosition = `${item.g[0]}% ${item.g[1]}%`;
@@ -1600,6 +1629,13 @@
               fill: "forwards"
             }
           );
+        }
+
+        // Reset Garment Tint layer for fresh outfit
+        const modelTint = document.getElementById("modelTint");
+        if (modelTint) {
+          modelTint.style.opacity = "0";
+          modelTint.style.backgroundColor = "transparent";
         }
 
         // Rebuild Color Dots
@@ -1622,10 +1658,64 @@
             activeColor = colorName;
             const curColCont = document.getElementById("colorLabel") ? document.getElementById("colorLabel").parentElement : colorContainer;
             rollText(curColCont, `Color · ${colorName}`);
+
+            // Live photoreal color fitting on model
+            applyGarmentColor(idx, hexVal, colorName);
           });
 
           colorDots.appendChild(dot);
         });
+      }
+
+      function applyGarmentColor(colorIdx, hexVal, colorName) {
+        const modelTint = document.getElementById("modelTint");
+        if (!modelTint) return;
+
+        if (colorIdx === 0) {
+          // Baseline original photoshoot color
+          modelTint.style.opacity = "0";
+          modelTint.style.backgroundColor = "transparent";
+        } else {
+          // Natural fabric tinting preserving all realistic creases and shadows
+          modelTint.style.backgroundColor = hexVal;
+          modelTint.style.opacity = "0.78";
+        }
+
+        pulseScanLine();
+        showToast(`Color fitted: ${colorName}`);
+      }
+
+      function pulseScanLine() {
+        if (modelScan && !prefersReducedMotion) {
+          modelScan.animate(
+            [
+              { top: "25%", transform: "scaleX(0.4)", opacity: 0 },
+              { top: "45%", transform: "scaleX(1)", opacity: 0.85 },
+              { top: "65%", transform: "scaleX(0.4)", opacity: 0 }
+            ],
+            {
+              duration: 520,
+              easing: "cubic-bezier(.2,.8,.2,1)"
+            }
+          );
+        }
+      }
+
+      // Proportional Size Scaling on Model
+      const SIZE_SCALES = {
+        "S": { x: 0.965, y: 0.985 },
+        "M": { x: 1.000, y: 1.000 },
+        "L": { x: 1.045, y: 1.015 },
+        "XL": { x: 1.090, y: 1.030 }
+      };
+
+      function applySizeFit(size) {
+        const modelEl = document.getElementById("modelEl");
+        const scale = SIZE_SCALES[size] || SIZE_SCALES["M"];
+        if (modelEl) {
+          modelEl.style.setProperty("--size-scale-x", scale.x);
+          modelEl.style.setProperty("--size-scale-y", scale.y);
+        }
       }
 
       // Size Chips handling
@@ -1634,6 +1724,8 @@
           sizeChips.querySelectorAll(".chip").forEach(c => c.classList.remove("is-active"));
           chip.classList.add("is-active");
           activeSize = chip.dataset.size || "M";
+          applySizeFit(activeSize);
+          showToast(`Fitted Size ${activeSize} to Model`);
         });
       });
 

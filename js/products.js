@@ -26,9 +26,12 @@ const VELORA_PRODUCTS = [
     description: "Relaxed drop-shoulder silhouette crafted in heavyweight 280 GSM combed jersey with micro-ribbed crew collar and subtle tonal high-density silicone typography.",
     sizes: ["S", "M", "L", "XL", "XXL"],
     colors: [
-      { name: "Onyx Black", hex: "#171717" },
-      { name: "Vintage Chalk", hex: "#F5F0E8" },
-      { name: "Smoked Taupe", hex: "#B9A58F" }
+      { name: "Chalk White", hex: "#F6F4EF" },
+      { name: "Sand Oat", hex: "#DDD3C2" },
+      { name: "Sage Mist", hex: "#94A388" },
+      { name: "Sky Slate", hex: "#64748B" },
+      { name: "Burgundy Wine", hex: "#5B1D2E" },
+      { name: "Pitch Black", hex: "#171717" }
     ],
     tags: ["T-Shirts", "Oversized", "Graphic", "Men"],
     isNew: false,
@@ -80,9 +83,11 @@ const VELORA_PRODUCTS = [
     description: "Substantial heavyweight fleece hoodie with matte two-way gunmetal YKK zipper, double-layered hood, and concealed magnetic kangaroo pouch seams.",
     sizes: ["S", "M", "L", "XL"],
     colors: [
-      { name: "Charcoal Heather", hex: "#232323" },
-      { name: "Sand Taupe", hex: "#D9C7B3" },
-      { name: "Soft Violet", hex: "#8B6FD8" }
+      { name: "Heather Slate", hex: "#A9A9A8" },
+      { name: "Bone Ecru", hex: "#E6E1D6" },
+      { name: "Pine Green", hex: "#1B3B2B" },
+      { name: "Rich Mocha", hex: "#5C4033" },
+      { name: "Jet Black", hex: "#181818" }
     ],
     tags: ["Hoodies", "Streetwear", "Heavyweight", "Men"],
     isNew: false,
@@ -185,9 +190,12 @@ const VELORA_PRODUCTS = [
     description: "Lustrous double-mercerized Pima cotton piqué with clean concealed placket, rib-knit collar, and reinforced side-slit vents.",
     sizes: ["S", "M", "L", "XL"],
     colors: [
-      { name: "Warm Cream", hex: "#F5F0E8" },
-      { name: "Soft Charcoal", hex: "#2B2B2B" },
-      { name: "Dusty Violet", hex: "#7E6E9C" }
+      { name: "Ivory Cream", hex: "#F5F0E8" },
+      { name: "Midnight Navy", hex: "#1E293B" },
+      { name: "Forest Emerald", hex: "#14532D" },
+      { name: "Deep Crimson", hex: "#881337" },
+      { name: "Smoked Grey", hex: "#4B5563" },
+      { name: "Obsidian", hex: "#18181B" }
     ],
     tags: ["T-Shirts", "Polo", "Mercerized", "Men"],
     isNew: false,
@@ -238,8 +246,12 @@ const VELORA_PRODUCTS = [
     description: "Breathable vacation silhouette with band collar, curved hemline, and relaxed chest fit. Pre-washed for exceptional softness from first wear.",
     sizes: ["S", "M", "L", "XL"],
     colors: [
-      { name: "Natural Sand", hex: "#D9C7B3" },
-      { name: "Soft Cream", hex: "#F5F0E8" }
+      { name: "Pure White", hex: "#F7F6F1" },
+      { name: "Natural Sand", hex: "#D9CCB4" },
+      { name: "Sky Chambray", hex: "#93C5FD" },
+      { name: "Olive Sage", hex: "#556B2F" },
+      { name: "Dusty Rose", hex: "#E2A8A8" },
+      { name: "Midnight Navy", hex: "#172554" }
     ],
     tags: ["Shirts", "Linen", "Resort", "Men"],
     isNew: true,
@@ -394,9 +406,13 @@ const VELORA_PRODUCTS = [
     description: "Boxy architectural cut with blind-stitched chest pocket, reinforced ribbed crew neckline, and drop-shoulder drape in dense combed cotton.",
     sizes: ["S", "M", "L", "XL", "XXL"],
     colors: [
-      { name: "Vintage Chalk", hex: "#F5F0E8" },
-      { name: "Smoked Slate", hex: "#4A5568" },
-      { name: "Onyx", hex: "#171717" }
+      { name: "Vintage Chalk", hex: "#F4F2EE" },
+      { name: "Ash Grey", hex: "#C9C7C2" },
+      { name: "Charcoal", hex: "#374151" },
+      { name: "Deep Navy", hex: "#1E3A8A" },
+      { name: "Olive Moss", hex: "#4D5D36" },
+      { name: "Terracotta", hex: "#9C4221" },
+      { name: "Vintage Black", hex: "#1F1F21" }
     ],
     tags: ["T-Shirts", "Heavyweight", "Boxy", "Men"],
     isNew: true,

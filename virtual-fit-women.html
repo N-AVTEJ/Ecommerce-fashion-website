@@ -692,6 +692,9 @@
       cursor: grab;
       touch-action: pan-y;
       position: relative;
+      transform: scale(var(--women-scale-x, 1), var(--women-scale-y, 1));
+      transform-origin: bottom center;
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     #body:active {
@@ -1634,7 +1637,7 @@
       <div class="look-panel">
         <div class="look-panel-header">
           <h2 class="look-heading">YOUR LOOK</h2>
-          <div class="look-total-price" id="lookTotalPrice">$407.89</div>
+          <div class="look-total-price" id="lookTotalPrice">₹18,499</div>
         </div>
 
         <!-- 4 Worn Items Rows -->
@@ -2143,7 +2146,7 @@
             <div class="product-info">
               <div class="product-store">${p.store}</div>
               <div class="product-name">${p.name}</div>
-              <div class="product-price">$${p.price.toFixed(2)}</div>
+              <div class="product-price">₹${(p.inr || Math.round(p.price * 80)).toLocaleString('en-IN')}</div>
             </div>
           `;
 
@@ -2194,13 +2197,13 @@
       }
 
       // Look Panel Rows & Pricing Counter
-      let currentTotalVal = 407.89;
+      let currentTotalVal = 18499;
       const totalDisplay = document.getElementById('lookTotalPrice');
       const lookRowsContainer = document.getElementById('lookRowsList');
 
       function syncLookPanel(changedCat) {
-        // Calculate total
-        const total = Object.values(currentLook).reduce((acc, k) => acc + (PRODUCT_MAP[k]?.price || 0), 0);
+        // Calculate total in Indian Rupees
+        const total = Object.values(currentLook).reduce((acc, k) => acc + (PRODUCT_MAP[k]?.inr || Math.round((PRODUCT_MAP[k]?.price || 0) * 80)), 0);
         animatePriceCount(currentTotalVal, total);
         currentTotalVal = total;
 
@@ -2219,7 +2222,7 @@
             <div class="look-row-details">
               <div class="look-row-store">${prod.store}</div>
               <div class="look-row-name">${prod.name}</div>
-              <div class="look-row-price">$${prod.price.toFixed(2)}</div>
+              <div class="look-row-price">₹${(prod.inr || Math.round(prod.price * 80)).toLocaleString('en-IN')}</div>
             </div>
             <div class="look-row-chevron">›</div>
           `;
@@ -2255,7 +2258,7 @@
           // Ease-out cubic
           const ease = 1 - Math.pow(1 - t, 3);
           const current = from + (to - from) * ease;
-          totalDisplay.textContent = '$' + current.toFixed(2);
+          totalDisplay.textContent = '₹' + Math.round(current).toLocaleString('en-IN');
           if (t < 1) requestAnimationFrame(update);
         }
         requestAnimationFrame(update);
@@ -2328,7 +2331,7 @@
             <div class="rec-thumb pt" style="background-position: ${bgPos};"></div>
             <div class="rec-store">${p.store}</div>
             <div class="rec-name">${p.name}</div>
-            <div class="rec-price">$${p.price.toFixed(2)}</div>
+            <div class="rec-price">₹${(p.inr || Math.round(p.price * 80)).toLocaleString('en-IN')}</div>
           `;
 
           card.addEventListener('click', () => {
@@ -2441,8 +2444,28 @@
 
       // Rail Buttons
       document.getElementById('railUndo').addEventListener('click', undo);
+
+      // Rail Size Cycling with Proportional Model Fit
+      const WOMEN_SIZES = [
+        { size: 'XS', label: 'Size XS • 160 cm • Petite Fit', sx: 0.965, sy: 0.985 },
+        { size: 'S',  label: 'Size S • 163 cm • Slim Fit',    sx: 0.982, sy: 0.992 },
+        { size: 'M',  label: 'Size M • 165 cm • Regular Fit', sx: 1.000, sy: 1.000 },
+        { size: 'L',  label: 'Size L • 168 cm • Relaxed Fit', sx: 1.035, sy: 1.015 },
+        { size: 'XL', label: 'Size XL • 170 cm • Comfort Fit', sx: 1.070, sy: 1.025 }
+      ];
+      let womenSizeIdx = 2; // Default M
+
       document.getElementById('railSize').addEventListener('click', () => {
-        showToast('Size M • 165 cm • fit profile saved');
+        womenSizeIdx = (womenSizeIdx + 1) % WOMEN_SIZES.length;
+        const curr = WOMEN_SIZES[womenSizeIdx];
+        const bodyEl = document.getElementById('body');
+        if (bodyEl) {
+          bodyEl.style.setProperty('--women-scale-x', curr.sx);
+          bodyEl.style.setProperty('--women-scale-y', curr.sy);
+        }
+        const tip = document.querySelector('#railSize + .rail-tooltip');
+        if (tip) tip.textContent = curr.label;
+        showToast(curr.label);
       });
       document.getElementById('railTop').addEventListener('click', () => { cycle('t'); setActiveCatTab('t'); });
       document.getElementById('railSkirt').addEventListener('click', () => { cycle('k'); setActiveCatTab('k'); });
